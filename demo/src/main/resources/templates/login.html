@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Furry Friends - Iniciar sesión</title>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <h1 class="titulo">Furry Friends</h1>
+        <a href="/" class="boton-inicio">Inicio</a>
+        <!-- Mensaje de éxito aquí -->
+        <div th:if="${mensajeExito}" class="alert alert-success" style="color: green; font-weight: bold; text-align: center; margin-bottom: 20px;">
+            <p th:text="${mensajeExito}"></p>
+        </div>
+        <div th:if="${param.error}" style="color:red; text-align:center; margin-bottom:10px;">
+            Usuario o contraseña incorrectos.
+        </div>
+        <div class="formulario">
+            <h2>Iniciar sesión</h2>
+            <form th:action="@{/login}" method="post">
+                <label for="username">Correo electrónico:</label>
+                <input type="email" id="username" name="username" placeholder="Introduce tu correo">
+
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" placeholder="Introduce la contraseña">
+
+                <div class="recordar">
+                    <input type="checkbox" id="recordar">
+                    <label for="recordar">Recordar contraseña</label>
+                </div>
+
+                <button type="submit" class="btn-login">Iniciar sesión</button>
+            </form>
+
+            <div class="links">
+                <a href="#">Inicia sesión con número de teléfono</a><br>
+                <a href="/register/adoptante">¿No tienes cuenta? Regístrate aquí</a><br>
+                <a href="#">¿Olvidaste tu contraseña?</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

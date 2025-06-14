@@ -1,0 +1,13 @@
+<div th:fragment="rol-buttons (rolActual)">
+    <div class="rol-buttons">
+        <a th:href="@{/registro/adoptante}">
+            <button type="button" class="btn-rol" th:classappend="${rolActual}=='adoptante' ? ' active' : ''">Adoptante</button>
+        </a>
+        <a th:href="@{/registro/refugio}">
+            <button type="button" class="btn-rol" th:classappend="${rolActual}=='refugio' ? ' active' : ''">Refugio Físico</button>
+        </a>
+        <a th:href="@{/registro/natural}">
+            <button type="button" class="btn-rol" th:classappend="${rolActual}=='natural' ? ' active' : ''">Persona Natural</button>
+        </a>
+    </div>
+</div>

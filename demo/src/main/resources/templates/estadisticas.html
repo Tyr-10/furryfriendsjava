@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Estadísticas</title>
+    <style>
+        body {
+            background-color: #f3f3f3;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 30px;
+        }
+        h1 {
+            font-size: 32px;
+            color: #333;
+        }
+        .grafica {
+            margin-top: 30px;
+            background-color: #fff;
+            padding: 20px;
+            display: inline-block;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        img {
+            border-radius: 10px;
+        }
+        a.boton {
+            margin-top: 20px;
+            display: inline-block;
+            background-color: #4d89c1;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Estadísticas de Adopciones y Registros</h1>
+    <div class="grafica">
+        <img th:src="@{/grafica}" alt="Gráfico de adopciones y registros">
+    </div>
+    <br>
+    <a href="/" class="boton">Volver al inicio</a>
+</body>
+</html>

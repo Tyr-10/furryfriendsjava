@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro</title>
+    <link rel="stylesheet" th:href="@{/css/register.css}">
+    <style>
+        .rol-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .rol-buttons a button {
+            padding: 12px 18px;
+            border-radius: 8px;
+            border: none;
+            background: #3498db;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .rol-buttons a button:hover {
+            background: #4CAF50;
+        }
+        #form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <a href="/" class="btn btn-secondary">🏠 Volver a inicio</a>
+    <h1 style="text-align:center;">Registro</h1>
+    <div class="rol-buttons">
+        <a th:href="@{/registro/adoptante}"><button type="button">Adoptante</button></a>
+        <a th:href="@{/registro/refugio}"><button type="button">Refugio Físico</button></a>
+        <a th:href="@{/registro/natural}"><button type="button">Persona Natural</button></a>
+    </div>
+    <div id="form-container"></div>
+</body>
+</html>

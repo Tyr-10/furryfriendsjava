@@ -1,0 +1,172 @@
+/* Estilos generales */
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    /* Azul pastel claro */
+}
+
+
+/* Cabecera */
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #42a5f5;
+    /* Azul más intenso */
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    color: rgb(0, 0, 0);
+    font-size: 24px;
+    margin: 0;
+}
+
+
+/* Contenedor principal */
+
+.container {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+
+/* Botones */
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.btn {
+    padding: 12px 18px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #64b5f6;
+    /* Azul pastel */
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn:hover {
+    background-color: #42a5f5;
+    /* Azul más intenso */
+    transform: scale(1.1);
+}
+
+.rol-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.btn-rol {
+    padding: 12px 18px;
+    border-radius: 8px;
+    border: none;
+    background: #3498db;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    font-size: 16px;
+    box-shadow: 0 2px 8px rgba(52,152,219,0.08);
+    outline: none;
+}
+
+.btn-rol.active,
+.btn-rol:focus,
+.btn-rol:hover {
+    background: #4CAF50;
+    color: white;
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 4px 16px rgba(76,175,80,0.12);
+}
+
+
+/* Formulario */
+
+#form-container {
+    margin-top: 20px;
+    text-align: left;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+label {
+    font-weight: bold;
+    color: #333;
+}
+
+input,
+textarea,
+button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button[type="submit"] {
+    background-color: #0288d1;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #0277bd;
+    transform: scale(1.05);
+}
+
+.back-button {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.back-button .btn {
+    background-color: #0288d1;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.back-button .btn:hover {
+    background-color: #0277bd;
+}
