@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <title>Bienvenido</title>
     <link rel="stylesheet" th:href="@{/css/register.css}">
+
+
+
+    <div class="header-buttons">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                </button>
+            </form>
+        </div>
 </head>
 <body>
     <div class="container" style="text-align:center; margin-top:60px;">

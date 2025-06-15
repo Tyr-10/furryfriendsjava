@@ -21,7 +21,7 @@ public class AdminDataLoader {
             Rol rolAdmin = rolRepository.findById(4L).orElse(null);
 
             // --- Admin Mariana ---
-            if (!usuarioRepository.findByCorreo("mariana@gmail.com").isPresent()) {
+            if (usuarioRepository.findByCorreo("mariana@gmail.com") == null) {
                 Usuario mariana = new Usuario();
                 mariana.setNombre("Admin Mariana");
                 mariana.setCorreo("mariana@gmail.com");
@@ -39,7 +39,7 @@ public class AdminDataLoader {
             }
 
             // --- Admin Emilly ---
-            if (!usuarioRepository.findByCorreo("emilly@gmail.com").isPresent()) {
+            if (usuarioRepository.findByCorreo("emilly@gmail.com") == null) {
                 Usuario emilly = new Usuario();
                 emilly.setNombre("Admin Emilly");
                 emilly.setCorreo("emilly@gmail.com");
@@ -57,7 +57,7 @@ public class AdminDataLoader {
             }
 
             // --- Admin Juan ---
-            if (!usuarioRepository.findByCorreo("juan@gmail.com").isPresent()) {
+            if (usuarioRepository.findByCorreo("juan@gmail.com") == null) {
                 Usuario juan = new Usuario();
                 juan.setNombre("Admin Juan");
                 juan.setCorreo("juan@gmail.com");
