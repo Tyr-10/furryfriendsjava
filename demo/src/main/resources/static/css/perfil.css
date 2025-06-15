@@ -1,0 +1,150 @@
+/* 🔹 Reset y Fuente */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #d0e8ff, #8ecae6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* 📌 Contenedor principal centrado */
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* 🔹 Tarjeta del Perfil */
+.profile-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* Espaciado uniforme entre los elementos */
+}
+
+/* 🔹 Encabezado */
+.profile-header {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ✅ Avatar con inicial */
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #0077b6; /* Azul */
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    border: 3px solid #023e8a;
+    animation: pulse 1.5s infinite alternate;
+}
+
+/* ✅ Animación Avatar */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.05); }
+}
+
+/* 📌 Nombre del Usuario */
+.profile-name {
+    font-size: 22px;
+    color: #023e8a;
+    margin: 10px 0 5px;
+}
+
+.profile-email {
+    font-size: 14px;
+    color: #555;
+}
+
+/* 📌 Campos de Entrada */
+.input-group {
+    text-align: left;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.input-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-left: -10%; /* Mover la etiqueta hacia la izquierda */
+
+}
+
+/* 🔹 Hacer los campos más largos */
+.input-group input {
+    width: 120%;
+    padding: 10px; /* Aumentado */
+    border: 1px solid #ccc;
+    border-radius: 8px; /* Bordes más redondeados */
+    font-size: 16px; /* Texto más grande */
+    transition: 0.3s;
+    margin-left: -10%; /* Desplazar a la derecha */
+
+}
+
+.input-group input:focus {
+    border-color: #0077b6;
+    outline: none;
+    box-shadow: 0px 0px 8px rgba(0, 119, 182, 0.5);
+}
+
+/* 🔹 Botón Principal */
+.btn {
+    width: 80%;
+    background: #48cae4; /* Azul claro */
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+    background: #0096c7; /* Azul oscuro al hacer hover */
+    transform: scale(1.05);
+}
+
+/* 🔹 Botón Secundario */
+.btn-secondary {
+    width: 80%;
+    background: #90e0ef; /* Azul más claro */
+    color: #023e8a;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 8px;
+    transition: 0.3s;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary:hover {
+    background: #48cae4; /* Azul claro al hacer hover */
+    transform: scale(1.05);
+}
