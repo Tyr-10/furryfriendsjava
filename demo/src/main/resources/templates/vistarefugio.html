@@ -68,6 +68,11 @@
             </button>
         </div>
 
+        <!-- Mensaje de éxito -->
+<div th:if="${param.success}" class="alert alert-success text-center">
+    <span th:text="${param.success}"></span>
+</div>
+
         <div class="action-buttons">
             <a th:href="@{/registroperros}" class="btn btn-secondary">
                 <i class="fas fa-plus-circle"></i> Registra un cachorrito
