@@ -77,7 +77,7 @@
 
         <div class="mb-3">
             <label class="form-label">🖼 Imagen</label>
-           <img th:src="@{'/imagenes/' + ${perro.imagenperro}}" alt="Foto del perro" class="img-thumbnail" width="200">
+            <input type="file" name="imagenArchivo" class="form-control" accept="image/*" required>
         </div>
 
         <div class="mb-3">
