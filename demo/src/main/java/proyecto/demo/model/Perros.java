@@ -1,6 +1,5 @@
 package proyecto.demo.model;
 
-
 import jakarta.persistence.*;
 
 @Entity
@@ -16,11 +15,20 @@ public class Perros {
     private String raza;
     private String tamanio;
     private String descripcion;
+
+    @Column(name = "usuario_id")
     private Long userId;
+
     private boolean disponible;
-    private String imagenperro;
+
+    @Lob
+    private byte[] imagenperro; // Cambiado de String a byte[]
+
     private String sexo;
+
+    @Column(name = "historial_clinico")
     private String historialClinico;
+
     private String color;
 
     // Getters y Setters
@@ -33,8 +41,6 @@ public class Perros {
         this.id = id;
     }
 
-    // ... (repite para cada campo)
-
     public String getNombre() {
         return nombre;
     }
@@ -43,5 +49,83 @@ public class Perros {
         this.nombre = nombre;
     }
 
-    // etc.
+    public Integer getEdad() {
+        return edad;
+    }
+
+    public void setEdad(Integer edad) {
+        this.edad = edad;
+    }
+
+    public String getRaza() {
+        return raza;
+    }
+
+    public void setRaza(String raza) {
+        this.raza = raza;
+    }
+
+    public String getTamanio() {
+        return tamanio;
+    }
+
+    public void setTamanio(String tamanio) {
+        this.tamanio = tamanio;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public boolean isDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
+    }
+
+    public byte[] getImagenperro() {
+        return imagenperro;
+    }
+
+    public void setImagenperro(byte[] imagenperro) {
+        this.imagenperro = imagenperro;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public String getHistorialClinico() {
+        return historialClinico;
+    }
+
+    public void setHistorialClinico(String historialClinico) {
+        this.historialClinico = historialClinico;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 }
