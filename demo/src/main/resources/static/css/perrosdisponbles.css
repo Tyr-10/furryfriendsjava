@@ -1,170 +1,268 @@
-/* 🎨 Fuente moderna */
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap');
+/* Variables de diseño */
+:root {
+    --color-primario: #4a6fa5;
+    --color-secundario: #ff7e5f;
+    --color-fondo: #f8f9fa;
+    --color-texto: #333;
+    --color-borde: #e1e5ee;
+    --sombra-suave: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --transicion-rapida: all 0.25s ease;
+}
+
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
-    background: linear-gradient(180deg, #0d47a1, #1976d2);
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    line-height: 1.6;
 }
 
-/* 🏠 Botón de regreso a Inicio */
-.btn-back {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    background: #ffca28;
-    color: #1a237e;
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-weight: bold;
-    text-decoration: none;
-    transition: 0.3s;
-}
-
-.btn-back i {
-    margin-right: 5px;
-}
-
-.btn-back:hover {
-    background: #1a237e;
-    color: white;
-    transform: scale(1.1);
-}
-
-/* Asegurar que el container no se vea raro con el botón */
-.container {
-    position: relative;
-    padding-top: 50px;
-}
-
-/* 🏡 Contenedor principal */
-.container {
-    background: white;
-    border-radius: 15px;
-    padding: 25px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+.contenedor-principal {
     max-width: 1200px;
-    margin: auto;
-    animation: fadeIn 1s ease-in-out;
-}
-
-/* 🔍 Filtros de búsqueda */
-.filter-container {
-    background: #1a237e;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    margin-bottom: 25px;
-    animation: slideIn 0.7s ease-in-out;
-}
-
-.filter-container h2 {
-    color: white;
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 15px;
-}
-
-/* 📦 Campos de entrada */
-.filter-container input {
-    border: 2px solid #ffca28;
-    border-radius: 8px;
-    padding: 8px;
-    width: 100%;
-}
-
-/* 🎯 Botón de búsqueda */
-.btn-primary {
-    background: #ffca28;
-    color: #1a237e;
-    border: none;
-    font-weight: bold;
-    padding: 12px;
-    transition: 0.3s;
-    border-radius: 10px;
-}
-
-.btn-primary:hover {
-    background: #1a237e;
-    color: white;
-    transform: scale(1.05);
-}
-
-/* 🐶 Tarjetas de los perros */
-.card {
-    border-radius: 15px;
-    overflow: hidden;
-    transition: 0.3s;
-    background: white;
-    border: 3px solid #1a237e;
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
-    animation: fadeIn 1s ease-in-out;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);
-}
-
-.card-title {
-    color: #1a237e;
-    font-weight: bold;
-}
-
-/* 📸 Imagen del perro */
-.card-img-top {
-    width: 100%;
-    height: 100px; /* 👈 Aquí puedes ajustar el tamaño si lo quieres más chico o más grande */
-    object-fit: cover;
-    border-bottom: 3px solid #1a237e;
-    display: block;
     margin: 0 auto;
-    border-radius: 8px 8px 0 0;
+    padding: 2rem;
 }
 
-/* 📑 Texto de la tarjeta */
-.card-text {
-    font-size: 14px;
-    color: #424242;
+/* Cabecera */
+.cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
 }
 
-/* ✅ Botón de adopción */
-.btn-success {
-    background: #1a237e;
-    border: none;
-    font-weight: bold;
-    transition: 0.3s;
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--color-primario);
+}
+
+.cabecera h1 {
+    font-size: 1.8rem;
+    color: var(--color-primario);
+    font-weight: 600;
+}
+
+.boton-regresar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--color-primario);
     color: white;
-    border-radius: 10px;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 500;
+    transition: var(--transicion-rapida);
 }
 
-.btn-success:hover {
-    background: #ffca28;
-    color: #1a237e;
-    transform: scale(1.05);
+.boton-regresar:hover {
+    background-color: #3a5a8f;
+    transform: translateY(-2px);
 }
 
-/* 🐾 Huellas de fondo */
-body::after {
-    content: "";
-    background: url('/images/huellas.png') repeat;
-    position: fixed;
-    top: 0;
-    left: 0;
+.icono-regresar {
+    font-size: 1.2rem;
+}
+
+/* Formulario de búsqueda */
+.seccion-busqueda {
+    margin-bottom: 3rem;
+}
+
+.seccion-busqueda h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-primario);
+    text-align: center;
+}
+
+.formulario-busqueda {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--sombra-suave);
+}
+
+.grupo-campos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.campo-formulario {
+    display: flex;
+    flex-direction: column;
+}
+
+.campo-formulario label {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #555;
+    font-weight: 500;
+}
+
+.campo-formulario input {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: var(--transicion-rapida);
+}
+
+.campo-formulario input:focus {
+    outline: none;
+    border-color: var(--color-primario);
+    box-shadow: 0 0 0 2px rgba(74, 111, 165, 0.2);
+}
+
+.boton-primario {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 2rem;
+    background-color: var(--color-secundario);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transicion-rapida);
+    margin: 0 auto;
+    display: block;
+}
+
+.boton-primario:hover {
+    background-color: #e66b4a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 126, 95, 0.3);
+}
+
+/* Resultados */
+.contador-resultados {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.grid-perros {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.tarjeta-perro {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--sombra-suave);
+    transition: var(--transicion-rapida);
+    display: flex;
+    flex-direction: column;
+}
+
+.tarjeta-perro:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.imagen-perro-container {
+    height: 250px;
+    overflow: hidden;
+}
+
+.imagen-perro {
     width: 100%;
     height: 100%;
-    opacity: 0.03;
-    z-index: -1;
+    object-fit: cover;
+    transition: var(--transicion-rapida);
 }
 
-/* 🔥 Animaciones */
-@keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
+.tarjeta-perro:hover .imagen-perro {
+    transform: scale(1.05);
 }
 
-@keyframes slideIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+.info-perro {
+    padding: 1.5rem;
+    flex-grow: 1;
 }
 
-  
+.nombre-perro {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--color-primario);
+}
+
+.detalles-perro {
+    list-style: none;
+}
+
+.detalles-perro li {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.detalles-perro strong {
+    color: #555;
+    font-weight: 500;
+}
+
+.acciones-perro {
+    padding: 1rem 1.5rem;
+    background-color: #f8f9fa;
+    border-top: 1px solid var(--color-borde);
+}
+
+.boton-adoptar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--color-primario);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transicion-rapida);
+    justify-content: center;
+}
+
+.boton-adoptar:hover {
+    background-color: #3a5a8f;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .cabecera {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .grupo-campos {
+        grid-template-columns: 1fr;
+    }
+    
+    .grid-perros {
+        grid-template-columns: 1fr;
+    }
+}
