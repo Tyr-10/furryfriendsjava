@@ -20,10 +20,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
         System.out.println("Intentando autenticar: " + correo);
-        
+
         Usuario usuario = usuarioRepository.findByCorreo(correo);
         if (usuario == null) {
-    throw new UsernameNotFoundException("Usuario no encontrado");
+            throw new UsernameNotFoundException("Usuario no encontrado");
         }
 
         System.out.println("Usuario encontrado. Email: " + usuario.getCorreo());
@@ -31,11 +31,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // Construimos el rol con el prefijo "ROLE_"
         String nombreRol = usuario.getRol().getNombre();
         SimpleGrantedAuthority autoridad = new SimpleGrantedAuthority("ROLE_" + nombreRol);
-        
+
         return new org.springframework.security.core.userdetails.User(
-            usuario.getCorreo(),
-            usuario.getPassword(),
-            Collections.singletonList(autoridad)
-        );
-    }
+                usuario.getCorreo(),
+                usuario.getPassword(),
+                Collections.singletonList(autoridad));
+    }
 }
