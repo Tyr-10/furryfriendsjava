@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Perros</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/registroperros.css}">
+    <style>
+        body {
+            background-color: #e3f2fd;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+        }
+        
+        .logo {
+            width: 100px;
+            height: auto;
+        }
+        
+        h1,
+        h2 {
+            color: #004080;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div style="text-align: center;">
+            <img th:src="@{/images/logo.jpg}" alt="logo" class="logo">
+        </div>
+
+        <a href="/" onclick="event.preventDefault(); window.history.length > 1 ? history.back() : window.location='/'" class="btn btn-primary mb-3">⬅ Volver</a>
+
+        <h2 class="mb-4 text-center">🐶 Furry Friends 🐶</h2>
+        <h1 class="text-center">🐶 Registro de Perros 🐶</h1>
+
+        <div th:if="${success}" class="alert alert-success text-center">
+            <span th:text="${success}"></span>
+        </div>
+
+        <div th:if="${error}" class="alert alert-danger text-center">
+            <span th:text="${error}"></span>
+        </div>
+
+        <form th:action="@{/registroperros}" method="post" enctype="multipart/form-data" class="p-4 shadow-lg rounded" style="background: #ffffff;">
+            <div class="mb-3">
+                <label class="form-label">📛 Nombre</label>
+                <input type="text" name="nombre" class="form-control" th:value="${perro.nombre}" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">🎂 Edad</label>
+                <input type="number" name="edad" class="form-control" th:value="${perro.edad}" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">📏 Tamaño</label>
+                <select name="tamanio" class="form-control" required>
+                <option value="Pequeño" th:selected="${perro.tamanio == 'Pequeño'}">Pequeño</option>
+                <option value="Mediano" th:selected="${perro.tamanio == 'Mediano'}">Mediano</option>
+                <option value="Grande" th:selected="${perro.tamanio == 'Grande'}">Grande</option>
+            </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">🎨 Color</label>
+                <input type="text" name="color" class="form-control" th:value="${perro.color}" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">🩺 Historial Clínico</label>
+                <textarea name="historialClinico" class="form-control" th:text="${perro.historialClinico}" required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">⚥ Sexo</label>
+                <select name="sexo" class="form-control" required>
+                <option value="Macho" th:selected="${perro.sexo == 'Macho'}">Macho</option>
+                <option value="Hembra" th:selected="${perro.sexo == 'Hembra'}">Hembra</option>
+            </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">🏷 Raza</label>
+                <input type="text" name="raza" class="form-control" th:value="${perro.raza}" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">🖼 Imagen</label>
+                <input type="file" name="imagenArchivo" class="form-control" accept="image/*" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">📖 Descripción</label>
+                <textarea name="descripcion" class="form-control" th:text="${perro.descripcion}" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">🐾 Registrar Perro 🐾</button>
+        </form>
+    </div>
+
+</body>
+
+</html>
