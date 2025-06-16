@@ -23,6 +23,7 @@ public class PerrosDisponiblesController {
             @RequestParam(required = false) String descripcion,
             Model model) {
 
+                
         List<Perros> perros = perrosRepository.findByFiltros(edad, color, tamanio, descripcion);
         model.addAttribute("perros", perros);
         return "perrosdisponibles";
