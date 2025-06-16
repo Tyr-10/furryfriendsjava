@@ -1,268 +1,224 @@
-/* Variables de diseño */
-:root {
-    --color-primario: #4a6fa5;
-    --color-secundario: #ff7e5f;
-    --color-fondo: #f8f9fa;
-    --color-texto: #333;
-    --color-borde: #e1e5ee;
-    --sombra-suave: 0 4px 12px rgba(0, 0, 0, 0.08);
-    --transicion-rapida: all 0.25s ease;
-}
-
-/* Reset y estilos base */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap');
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--color-fondo);
-    color: var(--color-texto);
-    line-height: 1.6;
+    background: linear-gradient(180deg, #e3f2fd, #bbdefb);
+    font-family: 'Raleway', sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-.contenedor-principal {
+/* Botón volver */
+.btn-warning {
+    font-weight: bold;
+    border-radius: 10px;
+    transition: 0.3s ease;
+}
+
+.btn-warning:hover {
+    background: #1a237e;
+    color: white;
+}
+
+/* Container general */
+.container {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
+    margin: 30px auto;
+    animation: fadeIn 1s ease-in-out;
 }
 
-/* Cabecera */
-.cabecera {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 3rem;
-}
-
-.logo-container {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.logo {
-    width: 70px;
-    height: 70px;
+/* Logo */
+.logo-img {
+    width: 80px;
     border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid var(--color-primario);
+    margin-bottom: 10px;
+    border: 3px solid #1a237e;
 }
 
-.cabecera h1 {
-    font-size: 1.8rem;
-    color: var(--color-primario);
-    font-weight: 600;
+/* Título principal */
+h2 {
+    color: #1a237e;
+    font-weight: bold;
 }
 
-.boton-regresar {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background-color: var(--color-primario);
-    color: white;
-    text-decoration: none;
-    border-radius: 50px;
-    font-weight: 500;
-    transition: var(--transicion-rapida);
+/* 🔍 Filtro búsqueda */
+.search-form {
+    background: #1a237e;
+    padding: 25px 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    animation: slideIn 0.8s ease-in-out;
 }
 
-.boton-regresar:hover {
-    background-color: #3a5a8f;
-    transform: translateY(-2px);
-}
-
-.icono-regresar {
-    font-size: 1.2rem;
-}
-
-/* Formulario de búsqueda */
-.seccion-busqueda {
-    margin-bottom: 3rem;
-}
-
-.seccion-busqueda h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    color: var(--color-primario);
-    text-align: center;
-}
-
-.formulario-busqueda {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: var(--sombra-suave);
-}
-
-.grupo-campos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.campo-formulario {
-    display: flex;
-    flex-direction: column;
-}
-
-.campo-formulario label {
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    color: #555;
-    font-weight: 500;
-}
-
-.campo-formulario input {
-    padding: 0.75rem 1rem;
-    border: 1px solid var(--color-borde);
+.search-form input {
     border-radius: 8px;
-    font-size: 1rem;
-    transition: var(--transicion-rapida);
-}
-
-.campo-formulario input:focus {
-    outline: none;
-    border-color: var(--color-primario);
-    box-shadow: 0 0 0 2px rgba(74, 111, 165, 0.2);
-}
-
-.boton-primario {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 2rem;
-    background-color: var(--color-secundario);
-    color: white;
     border: none;
-    border-radius: 50px;
-    font-size: 1rem;
+    padding: 10px;
+    outline: none;
+}
+
+.search-form input::placeholder {
+    color: #9e9e9e;
     font-weight: 500;
-    cursor: pointer;
-    transition: var(--transicion-rapida);
-    margin: 0 auto;
-    display: block;
 }
 
-.boton-primario:hover {
-    background-color: #e66b4a;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 126, 95, 0.3);
-}
-
-/* Resultados */
-.contador-resultados {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-size: 1.1rem;
-    color: #555;
-}
-
-.grid-perros {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.tarjeta-perro {
-    background: white;
+.search-form .btn-warning {
+    padding: 10px 30px;
+    font-weight: bold;
     border-radius: 12px;
+    transition: 0.3s ease;
+}
+
+.search-form .btn-warning:hover {
+    background: #ffca28;
+    color: black;
+}
+
+/* Resultado total */
+.total-count {
+    font-weight: 600;
+    font-size: 16px;
+    color: #424242;
+}
+
+/* 🐶 Tarjeta perro - Estilos mejorados */
+.card {
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     overflow: hidden;
-    box-shadow: var(--sombra-suave);
-    transition: var(--transicion-rapida);
-    display: flex;
-    flex-direction: column;
+    height: 100%;
+    position: relative;
 }
 
-.tarjeta-perro:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
 
-.imagen-perro-container {
+/* Contenedor de imagen con efecto de zoom controlado */
+.card-img-container {
+    width: 100%;
     height: 250px;
     overflow: hidden;
+    position: relative;
+    border-bottom: 4px solid #1a237e;
 }
 
-.imagen-perro {
+.dog-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: var(--transicion-rapida);
+    transition: transform 0.5s ease, filter 0.3s ease;
 }
 
-.tarjeta-perro:hover .imagen-perro {
-    transform: scale(1.05);
+.card:hover .dog-image {
+    transform: scale(1.1);
+    filter: brightness(1.05);
 }
 
-.info-perro {
-    padding: 1.5rem;
-    flex-grow: 1;
-}
-
-.nombre-perro {
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
-    color: var(--color-primario);
-}
-
-.detalles-perro {
-    list-style: none;
-}
-
-.detalles-perro li {
-    margin-bottom: 0.5rem;
-    font-size: 0.95rem;
-}
-
-.detalles-perro strong {
-    color: #555;
-    font-weight: 500;
-}
-
-.acciones-perro {
-    padding: 1rem 1.5rem;
-    background-color: #f8f9fa;
-    border-top: 1px solid var(--color-borde);
-}
-
-.boton-adoptar {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    width: 100%;
-    padding: 0.75rem;
-    background-color: var(--color-primario);
+/* Efecto de overlay para la imagen */
+.card-img-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(26, 35, 126, 0.7), transparent);
     color: white;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover .card-img-overlay {
+    opacity: 1;
+}
+
+/* Nombre del perro en la imagen */
+.dog-name-overlay {
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+}
+
+/* Animación al cargar las tarjetas */
+@keyframes cardEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.col-md-4.mb-4 {
+    animation: cardEntrance 0.6s ease-out;
+    animation-fill-mode: both;
+}
+
+/* Retraso escalonado para la animación */
+.col-md-4.mb-4:nth-child(1) { animation-delay: 0.1s; }
+.col-md-4.mb-4:nth-child(2) { animation-delay: 0.2s; }
+.col-md-4.mb-4:nth-child(3) { animation-delay: 0.3s; }
+.col-md-4.mb-4:nth-child(4) { animation-delay: 0.4s; }
+.col-md-4.mb-4:nth-child(5) { animation-delay: 0.5s; }
+.col-md-4.mb-4:nth-child(6) { animation-delay: 0.6s; }
+
+/* Fondo huellas */
+body::after {
+    content: "";
+    background: url('/images/huellas.png') repeat;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.03;
+    z-index: -1;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Estilo para el botón de adopción */
+.adoption-btn {
+    background: #1a237e;
     border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--transicion-rapida);
-    justify-content: center;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: 0.3s ease;
+    padding: 8px 20px;
 }
 
-.boton-adoptar:hover {
-    background-color: #3a5a8f;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .cabecera {
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-    
-    .grupo-campos {
-        grid-template-columns: 1fr;
-    }
-    
-    .grid-perros {
-        grid-template-columns: 1fr;
-    }
+.adoption-btn:hover {
+    background: #ffca28;
+    color: black;
+    transform: scale(1.05);
 }
