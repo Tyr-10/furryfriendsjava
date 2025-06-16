@@ -1,53 +1,41 @@
-// src/main/java/proyecto/demo/config/SecurityConfig.java
+// src/main/java/proyecto/demo/service/UserDetailsServiceImpl.java
 
-package proyecto.demo.config;
+package proyecto.demo.service;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.beans.factory.annotation.Autowired;
-import proyecto.demo.service.UserDetailsServiceImpl;
+import org.springframework.security.core.userdetails.*;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Service;
+import proyecto.demo.model.Usuario;
+import proyecto.demo.repository.UsuarioRepository;
 
-@Configuration
-public class SecurityConfig {
+import java.util.Collections;
+
+@Service
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UserDetailsServiceImpl userDetailsServiceImpl;
+    private UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private CustomLoginSuccessHandler loginSuccessHandler;
+    @Override
+    public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
+        System.out.println("Intentando autenticar: " + correo);
+        
+        Usuario usuario = usuarioRepository.findByCorreo(correo);
+        if (usuario == null) {
+            throw new UsernameNotFoundException("Usuario no encontrado");
+        }
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/index", "/registro/**", "/css/**", "/js/", "/cuidados", "/estadisticas","/perrosdisponibles", "/images/**").permitAll()
-                .anyRequest().authenticated()
-            )
-            .formLogin(login -> login
-                .loginPage("/login")
-                .successHandler(loginSuccessHandler) // Aquí usamos el handler personalizado
-                .permitAll()
-            )
-            .logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/index") // 👈 Aquí lo importante
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .permitAll()
-            );
+        System.out.println("Usuario encontrado. Email: " + usuario.getCorreo());
 
-        http.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/"));
-        http.headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()));
-
-        return http.build();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        // Construimos el rol con el prefijo "ROLE_"
+        String nombreRol = usuario.getRol().getNombre();
+        SimpleGrantedAuthority autoridad = new SimpleGrantedAuthority("ROLE_" + nombreRol);
+        
+        return new org.springframework.security.core.userdetails.User(
+            usuario.getCorreo(),
+            usuario.getPassword(),
+            Collections.singletonList(autoridad)
+        );
     }
 }
