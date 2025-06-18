@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Viabilidad de Estudio</title>
+    <link rel="stylesheet" th:href="@{/css/viabilidad.css}">
+</head>
+
+<body style="background-color: #d8eaff;">
+    <div class="container">
+        <a href="/" class="btn btn-primary">← Volver</a>
+
+        <h2>Subir Viabilidad de Estudio</h2>
+        <form method="post" enctype="multipart/form-data" th:action="@{/viabilidad/subir}">
+            <input type="file" name="archivo" accept="application/pdf" required>
+            <button type="submit">Subir</button>
+        </form>
+
+        <h2>Buscar Viabilidad de Estudio</h2>
+        <form method="get" th:action="@{/viabilidad/buscar}">
+            <input type="text" name="nombre" placeholder="Buscar...">
+            <button type="submit">Buscar</button>
+            <a href="/viabilidad"><button type="button">Limpiar</button></a>
+        </form>
+
+        <div th:if="${viabilidadEncontrada}">
+            <p>Documento: <span th:text="${viabilidadEncontrada.nombre}"></span></p>
+            <a th:href="@{/viabilidad/descargar/{id}(id=${viabilidadEncontrada.id})}">Descargar PDF</a>
+        </div>
+
+        <p th:if="${mensaje}" th:text="${mensaje}"></p>
+    </div>
+</body>
+
+</html>
