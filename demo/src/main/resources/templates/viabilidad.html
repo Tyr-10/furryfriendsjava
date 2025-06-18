@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Viabilidad de Estudio</title>
+    <link rel="stylesheet" th:href="@{/css/viabilidad.css}">
+</head>
+
+<body style="background-color: #d8eaff;">
+    <div class="container">
+        <a href="/" class="btn btn-primary">← Volver</a>
+
+        <h2>Subir Viabilidad de Estudio</h2>
+        <form method="post" enctype="multipart/form-data" th:action="@{/viabilidad/subir}">
+            <input type="file" name="archivo" accept="application/pdf" required>
+            <button type="submit">Subir</button>
+        </form>
+
+        <!-- Mensajes -->
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+        <h2>Buscar Viabilidad de Estudio</h2>
+        <form method="get" th:action="@{/viabilidad}">
+            <input type="text" name="archivo" placeholder="Buscar...">
+            <button type="submit">Buscar</button>
+            <a th:href="@{/viabilidad}"><button type="button">Limpiar</button></a>
+        </form>
+
+        <div th:if="${viabilidades}">
+            <ul>
+                <li th:each="v : ${viabilidades}">
+                    <span th:text="${v.nombreOriginal}"></span> |
+                    <a th:href="@{${v.archivo}}" target="_blank">Ver</a>
+                    <form th:action="@{/viabilidad/desactivar/{id}(id=${v.id})}" method="post" style="display:inline;">
+                        <button type="submit">Desactivar</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>
