@@ -1,9 +1,13 @@
 package proyecto.demo.controller;
 
 import proyecto.demo.model.Viabilidad;
+import proyecto.demo.model.Usuario;
 import proyecto.demo.repository.ViabilidadRepository;
+import proyecto.demo.repository.UsuarioRepository;
+
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +25,7 @@ import java.util.List;
 public class ViabilidadController {
 
     private final ViabilidadRepository viabilidadRepository;
+    private final UsuarioRepository usuarioRepository;
 
     @Value("${upload.path}")
     private String uploadDir;
@@ -55,15 +60,18 @@ public class ViabilidadController {
         }
 
         String nombreOriginal = Path.of(archivo.getOriginalFilename()).getFileName().toString();
-        Path destino = Paths.get(uploadDir).resolve(nombreOriginal);
+        Path destino = Paths.get("src/main/resources/static/uploads").resolve(nombreOriginal);
         Files.createDirectories(destino.getParent());
         Files.write(destino, archivo.getBytes());
+
+        // Obtener usuario autenticado
+        Usuario usuario = obtenerUsuarioDesdePrincipal(principal);
 
         Viabilidad viabilidad = new Viabilidad();
         viabilidad.setArchivo("/uploads/" + nombreOriginal);
         viabilidad.setNombreOriginal(nombreOriginal);
-        viabilidad.setUsuarioId(obtenerUsuarioIdDesdePrincipal(principal));
-        viabilidad.setRolId(obtenerRolIdDesdePrincipal(principal));
+        viabilidad.setUsuarioId(usuario.getId());
+        viabilidad.setRolId(usuario.getRol().getId());
         viabilidad.setActivo(true);
 
         viabilidadRepository.save(viabilidad);
@@ -84,11 +92,16 @@ public class ViabilidadController {
         return "redirect:/viabilidad?success=Documento desactivado con éxito.";
     }
 
-    private Long obtenerUsuarioIdDesdePrincipal(Principal principal) {
-        return 1L; // Ajusta esto con tu lógica de usuario
-    }
-
-    private Long obtenerRolIdDesdePrincipal(Principal principal) {
-        return 1L; // Ajusta esto con tu lógica de roles
+    // Obtener usuario autenticado desde principal
+    private Usuario obtenerUsuarioDesdePrincipal(Principal principal) {
+        if (principal != null) {
+            String correo = principal.getName();
+            Usuario usuario = usuarioRepository.findByCorreo(correo);
+            if (usuario != null) {
+                return usuario;
+            }
+        }
+        // Si no hay sesión activa, lanza error (mejor que guardar como usuario 1)
+        throw new IllegalStateException("No se pudo obtener el usuario autenticado.");
     }
 }
