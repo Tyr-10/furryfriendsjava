@@ -83,7 +83,7 @@ public class SeguimientoController {
         seguimientoRepository.save(seguimiento);
 
         model.addAttribute("success", "Archivo subido con éxito.");
-        return "redirect:/seguimiento";
+        return "redirect:/seguimiento?success=Archivo subido con éxito.";
     }
 
     // Desactivar archivo

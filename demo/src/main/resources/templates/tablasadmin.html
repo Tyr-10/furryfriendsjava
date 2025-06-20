@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Administración</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #3498db;
+            color: white;
+            padding: 15px 30px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .btn-volver {
+            background-color: white;
+            color: #3498db;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 120px;
+        }
+
+        .btn-custom {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 15px 30px;
+            margin: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .btn-custom:hover {
+            background-color: #217dbb;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #000000;
+            color: white;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="d-flex align-items-center">
+            <img src="/images/logo.jpg" alt="Logo" class="logo">
+            <h1 style="margin: 0; font-size: 1.5rem;">Furry Friends</h1>
+        </div>
+        <a href="#" onclick="history.back();" class="btn-volver">⬅ Volver</a>
+    </header>
+
+    <div class="container">
+        <h1>🐾 Bienvenido al <span style="color: #3498db;">Sistema de Administración</span> 🏡</h1>
+        <p class="lead">Seleccione una de las siguientes opciones para comenzar:</p>
+
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+            <a th:href="@{/usuarioscrud}" class="btn-custom">🏠 Usuarios</a>
+            <a th:href="@{/perroscrud}" class="btn-custom">🐶 Perros</a>
+            <a th:href="@{/seguimientocrud}" class="btn-custom">📋 Seguimiento de Visitas</a>
+            <a th:href="@{/viabilidadcrud}" class="btn-custom">📊 Viabilidad de Estudio</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Furry Friends | Todos los derechos reservados</p>
+    </footer>
+</body>
+</html>

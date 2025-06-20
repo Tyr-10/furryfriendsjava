@@ -83,7 +83,7 @@ public class ViabilidadController {
         viabilidadRepository.save(viabilidad);
 
         model.addAttribute("success", "Archivo subido con éxito.");
-        return "redirect:/viabilidad";
+        return "redirect:/viabilidad?success=Archivo subido con éxito.";
     }
 
     // Desactivar archivo
