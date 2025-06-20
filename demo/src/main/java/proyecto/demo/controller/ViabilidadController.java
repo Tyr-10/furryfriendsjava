@@ -30,17 +30,22 @@ public class ViabilidadController {
     @Value("${upload.path}")
     private String uploadDir;
 
-    // Mostrar archivos y buscar
+    // Mostrar archivos SOLO si hay búsqueda
     @GetMapping
-    public String mostrar(@RequestParam(value = "archivo", required = false) String archivo, Model model,
+    public String mostrar(@RequestParam(value = "archivo", required = false) String archivo, 
+                          Model model,
                           @RequestParam(value = "success", required = false) String success,
                           @RequestParam(value = "error", required = false) String error) {
 
-        List<Viabilidad> viabilidades = (archivo != null && !archivo.isEmpty())
-                ? viabilidadRepository.findByActivoTrueAndNombreOriginalContainingIgnoreCaseOrderByIdDesc(archivo)
-                : viabilidadRepository.findByActivoTrueOrderByIdDesc();
+        List<Viabilidad> viabilidades = null;
+
+        if (archivo != null && !archivo.isEmpty()) {
+            viabilidades = viabilidadRepository
+                    .findByActivoTrueAndNombreOriginalContainingIgnoreCaseOrderByIdDesc(archivo);
+        }
 
         model.addAttribute("viabilidades", viabilidades);
+
         if (success != null) model.addAttribute("success", success);
         if (error != null) model.addAttribute("error", error);
 
@@ -55,10 +60,10 @@ public class ViabilidadController {
 
         if (archivo == null || archivo.isEmpty()) {
             model.addAttribute("error", "Debes subir un archivo.");
-            model.addAttribute("viabilidades", viabilidadRepository.findByActivoTrueOrderByIdDesc());
             return "viabilidad";
         }
 
+        // Guardar archivo físico
         String nombreOriginal = Path.of(archivo.getOriginalFilename()).getFileName().toString();
         Path destino = Paths.get("src/main/resources/static/uploads").resolve(nombreOriginal);
         Files.createDirectories(destino.getParent());
@@ -67,6 +72,7 @@ public class ViabilidadController {
         // Obtener usuario autenticado
         Usuario usuario = obtenerUsuarioDesdePrincipal(principal);
 
+        // Guardar en base de datos
         Viabilidad viabilidad = new Viabilidad();
         viabilidad.setArchivo("/uploads/" + nombreOriginal);
         viabilidad.setNombreOriginal(nombreOriginal);
@@ -77,9 +83,7 @@ public class ViabilidadController {
         viabilidadRepository.save(viabilidad);
 
         model.addAttribute("success", "Archivo subido con éxito.");
-        model.addAttribute("viabilidades", viabilidadRepository.findByActivoTrueOrderByIdDesc());
-
-        return "viabilidad";
+        return "redirect:/viabilidad";
     }
 
     // Desactivar archivo
@@ -92,7 +96,7 @@ public class ViabilidadController {
         return "redirect:/viabilidad?success=Documento desactivado con éxito.";
     }
 
-    // Obtener usuario autenticado desde principal
+    // Obtener usuario autenticado desde Spring Security
     private Usuario obtenerUsuarioDesdePrincipal(Principal principal) {
         if (principal != null) {
             String correo = principal.getName();
@@ -101,7 +105,6 @@ public class ViabilidadController {
                 return usuario;
             }
         }
-        // Si no hay sesión activa, lanza error (mejor que guardar como usuario 1)
         throw new IllegalStateException("No se pudo obtener el usuario autenticado.");
     }
 }

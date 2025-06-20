@@ -1,0 +1,31 @@
+<!-- templates/seguimiento.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Seguimiento de Visitas</title>
+    <link rel="stylesheet" th:href="@{/css/seguimiento.css}">
+</head>
+<body>
+<div class="container">
+    <a href="#" onclick="history.back();" class="btn">← Volver</a>
+    <h2>Seguimiento de Visitas a Viabilidad de Estudio</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Usuario</th>
+            <th>Documento</th>
+            <th>Fecha de Visita</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="s : ${seguimientos}">
+            <td th:text="${s.nombreUsuario}"></td>
+            <td th:text="${s.nombreDocumento}"></td>
+            <td th:text="${#dates.format(s.fechaVisita, 'dd-MM-yyyy HH:mm')}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

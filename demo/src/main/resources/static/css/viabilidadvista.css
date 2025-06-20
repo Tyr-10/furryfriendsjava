@@ -1,124 +1,124 @@
+/* Fondo general con textura */
 body {
-    background: url('/img/patitas-bg.jpg') repeat;
+    
+    background-color: #d8eaff;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #ffffff;
     margin: 0;
     padding: 0;
 }
 
-.header {
-    background-color: #00a2ff;
-    text-align: center;
-    padding: 20px;
-    color: white;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-}
-
-.header .logo {
-    width: 80px;
-    vertical-align: middle;
-    margin-bottom: 10px;
-}
-
+/* Contenedor central */
 .container {
-    background-color: rgba(0, 0, 0, 0.8);
+    max-width: 800px;
+    margin: 40px auto;
+    background: white;
     padding: 30px;
-    border-radius: 15px;
-    max-width: 700px;
-    margin: 30px auto;
-    box-shadow: 0 0 20px #00a2ff;
+    border-radius: 20px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
 }
 
+/* Logo */
+.logo {
+    max-width: 140px;
+    display: block;
+    margin: 0 auto 15px auto;
+}
+
+/* Títulos */
 h2 {
-    border-bottom: 2px solid #00a2ff;
-    padding-bottom: 8px;
-    color: #00a2ff;
-    margin-top: 30px;
+    text-align: center;
+    color: #4d89c1;
+    margin-bottom: 20px;
 }
 
+/* Formularios */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+/* Inputs y botones */
 input[type="file"],
 input[type="text"] {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    outline: none;
+    transition: border 0.3s;
+}
+
+input[type="text"]:focus {
+    border-color: #4d89c1;
 }
 
 button {
-    background-color: #ff2d75;
+    padding: 10px;
+    background-color: #4d89c1;
     border: none;
-    padding: 10px 16px;
-    border-radius: 10px;
     color: white;
     font-weight: bold;
+    border-radius: 12px;
     cursor: pointer;
-    margin: 5px;
-    transition: 0.3s;
+    transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #ff4f90;
+    background-color: #3a6fa0;
 }
 
-.limpiar {
-    background-color: #888;
+/* Enlaces */
+a {
+    text-decoration: none;
 }
 
 .alert {
-    padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
 }
 
-.alert.success {
-    background-color: #004d40;
-    color: #00e676;
+.alert-success {
+    background-color: #d1f0d1;
+    color: #2d742d;
 }
 
-.alert.error {
-    background-color: #b71c1c;
-    color: #ff5252;
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
 }
 
+/* Lista de resultados */
 ul {
-    list-style: none;
+    list-style-type: none;
     padding: 0;
 }
 
 li {
-    background-color: #1a1a1a;
-    padding: 15px;
+    background-color: #f0f8ff;
     margin-bottom: 10px;
+    padding: 10px;
     border-radius: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
-a {
-    color: #00a2ff;
-    text-decoration: none;
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #000000;
+    color: white;
+    font-size: 0.9em;
+    margin-top: 50px;
 }
 
-a:hover {
-    text-decoration: underline;
-}
-
-.btn-volver {
-    background-color: #00a2ff;
+/* Botón volver */
+.btn.btn-primary {
+    background-color: #4d89c1;
+    color: white;
     padding: 8px 16px;
     border-radius: 8px;
-    text-decoration: none;
-    color: white;
+    font-weight: bold;
     display: inline-block;
     margin-bottom: 20px;
-}
-
-footer {
-    background-color: #0a0a0a;
-    text-align: center;
-    padding: 20px;
-    color: #ccc;
-    font-size: 14px;
 }

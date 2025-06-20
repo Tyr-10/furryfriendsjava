@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
-
 <head>
     <meta charset="UTF-8">
     <title>Viabilidad de Estudio</title>
@@ -8,47 +7,55 @@
 </head>
 
 <body>
-    <div class="header">
-        <img src="/img/perro-header.png" alt="logo" class="logo">
-        <h1>🐾 Subir y Buscar Viabilidad de Estudios 🐾</h1>
-    </div>
-
     <div class="container">
-        <a href="/" class="btn-volver">← Volver</a>
+        <a href="#" onclick="history.back();" class="btn btn-primary" style="margin-top: 20px;">←Volver</a>
 
-        <h2>📤 Subir Viabilidad</h2>
-        <form method="post" enctype="multipart/form-data" th:action="@{/viabilidad/subir}">
-            <input type="file" name="archivo" accept="application/pdf" required>
+        <div class="header">
+            <img src="/images/logo.jpg" alt="logo" class="logo">
+            <h2>Subir Viabilidad de Estudios</h2>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" th:action="@{/viabilidad/subir}" class="upload-form">
+            <label for="archivo">Seleccionar Archivo</label>
+            <input type="file" name="archivo" id="archivo" accept="application/pdf" required>
             <button type="submit">Subir Archivo</button>
         </form>
 
-        <div th:if="${success}" class="alert success" th:text="${success}"></div>
-        <div th:if="${error}" class="alert error" th:text="${error}"></div>
+        <!-- Mensajes -->
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
-        <h2>🔍 Buscar Viabilidad</h2>
-        <form method="get" th:action="@{/viabilidad}">
-            <input type="text" name="archivo" placeholder="Nombre del archivo">
-            <button type="submit">Buscar</button>
-            <a th:href="@{/viabilidad}">
-                <button type="button" class="limpiar">Limpiar</button>
-            </a>
-        </form>
+        <div class="search-section">
+            <h2>Buscar Viabilidades</h2>
+            <form method="get" th:action="@{/viabilidad}">
+                <label for="buscar">Nombre del archivo</label>
+                <input type="text" name="archivo" id="buscar" placeholder="Buscar...">
+                <button type="submit">🔍 Buscar</button>
+                <a th:href="@{/viabilidad}">
+                    <button type="button">❌ Limpiar</button>
+                </a>
+            </form>
+        </div>
 
-        <!-- Mostrar solo si hay búsqueda -->
-        <div th:if="${#request.getParameter('archivo') != null and #request.getParameter('archivo') != ''}">
-            <ul th:if="${viabilidades}">
+        <!-- Mostrar resultados solo si hay búsqueda -->
+        <div th:if="${viabilidades != null and !viabilidades.isEmpty()}">
+            <ul>
                 <li th:each="v : ${viabilidades}">
                     <span th:text="${v.nombreOriginal}"></span> |
-                    <a th:href="@{${v.archivo}}" target="_blank">Ver</a>
-                    <form th:action="@{/viabilidad/desactivar/{id}(id=${v.id})}" method="post" style="display:inline;">
-                        <button type="submit">Desactivar</button>
-                    </form>
+                    <a th:if="${v.archivo != null}" th:href="@{${v.archivo}}" target="_blank">Ver</a>
+                    
                 </li>
             </ul>
         </div>
+
+        <!-- Mensaje si no se encontraron resultados -->
+        <div th:if="${viabilidades != null and viabilidades.isEmpty()}">
+            <p style="color: gray; margin-top: 20px;">😢 No se encontraron resultados.</p>
+        </div>
     </div>
 
-    <footer>© 2025 Furry Friends | Todos los derechos reservados</footer>
+    <footer style="text-align: center; padding: 15px; background-color: #000000; color: white; margin-top: 50px;">
+        © 2025 Sistema de Adopciones | Todos los derechos reservados
+    </footer>
 </body>
-
 </html>
