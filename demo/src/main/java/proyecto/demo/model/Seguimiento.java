@@ -2,7 +2,6 @@ package proyecto.demo.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "seguimiento_visitas")
@@ -15,12 +14,20 @@ public class Seguimiento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombre_usuario")
-    private String nombreUsuario;
+    private String archivo;
 
-    @Column(name = "nombre_documento")
-    private String nombreDocumento;
+    @Column(name = "nombre_original")
+    private String nombreOriginal;
 
-    @Column(name = "fecha_visita")
-    private LocalDateTime fechaVisita;
+    @Column(name = "rol_id")
+    private Long rolId;
+
+    @Column(name = "usuario_id")
+    private Long usuarioId;
+
+    private Boolean activo;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", insertable = false, updatable = false)
+    private Usuario usuario;
 }
