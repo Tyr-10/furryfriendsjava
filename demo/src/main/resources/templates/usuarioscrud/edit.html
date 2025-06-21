@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Crear Usuario</title>
+    <title>Editar Usuario</title>
 </head>
 <body>
-<h1>Crear Usuario</h1>
-<form th:action="@{/usuarios/guardar}" th:object="${usuario}" method="post">
+<h1>Editar Usuario</h1>
+<form th:action="@{'/usuarios/actualizar/' + ${usuario.id}}" th:object="${usuario}" method="post">
     <label>Nombre: <input type="text" th:field="*{nombre}" /></label><br>
     <label>Correo: <input type="email" th:field="*{correo}" /></label><br>
     <label>Contraseña: <input type="password" th:field="*{password}" /></label><br>
@@ -18,8 +18,7 @@
     <label>Responsable: <input type="text" th:field="*{responsable}" /></label><br>
     <label>Servicios: <input type="text" th:field="*{servicios}" /></label><br>
     <label>Disponible: <input type="checkbox" th:field="*{disponible}" /></label><br>
-    <!-- Para rol, puedes hacer un select si tienes una lista -->
-    <button type="submit">Guardar</button>
+    <button type="submit">Actualizar</button>
 </form>
 <a th:href="@{/usuarios}">🔙 Volver</a>
 </body>

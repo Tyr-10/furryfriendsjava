@@ -21,13 +21,13 @@ public class UsuarioCrudController {
     public String index(Model model) {
         List<Usuario> usuarios = usuarioRepository.findAll();
         model.addAttribute("usuarios", usuarios);
-        return "usuarios/index";
+        return "usuarioscrud/index"; // ← carpeta + archivo
     }
 
     @GetMapping("/crear")
     public String crearFormulario(Model model) {
         model.addAttribute("usuario", new Usuario());
-        return "usuarios/create";
+        return "usuarioscrud/create";
     }
 
     @PostMapping("/guardar")
@@ -41,7 +41,7 @@ public class UsuarioCrudController {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         if (usuario.isPresent()) {
             model.addAttribute("usuario", usuario.get());
-            return "usuarios/edit";
+            return "usuarioscrud/edit";
         } else {
             return "redirect:/usuarios";
         }

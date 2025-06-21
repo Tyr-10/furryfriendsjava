@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Usuarios</title>
+    <title>Usuarios - Lista</title>
 </head>
 <body>
 <h1>Listado de Usuarios</h1>
@@ -14,7 +14,6 @@
             <th>Correo</th>
             <th>Teléfono</th>
             <th>Ciudad</th>
-            <th>Responsable</th>
             <th>Rol</th>
             <th>Acciones</th>
         </tr>
@@ -25,11 +24,10 @@
             <td th:text="${usuario.correo}">Correo</td>
             <td th:text="${usuario.telefono}">Teléfono</td>
             <td th:text="${usuario.ciudad}">Ciudad</td>
-            <td th:text="${usuario.responsable}">Responsable</td>
             <td th:text="${usuario.rol.nombre}">Rol</td>
             <td>
                 <a th:href="@{/usuarios/editar/{id}(id=${usuario.id})}">✏ Editar</a> |
-                <a th:href="@{/usuarios/eliminar/{id}(id=${usuario.id})}" onclick="return confirm('¿Eliminar usuario?')">🗑 Eliminar</a>
+                <a th:href="@{/usuarios/eliminar/{id}(id=${usuario.id})}" onclick="return confirm('¿Seguro que deseas eliminar este usuario?')">🗑 Eliminar</a>
             </td>
         </tr>
     </tbody>
