@@ -19,4 +19,5 @@ public interface PerrosRepository extends JpaRepository<Perros, Long> {
     List<Perros> findByFiltros(Integer edad, String color, String tamanio, String descripcion);
 
     // Ya puedes usar: save(), findAll(), findById(), deleteById() gracias a JpaRepository
+    
 }
