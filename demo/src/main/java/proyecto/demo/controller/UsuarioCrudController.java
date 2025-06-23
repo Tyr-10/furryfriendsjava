@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/usuarios")
+@RequestMapping("/usuarioscrud")
 public class UsuarioCrudController {
 
     @Autowired
@@ -21,10 +21,10 @@ public class UsuarioCrudController {
     public String index(Model model) {
         List<Usuario> usuarios = usuarioRepository.findAll();
         model.addAttribute("usuarios", usuarios);
-        return "usuarioscrud/index"; // ← carpeta + archivo
+        return "usuarioscrud/index";
     }
 
-    @GetMapping("/crear")
+    @GetMapping("/create")
     public String crearFormulario(Model model) {
         model.addAttribute("usuario", new Usuario());
         return "usuarioscrud/create";
@@ -33,17 +33,17 @@ public class UsuarioCrudController {
     @PostMapping("/guardar")
     public String guardar(@ModelAttribute Usuario usuario) {
         usuarioRepository.save(usuario);
-        return "redirect:/usuarios";
+        return "redirect:/usuarioscrud";
     }
 
-    @GetMapping("/editar/{id}")
+    @GetMapping("/edit/{id}")
     public String editarFormulario(@PathVariable Long id, Model model) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         if (usuario.isPresent()) {
             model.addAttribute("usuario", usuario.get());
             return "usuarioscrud/edit";
         } else {
-            return "redirect:/usuarios";
+            return "redirect:/usuarioscrud"; // <-- CORREGIDO
         }
     }
 
@@ -51,12 +51,12 @@ public class UsuarioCrudController {
     public String actualizar(@PathVariable Long id, @ModelAttribute Usuario usuario) {
         usuario.setId(id);
         usuarioRepository.save(usuario);
-        return "redirect:/usuarios";
+        return "redirect:/usuarioscrud"; // <-- CORREGIDO
     }
 
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable Long id) {
         usuarioRepository.deleteById(id);
-        return "redirect:/usuarios";
+        return "redirect:/usuarioscrud"; // <-- CORREGIDO
     }
 }

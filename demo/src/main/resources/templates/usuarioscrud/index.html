@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Usuarios - Lista</title>
+    <link rel="stylesheet" th:href="@{/css/crud.css}">
 </head>
 <body>
 <h1>Listado de Usuarios</h1>
@@ -26,7 +27,8 @@
             <td th:text="${usuario.ciudad}">Ciudad</td>
             <td th:text="${usuario.rol.nombre}">Rol</td>
             <td>
-                <a th:href="@{/usuarios/editar/{id}(id=${usuario.id})}">✏ Editar</a> |
+                
+                <a th:href="@{/usuarioscrud/edit/{id}(id=${usuario.id})}">✏ Editar</a>
                 <a th:href="@{/usuarios/eliminar/{id}(id=${usuario.id})}" onclick="return confirm('¿Seguro que deseas eliminar este usuario?')">🗑 Eliminar</a>
             </td>
         </tr>

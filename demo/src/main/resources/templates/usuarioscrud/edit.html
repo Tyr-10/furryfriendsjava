@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Editar Usuario</title>
+    <link rel="stylesheet" th:href="@{/css/crud.css}">
 </head>
 <body>
 <h1>Editar Usuario</h1>
-<form th:action="@{'/usuarios/actualizar/' + ${usuario.id}}" th:object="${usuario}" method="post">
+<form th:action="@{'/usuarioscrud/actualizar/' + ${usuario.id}}" th:object="${usuario}" method="post">
     <label>Nombre: <input type="text" th:field="*{nombre}" /></label><br>
     <label>Correo: <input type="email" th:field="*{correo}" /></label><br>
     <label>Contraseña: <input type="password" th:field="*{password}" /></label><br>
@@ -20,6 +21,6 @@
     <label>Disponible: <input type="checkbox" th:field="*{disponible}" /></label><br>
     <button type="submit">Actualizar</button>
 </form>
-<a th:href="@{/usuarios}">🔙 Volver</a>
+<a th:href="@{/usuarioscrud}">🔙 Volver</a>
 </body>
 </html>
