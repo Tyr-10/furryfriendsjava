@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Seguimiento</title>
+    <link rel="stylesheet" th:href="@{/css/crud.css}">
+</head>
+<body>
+
+<h1>Editar Seguimiento</h1>
+
+<form th:action="@{'/seguimientocrud/actualizar/' + ${seguimiento.id}}" method="post" enctype="multipart/form-data">
+    <label>Nombre Original:
+        <input type="text" name="nombreOriginal" th:value="${seguimiento.nombreOriginal}" required />
+    </label><br>
+
+    <label>Reemplazar Archivo:
+        <input type="file" name="archivo" />
+    </label><br>
+
+    <button type="submit">Actualizar</button>
+</form>
+
+<a th:href="@{/seguimientocrud}">🔙 Volver</a>
+
+</body>
+</html>

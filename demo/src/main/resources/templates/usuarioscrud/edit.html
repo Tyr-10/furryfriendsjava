@@ -18,7 +18,16 @@
     <label>Horarios: <input type="text" th:field="*{horarios}" /></label><br>
     <label>Responsable: <input type="text" th:field="*{responsable}" /></label><br>
     <label>Servicios: <input type="text" th:field="*{servicios}" /></label><br>
-    <label>Disponible: <input type="checkbox" th:field="*{disponible}" /></label><br>
+    
+
+    <label>Rol:
+    <select th:field="*{rol.id}">
+        <option value="">-- Selecciona un rol --</option>
+        <option value="1" th:selected="${usuario.rol?.id == 1}">Adoptante</option>
+        <option value="2" th:selected="${usuario.rol?.id == 2}">Refugio Natural</option>
+        <option value="3" th:selected="${usuario.rol?.id == 3}">Refugio Físico</option>
+    </select>
+</label><br>
     <button type="submit">Actualizar</button>
 </form>
 <a th:href="@{/usuarioscrud}">🔙 Volver</a>

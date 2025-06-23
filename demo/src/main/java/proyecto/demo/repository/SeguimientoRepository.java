@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface SeguimientoRepository extends JpaRepository<Seguimiento, Long> {
 
-    // Buscar por nombre original parcialmente y activo
-    List<Seguimiento> findByActivoTrueAndNombreOriginalContainingIgnoreCaseOrderByIdDesc(String archivo);
+    // Buscar seguimientos activos filtrando por nombre original (como búsqueda por texto)
+    List<Seguimiento> findByActivoTrueAndNombreOriginalContainingIgnoreCaseOrderByIdDesc(String nombreOriginal);
 
-    // Listar todos los activos ordenados
+    // Listar todos los seguimientos activos, ordenados por ID descendente
     List<Seguimiento> findByActivoTrueOrderByIdDesc();
 }

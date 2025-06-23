@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Perros</title>
+    <link rel="stylesheet" th:href="@{/css/crud.css}">
+</head>
+<body>
+<h1>Listado de Perros</h1>
+<a th:href="@{/perroscrud/create}">➕ Registrar nuevo perro</a>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Edad</th>
+            <th>Raza</th>
+            <th>Tamaño</th>
+            <th>Sexo</th>
+            <th>Color</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="perro : ${perros}">
+            <td th:text="${perro.nombre}">Nombre</td>
+            <td th:text="${perro.edad}">Edad</td>
+            <td th:text="${perro.raza}">Raza</td>
+            <td th:text="${perro.tamanio}">Tamaño</td>
+            <td th:text="${perro.sexo}">Sexo</td>
+            <td th:text="${perro.color}">Color</td>
+            <td>
+                <a th:href="@{/perroscrud/edit/{id}(id=${perro.id})}">✏ Editar</a>
+                <a th:href="@{/perroscrud/eliminar/{id}(id=${perro.id})}" onclick="return confirm('¿Eliminar este perro?')">🗑 Eliminar</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

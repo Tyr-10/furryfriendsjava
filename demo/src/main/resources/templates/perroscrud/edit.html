@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Perro</title>
+    <link rel="stylesheet" th:href="@{/css/crud.css}">
+</head>
+<body>
+<h1>Editar Perro</h1>
+
+<form th:action="@{'/perroscrud/actualizar/' + ${perro.id}}" th:object="${perro}" method="post" enctype="multipart/form-data">
+    <label>Nombre: <input type="text" th:field="*{nombre}" /></label><br>
+    <label>Edad: <input type="number" th:field="*{edad}" /></label><br>
+    <label>Raza: <input type="text" th:field="*{raza}" /></label><br>
+    <label>Tamaño:
+        <select th:field="*{tamanio}">
+            <option value="">-- Selecciona --</option>
+            <option value="Grande" th:selected="${perro.tamanio == 'Grande'}">Grande</option>
+            <option value="Mediano" th:selected="${perro.tamanio == 'Mediano'}">Mediano</option>
+            <option value="Pequeño" th:selected="${perro.tamanio == 'Pequeño'}">Pequeño</option>
+        </select>
+    </label><br>
+    <label>Descripción: <input type="text" th:field="*{descripcion}" /></label><br>
+    <label>Sexo:
+        <select th:field="*{sexo}">
+            <option value="">-- Selecciona --</option>
+            <option value="Macho" th:selected="${perro.sexo == 'Macho'}">Macho</option>
+            <option value="Hembra" th:selected="${perro.sexo == 'Hembra'}">Hembra</option>
+        </select>
+    </label><br>
+    <label>Color: <input type="text" th:field="*{color}" /></label><br>
+    <label>Historial Clínico: <input type="text" th:field="*{historialClinico}" /></label><br>
+    <label>Imagen: <input type="file" name="imagen" /></label><br>
+    <label>Disponible: <input type="checkbox" th:field="*{disponible}" /></label><br>
+
+    <button type="submit">Actualizar</button>
+</form>
+<a th:href="@{/perroscrud}">🔙 Volver</a>
+</body>
+</html>

@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Listado de Usuarios</h1>
-<a th:href="@{/usuarios/crear}">➕ Crear nuevo usuario</a>
+<a th:href="@{/usuarioscrud/create}">➕ Crear nuevo usuario</a>
 <table border="1">
     <thead>
         <tr>
@@ -25,11 +25,11 @@
             <td th:text="${usuario.correo}">Correo</td>
             <td th:text="${usuario.telefono}">Teléfono</td>
             <td th:text="${usuario.ciudad}">Ciudad</td>
-            <td th:text="${usuario.rol.nombre}">Rol</td>
+            <td th:text="${usuario.rol != null ? usuario.rol.nombre : 'Sin rol'}">Rol</td>
             <td>
                 
                 <a th:href="@{/usuarioscrud/edit/{id}(id=${usuario.id})}">✏ Editar</a>
-                <a th:href="@{/usuarios/eliminar/{id}(id=${usuario.id})}" onclick="return confirm('¿Seguro que deseas eliminar este usuario?')">🗑 Eliminar</a>
+                <a th:href="@{/usuarioscrud/eliminar/{id}(id=${usuario.id})}" onclick="return confirm('¿Seguro que deseas eliminar este usuario?')">🗑 Eliminar</a>
             </td>
         </tr>
     </tbody>
