@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Subir Seguimiento</title>
-    <link rel="stylesheet" th:href="@{/css/crud.css}">
 </head>
 <body>
-
-<h1>Subir Seguimiento de Visita</h1>
+<h1>Subir Archivo de Seguimiento</h1>
 
 <form th:action="@{/seguimientocrud/guardar}" method="post" enctype="multipart/form-data">
-    <label>Seleccionar Archivo:
-        <input type="file" name="archivo" required />
+    <label>Nombre Original:
+        <input type="text" name="nombreOriginal" required />
     </label><br>
-
-    <button type="submit">Guardar</button>
+    <label>Archivo:
+        <input type="file" name="archivo" accept=".pdf" required />
+    </label><br>
+    <button type="submit">Subir</button>
 </form>
 
 <a th:href="@{/seguimientocrud}">🔙 Volver</a>
-
 </body>
 </html>

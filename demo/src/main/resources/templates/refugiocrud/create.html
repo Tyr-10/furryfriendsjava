@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Perro</title>
+</head>
+<body>
+<h1>Registrar Nuevo Perro</h1>
+<form th:action="@{/refugio/perros/guardar}" method="post" enctype="multipart/form-data" th:object="${perro}">
+    <label>Nombre: <input type="text" th:field="*{nombre}" /></label><br>
+    <label>Edad: <input type="number" th:field="*{edad}" /></label><br>
+    <label>Raza: <input type="text" th:field="*{raza}" /></label><br>
+    <label>Tamaño:
+        <select th:field="*{tamanio}">
+            <option value="Pequeño">Pequeño</option>
+            <option value="Mediano">Mediano</option>
+            <option value="Grande">Grande</option>
+        </select>
+    </label><br>
+    <label>Sexo:
+        <select th:field="*{sexo}">
+            <option value="Hembra">Hembra</option>
+            <option value="Macho">Macho</option>
+        </select>
+    </label><br>
+    <label>Color: <input type="text" th:field="*{color}" /></label><br>
+    <label>Descripción: <textarea th:field="*{descripcion}"></textarea></label><br>
+    <label>Historial Clínico: <input type="text" th:field="*{historialClinico}" /></label><br>
+    <label>Imagen: <input type="file" name="file" /></label><br>
+    <button type="submit">Guardar</button>
+</form>
+<a th:href="@{/refugio/perros}">🔙 Volver</a>
+</body>
+</html>

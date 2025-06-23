@@ -20,4 +20,8 @@ public interface PerrosRepository extends JpaRepository<Perros, Long> {
             "AND (:tamanio IS NULL OR LOWER(p.tamanio) LIKE LOWER(CONCAT('%', :tamanio, '%'))) " +
             "AND (:descripcion IS NULL OR LOWER(p.descripcion) LIKE LOWER(CONCAT('%', :descripcion, '%')))")
     List<Perros> findByFiltros(Integer edad, String color, String tamanio, String descripcion);
+
+    // Listar perros disponibles por usuario/refugio específico
+List<Perros> findByUserIdAndDisponibleTrue(Long userId);
+List<Perros> findByUserId(Long userId);  // ← este método ya permite ver todos, no solo disponibles
 }

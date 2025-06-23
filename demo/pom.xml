@@ -95,6 +95,15 @@
 
     <version>1.5.3</version>
 
+
+	
+
+</dependency>
+
+<dependency>
+    <groupId>commons-codec</groupId>
+    <artifactId>commons-codec</artifactId>
+    <version>1.15</version> <!-- o cualquier versión compatible -->
 </dependency>
 
 	</dependencies>
