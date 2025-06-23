@@ -1,22 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>Editar Seguimiento</title>
 </head>
 <body>
-<h1>Editar Archivo de Seguimiento</h1>
-
-<form th:action="@{'/seguimientocrud/actualizar/' + ${seguimiento.id}}" method="post" enctype="multipart/form-data">
-    <label>Nombre Original:
-        <input type="text" name="nombreOriginal" th:value="${seguimiento.nombreOriginal}" required />
-    </label><br>
-    <label>Archivo nuevo (opcional):
-        <input type="file" name="archivo" accept=".pdf" />
-    </label><br>
-    <button type="submit">Actualizar</button>
-</form>
-
-<a th:href="@{/seguimientocrud}">🔙 Volver</a>
+    <h1>Editar archivo</h1>
+    <form method="post" enctype="multipart/form-data" th:action="@{'/seguimientocrud/actualizar/' + ${seguimiento.id}}">
+        <label>Nuevo archivo PDF:</label>
+        <input type="file" name="archivo" accept="application/pdf" required />
+        <button type="submit">Actualizar</button>
+    </form>
+    <a th:href="@{/seguimientocrud}">Volver</a>
 </body>
 </html>

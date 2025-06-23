@@ -1,22 +1,15 @@
-<!DOCTYPE html>
+ç<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Subir Seguimiento</title>
+    <title>Crear Seguimiento</title>
 </head>
 <body>
-<h1>Subir Archivo de Seguimiento</h1>
-
-<form th:action="@{/seguimientocrud/guardar}" method="post" enctype="multipart/form-data">
-    <label>Nombre Original:
-        <input type="text" name="nombreOriginal" required />
-    </label><br>
-    <label>Archivo:
-        <input type="file" name="archivo" accept=".pdf" required />
-    </label><br>
-    <button type="submit">Subir</button>
-</form>
-
-<a th:href="@{/seguimientocrud}">🔙 Volver</a>
+    <h1>Subir nuevo seguimiento</h1>
+    <form method="post" enctype="multipart/form-data" th:action="@{/seguimientocrud/guardar}">
+        <label>Archivo PDF:</label>
+        <input type="file" name="archivo" accept="application/pdf" required />
+        <button type="submit">Guardar</button>
+    </form>
+    <a th:href="@{/seguimientocrud}">Volver</a>
 </body>
 </html>

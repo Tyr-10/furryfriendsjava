@@ -1,37 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Seguimiento - Lista</title>
-    <link rel="stylesheet" th:href="@{/css/crud.css}">
+    <title>Lista de Seguimientos</title>
+    <link rel="stylesheet" href="/css/crud.css">
 </head>
 <body>
-<h1>Listado de Seguimientos</h1>
-<a th:href="@{/seguimientocrud/create}">➕ Crear nuevo seguimiento</a>
-<table border="1">
-    <thead>
-        <tr>
-            <th>Archivo</th>
-            <th>Nombre Original</th>
-            <th>Rol</th>
-            <th>Usuario</th>
-            <th>Activo</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="seg : ${seguimientos}">
-            <td th:text="${seg.archivo}">Archivo</td>
-            <td th:text="${seg.nombreOriginal}">Nombre Original</td>
-            <td th:text="${seg.rolId == 1 ? 'Adoptante' : (seg.rolId == 2 ? 'Refugio Natural' : (seg.rolId == 3 ? 'Refugio Físico' : 'Otro'))}">Rol</td>
-            <td th:text="${seg.usuario != null ? seg.usuario.nombre : 'Sin usuario'}">Usuario</td>
-            <td th:text="${seg.activo ? 'Sí' : 'No'}">Activo</td>
-            <td>
-                <a th:href="@{/seguimientocrud/edit/{id}(id=${seg.id})}">✏ Editar</a>
-                <a th:href="@{/seguimientocrud/eliminar/{id}(id=${seg.id})}" onclick="return confirm('¿Seguro que deseas eliminar este seguimiento?')">🗑 Eliminar</a>
-            </td>
-        </tr>
-    </tbody>
-</table>
+    <h1>Seguimientos registrados</h1>
+    <a th:href="@{/seguimientocrud/create}">Subir nuevo seguimiento</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Archivo</th>
+                <th>Nombre original</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="s : ${seguimientos}">
+                <td th:text="${s.id}"></td>
+                <td><a th:href="${s.archivo}" target="_blank">Ver archivo</a></td>
+                <td th:text="${s.nombreOriginal}"></td>
+                <td>
+                    <a th:href="@{'/seguimientocrud/edit/' + ${s.id}}">Editar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>
