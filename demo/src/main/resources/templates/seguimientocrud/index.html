@@ -22,8 +22,13 @@
                 <td><a th:href="${s.archivo}" target="_blank">Ver archivo</a></td>
                 <td th:text="${s.nombreOriginal}"></td>
                 <td>
-                    <a th:href="@{'/seguimientocrud/edit/' + ${s.id}}">Editar</a>
-                </td>
+    <a th:href="@{'/seguimientocrud/edit/' + ${s.id}}">Editar</a>
+
+    <form th:action="@{'/seguimientocrud/eliminar/' + ${s.id}}" method="post" style="display:inline;">
+        <input type="hidden" name="_method" value="delete" />
+        <button type="submit" onclick="return confirm('¿Estás seguro de eliminar este seguimiento?')">Eliminar</button>
+    </form>
+</td>
             </tr>
         </tbody>
     </table>

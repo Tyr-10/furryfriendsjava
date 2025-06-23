@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Crear Viabilidad</title>
+    <link rel="stylesheet" href="/css/crud.css">
+</head>
+<body>
+    <h1>Subir nueva viabilidad</h1>
+
+    <form method="post" enctype="multipart/form-data" th:action="@{/viabilidadcrud/guardar}">
+        <label>Archivo PDF:</label>
+        <input type="file" name="archivo" accept="application/pdf" required />
+        <button type="submit">Guardar</button>
+    </form>
+
+    <a th:href="@{/viabilidadcrud}">Volver</a>
+</body>
+</html>

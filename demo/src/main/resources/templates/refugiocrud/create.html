@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Registrar Nuevo Perro</h1>
-<form th:action="@{/refugio/perros/guardar}" method="post" enctype="multipart/form-data" th:object="${perro}">
+<form th:action="@{/refugiocrud/guardar}" method="post" enctype="multipart/form-data" th:object="${perro}">
     <label>Nombre: <input type="text" th:field="*{nombre}" /></label><br>
     <label>Edad: <input type="number" th:field="*{edad}" /></label><br>
     <label>Raza: <input type="text" th:field="*{raza}" /></label><br>

@@ -7,10 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import proyecto.demo.model.Seguimiento;
 import proyecto.demo.model.Usuario;
-import proyecto.demo.repository.SeguimientoRepository;
+import proyecto.demo.model.Viabilidad;
 import proyecto.demo.repository.UsuarioRepository;
+import proyecto.demo.repository.ViabilidadRepository;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,25 +20,25 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/seguimientocrud")
-public class SeguimientoCrudController {
+@RequestMapping("/viabilidadcrud")
+public class ViabilidadCrudController {
 
     @Autowired
-    private SeguimientoRepository seguimientoRepository;
+    private ViabilidadRepository viabilidadRepository;
 
     @Autowired
     private UsuarioRepository usuarioRepository;
 
     @GetMapping
     public String index(Model model) {
-        List<Seguimiento> seguimientos = seguimientoRepository.findByActivoTrueOrderByIdDesc();
-        model.addAttribute("seguimientos", seguimientos);
-        return "seguimientocrud/index";
+        List<Viabilidad> viabilidades = viabilidadRepository.findByActivoTrueOrderByIdDesc();
+        model.addAttribute("viabilidades", viabilidades);
+        return "viabilidadcrud/index";
     }
 
     @GetMapping("/create")
     public String mostrarFormularioCrear() {
-        return "seguimientocrud/create";
+        return "viabilidadcrud/create";
     }
 
     @PostMapping("/guardar")
@@ -48,7 +48,7 @@ public class SeguimientoCrudController {
                 String nombreOriginal = archivo.getOriginalFilename();
                 String nombreArchivo = UUID.randomUUID() + "_" + nombreOriginal;
 
-                // Ruta absoluta a static/uploads
+                // Guardar en /static/uploads
                 String rutaAbsoluta = new File("src/main/resources/static/uploads").getAbsolutePath();
                 File directorio = new File(rutaAbsoluta);
                 if (!directorio.exists()) {
@@ -63,46 +63,36 @@ public class SeguimientoCrudController {
                 String correo = auth.getName();
                 Usuario usuario = usuarioRepository.findByCorreo(correo);
 
-                // Crear y guardar seguimiento
-                Seguimiento nuevo = new Seguimiento();
-                nuevo.setArchivo("/uploads/" + nombreArchivo);
-                nuevo.setNombreOriginal(nombreOriginal);
-                nuevo.setActivo(true);
+                Viabilidad nueva = new Viabilidad();
+                nueva.setArchivo("/uploads/" + nombreArchivo);
+                nueva.setNombreOriginal(nombreOriginal);
+                nueva.setActivo(true);
                 if (usuario != null) {
-                    nuevo.setUsuarioId(usuario.getId());
-                    nuevo.setRolId(usuario.getRol().getId()); // ✅ Correcto
+                    nueva.setUsuarioId(usuario.getId());
+                    nueva.setRolId(usuario.getRol().getId());
                 }
 
-                seguimientoRepository.save(nuevo);
+                viabilidadRepository.save(nueva);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        return "redirect:/seguimientocrud";
+        return "redirect:/viabilidadcrud";
     }
 
     @GetMapping("/edit/{id}")
     public String mostrarFormularioEditar(@PathVariable Long id, Model model) {
-        Seguimiento seguimiento = seguimientoRepository.findById(id).orElse(null);
-        model.addAttribute("seguimiento", seguimiento);
-        return "seguimientocrud/edit";
+        Viabilidad viabilidad = viabilidadRepository.findById(id).orElse(null);
+        model.addAttribute("viabilidad", viabilidad);
+        return "viabilidadcrud/edit";
     }
-    @PostMapping("/eliminar/{id}")
-public String eliminar(@PathVariable Long id) {
-    Seguimiento seguimiento = seguimientoRepository.findById(id).orElse(null);
-    if (seguimiento != null) {
-        seguimiento.setActivo(false);
-        seguimientoRepository.save(seguimiento);
-    }
-    return "redirect:/seguimientocrud";
-}
 
     @PostMapping("/actualizar/{id}")
     public String actualizar(@PathVariable Long id, @RequestParam("archivo") MultipartFile archivo) {
-        Seguimiento seguimiento = seguimientoRepository.findById(id).orElse(null);
+        Viabilidad viabilidad = viabilidadRepository.findById(id).orElse(null);
 
-        if (seguimiento != null && !archivo.isEmpty()) {
+        if (viabilidad != null && !archivo.isEmpty()) {
             try {
                 String nombreOriginal = archivo.getOriginalFilename();
                 String nombreArchivo = UUID.randomUUID() + "_" + nombreOriginal;
@@ -116,15 +106,25 @@ public String eliminar(@PathVariable Long id) {
                 Path ruta = Paths.get(rutaAbsoluta, nombreArchivo);
                 archivo.transferTo(ruta.toFile());
 
-                seguimiento.setArchivo("/uploads/" + nombreArchivo);
-                seguimiento.setNombreOriginal(nombreOriginal);
-                seguimientoRepository.save(seguimiento);
+                viabilidad.setArchivo("/uploads/" + nombreArchivo);
+                viabilidad.setNombreOriginal(nombreOriginal);
+                viabilidadRepository.save(viabilidad);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
-        return "redirect:/seguimientocrud";
+        return "redirect:/viabilidadcrud";
+    }
+
+    @PostMapping("/eliminar/{id}")
+    public String eliminar(@PathVariable Long id) {
+        Viabilidad viabilidad = viabilidadRepository.findById(id).orElse(null);
+        if (viabilidad != null) {
+            viabilidad.setActivo(false);
+            viabilidadRepository.save(viabilidad);
+        }
+        return "redirect:/viabilidadcrud";
     }
 }

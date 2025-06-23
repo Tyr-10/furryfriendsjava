@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Viabilidades</title>
+    <link rel="stylesheet" th:href="@{/css/crud.css}">
+</head>
+<body>
+<h1>Listado de Viabilidades</h1>
+<a th:href="@{/viabilidadcrud/create}">➕ Subir nueva viabilidad</a>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Nombre del archivo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="viabilidad : ${viabilidades}">
+            <td th:text="${viabilidad.nombreOriginal}">Nombre</td>
+            <td>
+                <a th:href="@{/viabilidadcrud/edit/{id}(id=${viabilidad.id})}">✏ Editar</a>
+                <form th:action="@{/viabilidadcrud/eliminar/{id}(id=${viabilidad.id})}" method="post" style="display:inline;">
+                    <button type="submit" onclick="return confirm('¿Eliminar este archivo?')">🗑 Eliminar</button>
+                </form>
+                <a th:href="${viabilidad.archivo}" target="_blank">📄 Ver PDF</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

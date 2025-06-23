@@ -293,3 +293,24 @@ footer {
         align-items: center;
     }
 }
+/* Variaciones de inicio */
+.huella1 { top: 100%; left: 20%; animation-delay: 0s; }
+.huella2 { top: 120%; left: 40%; animation-delay: 2s; }
+.huella3 { top: 130%; left: 60%; animation-delay: 4s; }
+.huella4 { top: 110%; left: 80%; animation-delay: 6s; }
+.huella5 { top: 100%; left: 20%; animation-delay: 8s; }
+.huella6 { top: 120%; left: 40%; animation-delay: 10s; }
+.huella7 { top: 130%; left: 60%; animation-delay: 12s; }
+.huella8 { top: 110%; left: 80%; animation-delay: 14s; }
+
+/* Animación de huellitas hacia arriba y en diagonal */
+@keyframes caminar {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.15;
+    }
+    100% {
+        transform: translateY(-130vh) translateX(30px) rotate(360deg);
+        opacity: 0.1;
+    }
+}

@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface ViabilidadRepository extends JpaRepository<Viabilidad, Long> {
 
-    // Buscar por nombre original parcialmente y activo
-    List<Viabilidad> findByActivoTrueAndNombreOriginalContainingIgnoreCaseOrderByIdDesc(String archivo);
+    // Buscar viabilidades activas filtrando por nombre original (como búsqueda por texto)
+    List<Viabilidad> findByActivoTrueAndNombreOriginalContainingIgnoreCaseOrderByIdDesc(String nombreOriginal);
 
-    // 🔧 ESTE es el que te faltaba para listar todos los activos ordenados
+    // Listar todas las viabilidades activas, ordenadas por ID descendente
     List<Viabilidad> findByActivoTrueOrderByIdDesc();
 }
