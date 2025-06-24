@@ -5,7 +5,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import proyecto.demo.model.Usuario;
 import proyecto.demo.repository.UsuarioRepository;
 
@@ -30,7 +29,7 @@ public class RecuperacionController {
     @PostMapping("/recuperar/enviar")
     public String procesarRecuperacion(
             @RequestParam("correo") String correo,
-            RedirectAttributes redirectAttributes
+            Model model
     ) {
         Usuario usuario = usuarioRepository.findByCorreo(correo);
 
@@ -42,28 +41,41 @@ public class RecuperacionController {
             usuario.setPassword(passwordCodificada);
             usuarioRepository.save(usuario);
 
-            // ✅ Mostrar mensaje (en un proyecto real se mandaría por email)
-            redirectAttributes.addFlashAttribute("mensajeExito",
-                "Tu nueva contraseña es: " + nuevaPassword + ". Cámbiala después de iniciar sesión.");
+            // ✅ Mostrar la nueva contraseña en la misma vista
+            model.addAttribute("nuevaPassword", nuevaPassword);
         } else {
-            redirectAttributes.addFlashAttribute("mensajeExito",
-                "Si el correo está registrado, recibirás una nueva contraseña.");
+            model.addAttribute("nuevaPassword", null);
         }
-
-        return "redirect:/login";
+        model.addAttribute("correo", correo);
+        return "recuperar";
     }
 
-    // 🔒 Generador de contraseña simple
+    // 🔒 Generador de contraseña que cumple requisitos
     private String generarPasswordAleatoria(int longitud) {
-        String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        StringBuilder password = new StringBuilder();
+        String mayus = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String minus = "abcdefghijklmnopqrstuvwxyz";
+        String numeros = "0123456789";
+        String simbolos = "!@#$%^&.,-_;:";
+        String todos = mayus + minus + numeros + simbolos;
         Random random = new Random();
+        StringBuilder password = new StringBuilder();
 
-        for (int i = 0; i < longitud; i++) {
-            int index = random.nextInt(caracteres.length());
-            password.append(caracteres.charAt(index));
+        // Garantizar al menos un carácter de cada tipo
+        password.append(mayus.charAt(random.nextInt(mayus.length())));
+        password.append(numeros.charAt(random.nextInt(numeros.length())));
+        password.append(simbolos.charAt(random.nextInt(simbolos.length())));
+        // El resto aleatorio
+        for (int i = 3; i < longitud; i++) {
+            password.append(todos.charAt(random.nextInt(todos.length())));
         }
-
-        return password.toString();
+        // Mezclar para que no siempre empiece igual
+        char[] arr = password.toString().toCharArray();
+        for (int i = arr.length - 1; i > 0; i--) {
+            int j = random.nextInt(i + 1);
+            char tmp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = tmp;
+        }
+        return new String(arr);
     }
 }

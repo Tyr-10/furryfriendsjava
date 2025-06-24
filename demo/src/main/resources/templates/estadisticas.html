@@ -3,45 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <title>Estadísticas</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
-            background-color: #f3f3f3;
+            background-color: #f6fbff;
             font-family: 'Arial', sans-serif;
-            text-align: center;
-            padding: 30px;
+            margin: 0;
+            padding: 0;
+        }
+        .estadisticas-container {
+            max-width: 900px;
+            margin: 40px auto 0 auto;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+            padding: 36px 32px 32px 32px;
         }
         h1 {
-            font-size: 32px;
-            color: #333;
+            font-size: 2.2rem;
+            color: #3498db;
+            text-align: center;
+            margin-bottom: 30px;
         }
-        .grafica {
-            margin-top: 30px;
-            background-color: #fff;
-            padding: 20px;
+        .resumen {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            font-size: 1.3rem;
+        }
+        .resumen span {
+            background: #e3f2fd;
+            color: #217dbb;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(52,152,219,0.08);
+        }
+        .grafica-interactiva {
+            width: 100%;
+            min-height: 420px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .boton {
+            margin-top: 32px;
             display: inline-block;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-        img {
-            border-radius: 10px;
-        }
-        a.boton {
-            margin-top: 20px;
-            display: inline-block;
-            background-color: #4d89c1;
+            background-color: #4CAF50;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 28px;
             border-radius: 8px;
             text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: background 0.2s;
+        }
+        .boton:hover {
+            background-color: #3498db;
+        }
+        @media (max-width: 700px) {
+            .estadisticas-container {
+                padding: 18px 4vw 18px 4vw;
+            }
+            .resumen {
+                flex-direction: column;
+                gap: 18px;
+                align-items: center;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Estadísticas de Adopciones y Registros</h1>
-    <div class="grafica">
-        <img th:src="@{/grafica}" alt="Gráfico de adopciones y registros">
+    <div class="estadisticas-container">
+        <h1>Estadísticas del Sistema</h1>
+        <div class="resumen">
+            <span>Total de usuarios: <span th:text="${usuariosTotales}">0</span></span>
+            <span>Total de perros: <span th:text="${perrosTotales}">0</span></span>
+        </div>
+        <div class="grafica-interactiva">
+            <canvas id="graficoEstadisticas"></canvas>
+        </div>
+        <a href="/" class="boton">Volver al inicio</a>
     </div>
-    <br>
-    <a href="/" class="boton">Volver al inicio</a>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var usuariosTotales = /*[[${usuariosTotales}]]*/ 0;
+        var perrosTotales = /*[[${perrosTotales}]]*/ 0;
+
+        const labels = ["Usuarios", "Perros"];
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'Cantidad',
+                data: [usuariosTotales, perrosTotales],
+                backgroundColor: [
+                    '#3498db',
+                    '#4CAF50'
+                ],
+                borderColor: [
+                    '#217dbb',
+                    '#388e3c'
+                ],
+                borderWidth: 2,
+                borderRadius: 12,
+                hoverBackgroundColor: [
+                    '#217dbb',
+                    '#388e3c'
+                ]
+            }]
+        };
+
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        enabled: true,
+                        callbacks: {
+                            label: function(context) {
+                                return ` ${context.dataset.label}: ${context.parsed.y}`;
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Usuarios y Perros Registrados',
+                        color: '#3498db',
+                        font: { size: 20, weight: 'bold' }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#333', font: { size: 16, weight: 'bold' } }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: '#e3f2fd' },
+                        ticks: { color: '#333', font: { size: 15 } }
+                    }
+                }
+            }
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const ctx = document.getElementById('graficoEstadisticas').getContext('2d');
+            new Chart(ctx, config);
+        });
+        /*]]>*/
+    </script>
 </body>
 </html>

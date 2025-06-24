@@ -1,6 +1,7 @@
 package proyecto.demo.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Usuario {
@@ -22,6 +23,8 @@ public class Usuario {
 
     @Column(nullable = false)
     private boolean disponible = true;
+
+    private LocalDateTime fechaRegistro;
 
     @ManyToOne
     @JoinColumn(name = "id_rol")
@@ -123,6 +126,14 @@ public class Usuario {
 
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;
+    }
+
+    public LocalDateTime getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(LocalDateTime fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
     }
 
     public Rol getRol() {
