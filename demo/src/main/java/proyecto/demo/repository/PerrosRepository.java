@@ -10,20 +10,19 @@ import java.util.List;
 @Repository
 public interface PerrosRepository extends JpaRepository<Perros, Long> {
 
-    // Listar todos los perros disponibles
+    // Perros disponibles para la vista pública
     List<Perros> findByDisponibleTrue();
 
-    // Filtro avanzado para buscar perros disponibles según varios criterios
+    // Filtro para búsqueda avanzada (solo disponibles)
     @Query("SELECT p FROM Perros p WHERE p.disponible = true " +
             "AND (:edad IS NULL OR p.edad = :edad) " +
             "AND (:color IS NULL OR LOWER(p.color) LIKE LOWER(CONCAT('%', :color, '%'))) " +
             "AND (:tamanio IS NULL OR LOWER(p.tamanio) LIKE LOWER(CONCAT('%', :tamanio, '%'))) " +
-            "AND (:descripcion IS NULL OR LOWER(p.descripcion) LIKE LOWER(CONCAT('%', :descripcion, '%')))")
+            "AND (:descripcion IS NULL OR LOWER(p.descripcion) LIKE LOWER(CONCAT('%', :descripcion, '%'))) ")
     List<Perros> findByFiltros(Integer edad, String color, String tamanio, String descripcion);
 
-    // Perros disponibles de un refugio específico
-    List<Perros> findByUserIdAndDisponibleTrue(Long userId);
-
-    // Todos los perros (disponibles o no) por refugio
+    // ✅ CORRECTO según tu modelo
     List<Perros> findByUserId(Long userId);
+
+    List<Perros> findByUserIdAndDisponibleTrue(Long userId);
 }

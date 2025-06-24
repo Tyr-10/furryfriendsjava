@@ -1,19 +1,17 @@
 package proyecto.demo.controller;
 
 import jakarta.servlet.http.HttpSession;
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import proyecto.demo.model.Perros;
+import proyecto.demo.model.Usuario;
 import proyecto.demo.repository.PerrosRepository;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Controller
 @RequestMapping("/refugiocrud")
@@ -22,108 +20,102 @@ public class RefugioCrudController {
     @Autowired
     private PerrosRepository perrosRepository;
 
-    // INDEX: Mostrar todos los perros del refugio autenticado
     @GetMapping
-    public String listarPerros(Model model, HttpSession session) {
-        Long refugioId = (Long) session.getAttribute("usuarioId");
-
-        if (refugioId == null) {
-            return "redirect:/login"; // o muestra error
+    public String index(Model model, HttpSession session) {
+        Usuario refugio = (Usuario) session.getAttribute("usuarioLogueado");
+        if (refugio == null) {
+            return "redirect:/login";
         }
 
-        List<Perros> lista = perrosRepository.findByUserId(refugioId);
+        List<Perros> perros = perrosRepository.findByUserId(refugio.getId());
 
-        // Convertir imagenes byte[] a Base64 para el HTML
-        List<Perros> perrosConImagenBase64 = lista.stream().map(perro -> {
-            if (perro.getImagenperro() != null && perro.getImagenperro().length > 0) {
-                String base64 = Base64.encodeBase64String(perro.getImagenperro());
-                perro.setDescripcion(base64); // solo para mostrar imagen
+        // Convertir imágenes a base64
+        Map<Long, String> imagenesBase64 = new HashMap<>();
+        for (Perros p : perros) {
+            if (p.getImagenperro() != null) {
+                String base64 = Base64.getEncoder().encodeToString(p.getImagenperro());
+                imagenesBase64.put(p.getId(), base64);
             }
-            return perro;
-        }).collect(Collectors.toList());
+        }
 
-        model.addAttribute("perros", perrosConImagenBase64);
+        model.addAttribute("perros", perros);
+        model.addAttribute("imagenes", imagenesBase64);
+
         return "refugiocrud/index";
     }
 
-    // FORMULARIO CREAR
-    @GetMapping("/create")
-    public String mostrarFormularioCrear(Model model) {
-        model.addAttribute("perro", new Perros());
-        return "refugiocrud/create";
-    }
-
-    // GUARDAR NUEVO PERRO
     @PostMapping("/guardar")
     public String guardarPerro(@ModelAttribute Perros perro,
-                               @RequestParam("file") MultipartFile imagen,
+                               @RequestParam("imagenFile") MultipartFile imagenFile,
                                HttpSession session) throws IOException {
+        Usuario refugio = (Usuario) session.getAttribute("usuarioLogueado");
+        if (refugio == null) return "redirect:/login";
 
-        Long refugioId = (Long) session.getAttribute("usuarioId");
-        if (refugioId == null) {
-            return "redirect:/login"; // o error
+        if (!imagenFile.isEmpty()) {
+            perro.setImagenperro(imagenFile.getBytes());
         }
 
-        perro.setUserId(refugioId); // ✔ asignar refugio
-        perro.setDisponible(true);
-        if (!imagen.isEmpty()) {
-            perro.setImagenperro(imagen.getBytes());
-        }
+        perro.setUserId(refugio.getId());
         perrosRepository.save(perro);
         return "redirect:/refugiocrud";
     }
 
-    // FORMULARIO EDITAR
-    @GetMapping("/edit/{id}")
-    public String editar(@PathVariable Long id, Model model) {
-        Optional<Perros> perro = perrosRepository.findById(id);
-        if (perro.isPresent()) {
-            model.addAttribute("perro", perro.get());
-            return "refugiocrud/edit";
-        }
-        return "redirect:/refugiocrud";
-    }
-
-    // ACTUALIZAR
-    @PostMapping("/actualizar/{id}")
-    public String actualizar(@PathVariable Long id,
-                             @ModelAttribute Perros formPerro,
-                             @RequestParam("file") MultipartFile imagen,
-                             HttpSession session) throws IOException {
+    @GetMapping("/editar/{id}")
+    public String mostrarFormularioEditar(@PathVariable Long id, Model model, HttpSession session) {
+        Usuario refugio = (Usuario) session.getAttribute("usuarioLogueado");
+        if (refugio == null) return "redirect:/login";
 
         Optional<Perros> perroOpt = perrosRepository.findById(id);
-        if (perroOpt.isPresent()) {
-            Perros perro = perroOpt.get();
-            perro.setNombre(formPerro.getNombre());
-            perro.setEdad(formPerro.getEdad());
-            perro.setRaza(formPerro.getRaza());
-            perro.setTamanio(formPerro.getTamanio());
-            perro.setDescripcion(formPerro.getDescripcion());
-            perro.setSexo(formPerro.getSexo());
-            perro.setColor(formPerro.getColor());
-            perro.setHistorialClinico(formPerro.getHistorialClinico());
-            perro.setDisponible(formPerro.isDisponible());
-
-            if (!imagen.isEmpty()) {
-                perro.setImagenperro(imagen.getBytes());
-            }
-
-            Long refugioId = (Long) session.getAttribute("usuarioId");
-            perro.setUserId(refugioId); // ✔ importante mantener esto
-
-            perrosRepository.save(perro);
+        if (perroOpt.isPresent() && perroOpt.get().getUserId().equals(refugio.getId())) {
+            model.addAttribute("perro", perroOpt.get());
+            model.addAttribute("tamanos", List.of("Grande", "Mediano", "Pequeño"));
+            model.addAttribute("sexos", List.of("Hembra", "Macho"));
+            return "refugiocrud/edit";
         }
+
         return "redirect:/refugiocrud";
     }
 
-    // ELIMINACIÓN LÓGICA
-    @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable Long id) {
-        Optional<Perros> perro = perrosRepository.findById(id);
-        if (perro.isPresent()) {
-            perro.get().setDisponible(false);
-            perrosRepository.save(perro.get());
+    @PostMapping("/actualizar")
+    public String actualizarPerro(@ModelAttribute Perros perro,
+                                  @RequestParam("imagenFile") MultipartFile imagenFile,
+                                  HttpSession session) throws IOException {
+        Usuario refugio = (Usuario) session.getAttribute("usuarioLogueado");
+        if (refugio == null) return "redirect:/login";
+
+        Optional<Perros> perroExistente = perrosRepository.findById(perro.getId());
+        if (perroExistente.isPresent() && perroExistente.get().getUserId().equals(refugio.getId())) {
+            Perros actualizado = perroExistente.get();
+            actualizado.setNombre(perro.getNombre());
+            actualizado.setEdad(perro.getEdad());
+            actualizado.setTamanio(perro.getTamanio());
+            actualizado.setColor(perro.getColor());
+            actualizado.setSexo(perro.getSexo());
+            actualizado.setDescripcion(perro.getDescripcion());
+            actualizado.setDisponible(perro.isDisponible());
+
+            if (!imagenFile.isEmpty()) {
+                actualizado.setImagenperro(imagenFile.getBytes());
+            }
+
+            perrosRepository.save(actualizado);
         }
+
+        return "redirect:/refugiocrud";
+    }
+
+    @GetMapping("/eliminar/{id}")
+    public String eliminarPerro(@PathVariable Long id, HttpSession session) {
+        Usuario refugio = (Usuario) session.getAttribute("usuarioLogueado");
+        if (refugio == null) return "redirect:/login";
+
+        Optional<Perros> perroOpt = perrosRepository.findById(id);
+        if (perroOpt.isPresent() && perroOpt.get().getUserId().equals(refugio.getId())) {
+            Perros perro = perroOpt.get();
+            perro.setDisponible(false); // eliminación lógica
+            perrosRepository.save(perro);
+        }
+
         return "redirect:/refugiocrud";
     }
 }

@@ -3,54 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Editar Perro</title>
-    <link rel="stylesheet" th:href="@{/css/crud.css}">
 </head>
 <body>
-
-<h1>✏ Editar Perro</h1>
-
-<form th:action="@{'/refugiocrud/actualizar/' + ${perro.id}}" th:object="${perro}" method="post" enctype="multipart/form-data">
+<h1>Editar Perro</h1>
+<form th:action="@{/refugiocrud/actualizar}" method="post" enctype="multipart/form-data" th:object="${perro}">
+    <input type="hidden" th:field="*{id}"/>
 
     <label>Nombre:</label>
-    <input type="text" th:field="*{nombre}" required/><br/>
+    <input type="text" th:field="*{nombre}" required><br>
 
     <label>Edad:</label>
-    <input type="number" th:field="*{edad}" required/><br/>
-
-    <label>Raza:</label>
-    <input type="text" th:field="*{raza}" required/><br/>
+    <input type="number" th:field="*{edad}" required><br>
 
     <label>Tamaño:</label>
     <select th:field="*{tamanio}">
-        <option value="Pequeño">Pequeño</option>
-        <option value="Mediano">Mediano</option>
-        <option value="Grande">Grande</option>
-    </select><br/>
+        <option th:each="t : ${tamanos}" th:value="${t}" th:text="${t}"></option>
+    </select><br>
+
+    <label>Color:</label>
+    <input type="text" th:field="*{color}" required><br>
 
     <label>Sexo:</label>
     <select th:field="*{sexo}">
-        <option value="Macho">Macho</option>
-        <option value="Hembra">Hembra</option>
-    </select><br/>
-
-    <label>Color:</label>
-    <input type="text" th:field="*{color}" required/><br/>
+        <option th:each="s : ${sexos}" th:value="${s}" th:text="${s}"></option>
+    </select><br>
 
     <label>Descripción:</label>
-    <textarea th:field="*{descripcion}"></textarea><br/>
+    <textarea th:field="*{descripcion}"></textarea><br>
 
-    <label>Historial Clínico:</label>
-    <textarea th:field="*{historialClinico}"></textarea><br/>
+    <label>Disponible:</label>
+    <input type="checkbox" th:field="*{disponible}"><br>
 
-    <label>Imagen (opcional):</label>
-    <input type="file" name="file"/><br/>
+    <label>Imagen (si deseas cambiarla):</label>
+    <input type="file" name="imagenFile"><br>
 
-    <label>¿Disponible?</label>
-    <input type="checkbox" th:field="*{disponible}"/><br/>
-
-    <button type="submit">💾 Guardar Cambios</button>
-    <a th:href="@{/refugiocrud}">↩ Volver</a>
+    <button type="submit">Actualizar</button>
 </form>
-
 </body>
 </html>

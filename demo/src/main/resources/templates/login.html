@@ -13,9 +13,14 @@
         <div th:if="${mensajeExito}" class="alert alert-success" style="color: green; font-weight: bold; text-align: center; margin-bottom: 20px;">
             <p th:text="${mensajeExito}"></p>
         </div>
-        <div th:if="${param.error}" style="color:red; text-align:center; margin-bottom:10px;">
-            Usuario o contraseña incorrectos.
-        </div>
+        <div th:if="${param.error}" style="color:red; text-align:center; margin-bottom:10px; font-weight: bold;">
+    <span th:switch="${param.error}">
+        <span th:case="'credenciales'">Correo o contraseña incorrectos.</span>
+        <span th:case="'desactivada'">Tu cuenta ha sido desactivada. Contacta con soporte.</span>
+        <span th:case="'no_encontrado'">Usuario no encontrado.</span>
+        <span th:case="*">Credenciales incorrectas o cuenta no existente en el sistema.</span>
+    </span>
+</div>
         <div class="formulario">
             <h2>Iniciar sesión</h2>
             <form th:action="@{/login}" method="post">
@@ -34,9 +39,8 @@
             </form>
 
             <div class="links">
-                <a href="#">Inicia sesión con número de teléfono</a><br>
-                <a href="/register/adoptante">¿No tienes cuenta? Regístrate aquí</a><br>
-                <a href="#">¿Olvidaste tu contraseña?</a>
+                <a th:href="@{/register/adoptante}"><i class="fas fa-chart-bar"></i> ¿No tienes cuenta? Regístrate aquí</a><br>
+                <a th:href="@{/recuperar}"><i class="fas fa-chart-bar"></i> ¿Olvidaste tu contraseña?</a>
             </div>
         </div>
     </div>

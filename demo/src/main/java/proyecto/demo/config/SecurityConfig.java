@@ -1,5 +1,3 @@
-// src/main/java/proyecto/demo/config/SecurityConfig.java
-
 package proyecto.demo.config;
 
 import org.springframework.context.annotation.Bean;
@@ -8,7 +6,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import proyecto.demo.service.UserDetailsServiceImpl;
 
@@ -25,17 +22,28 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/index", "/registro/**", "/css/**", "/js/", "/cuidados", "/estadisticas","/perrosdisponibles", "/images/**").permitAll()
+                .requestMatchers(
+                    "/", 
+                    "/index", 
+                    "/registro/**", 
+                    "/css/**", 
+                    "/js/**", 
+                    "/cuidados", 
+                    "/estadisticas",
+                    "/perrosdisponibles", 
+                    "/images/**",         
+                    "/recuperar/**"        // ✅ Permitir acceso POST
+                ).permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(login -> login
                 .loginPage("/login")
-                .successHandler(loginSuccessHandler) // Aquí usamos el handler personalizado
+                .successHandler(loginSuccessHandler)
                 .permitAll()
             )
             .logout(logout -> logout
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/index") // 👈 Aquí lo importante
+                .logoutSuccessUrl("/index")
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .permitAll()

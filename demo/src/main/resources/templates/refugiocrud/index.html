@@ -8,8 +8,6 @@
 <body>
 <h1>🐶 Mis Perros</h1>
 
-<a th:href="@{/refugiocrud/create}" class="btn">➕ Registrar Perro</a>
-
 <table border="1">
   <thead>
     <tr>
@@ -24,17 +22,17 @@
   <tbody>
     <tr th:each="perro : ${perros}">
       <td>
-        <div th:if="${perro.descripcion != null}">
-          <img th:src="'data:image/jpeg;base64,' + ${perro.descripcion}" alt="Foto" width="100"/>
+        <div th:if="${imagenes[perro.id] != null}">
+          <img th:src="'data:image/jpeg;base64,' + ${imagenes[perro.id]}" alt="Foto" width="100"/>
         </div>
-        <div th:if="${perro.descripcion == null}">No image</div>
+        <div th:if="${imagenes[perro.id] == null}">No image</div>
       </td>
       <td th:text="${perro.nombre}">Nombre</td>
       <td th:text="${perro.edad}">Edad</td>
       <td th:text="${perro.raza}">Raza</td>
       <td th:text="${perro.disponible ? 'Sí' : 'No'}">Disponible</td>
       <td>
-        <a th:href="@{'/refugiocrud/edit/' + ${perro.id}}">✏ Editar</a>
+        <a th:href="@{'/refugiocrud/editar/' + ${perro.id}}">✏ Editar</a>
         <a th:href="@{'/refugiocrud/eliminar/' + ${perro.id}}"
            onclick="return confirm('¿Eliminar este perro?')">🗑 Eliminar</a>
       </td>

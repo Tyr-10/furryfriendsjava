@@ -33,6 +33,19 @@
         <a th:href="@{/estadisticas}"><i class="fas fa-chart-bar"></i> Estadísticas</a>
         <a th:href="@{/cuidados}"><i class="fas fa-cog"></i> Cuidados</a>
     </nav>
+    <div th:if="${session.mensajeDesactivado}" id="mensajeAlerta" class="alert">
+    <p th:text="${session.mensajeDesactivado}"></p>
+</div>
+
+<script>
+    // Oculta el mensaje después de 5 segundos
+    setTimeout(() => {
+        const alerta = document.getElementById('mensajeAlerta');
+        if (alerta) {
+            alerta.style.display = 'none';
+        }
+    }, 5000);
+</script>
 
     <!-- Carrusel -->
     <main>
