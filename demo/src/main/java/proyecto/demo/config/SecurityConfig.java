@@ -32,7 +32,8 @@ public class SecurityConfig {
                     "/estadisticas",
                     "/perrosdisponibles", 
                     "/images/**",         
-                    "/recuperar/**"        // ✅ Permitir acceso POST
+                    "/recuperar/**",
+                    "/imagen/**" // <-- AGREGA ESTA LÍNEA para permitir acceso público a las imágenes de perros
                 ).permitAll()
                 .anyRequest().authenticated()
             )

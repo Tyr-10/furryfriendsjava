@@ -64,18 +64,6 @@ public class RegistroPerrosController {
         return "registroperros";
     }
 
-    @GetMapping("/imagen/{id}")
-    public ResponseEntity<byte[]> mostrarImagen(@PathVariable Long id) {
-        Perros perro = perrosRepository.findById(id).orElse(null);
-        if (perro == null || perro.getImagenperro() == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok()
-                .header("Content-Type", "image/jpeg")
-                .body(perro.getImagenperro());
-    }
-
     // Método para obtener el usuario autenticado
     private Usuario obtenerUsuarioDesdePrincipal(Principal principal) {
         if (principal != null) {
