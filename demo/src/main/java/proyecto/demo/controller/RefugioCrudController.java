@@ -1,7 +1,11 @@
 package proyecto.demo.controller;
 
+import com.lowagie.text.*;
+import com.lowagie.text.pdf.PdfWriter;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,8 +14,14 @@ import proyecto.demo.model.Perros;
 import proyecto.demo.model.Usuario;
 import proyecto.demo.repository.PerrosRepository;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.*;
+import java.io.InputStream;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/refugiocrud")
@@ -117,5 +127,66 @@ public class RefugioCrudController {
         }
 
         return "redirect:/refugiocrud";
+    }
+
+    @GetMapping("/reporte")
+    public void generarReporte(HttpSession session, HttpServletResponse response) throws Exception {
+        Usuario refugio = (Usuario) session.getAttribute("usuarioLogueado");
+        if (refugio == null) {
+            response.sendRedirect("/login");
+            return;
+        }
+
+        List<Perros> perros = perrosRepository.findByUserIdAndDisponibleTrue(refugio.getId());
+
+        Document document = new Document();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PdfWriter.getInstance(document, baos);
+        document.open();
+
+        // Logo
+        try {
+            InputStream logoStream = new ClassPathResource("static/images/logo.jpg").getInputStream();
+            Image logo = Image.getInstance(logoStream.readAllBytes());
+            logo.scaleToFit(80, 80);
+            logo.setAlignment(Image.ALIGN_CENTER);
+            document.add(logo);
+        } catch (Exception e) {
+            // Si no hay logo, ignora
+        }
+
+        document.add(new Paragraph("Reporte de Perros Registrados", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18)));
+        document.add(new Paragraph("Refugio: " + refugio.getNombre() + " (" + refugio.getCorreo() + ")\n\n"));
+
+        for (Perros p : perros) {
+            // Imagen del perro (solo si es una imagen válida)
+            if (p.getImagenperro() != null && p.getImagenperro().length > 0) {
+                try {
+                    Image img = Image.getInstance(p.getImagenperro());
+                    img.scaleToFit(100, 100);
+                    document.add(img);
+                } catch (Exception ex) {
+                    // Si la imagen no es válida, ignora y sigue con el resto del reporte
+                }
+            }
+            document.add(new Paragraph(
+                "Nombre: " + p.getNombre() +
+                "\nEdad: " + p.getEdad() +
+                "\nRaza: " + p.getRaza() +
+                "\nTamaño: " + p.getTamanio() +
+                "\nColor: " + p.getColor() +
+                "\nSexo: " + p.getSexo() +
+                "\nDescripción: " + p.getDescripcion() +
+                "\nHistorial Clínico: " + p.getHistorialClinico()
+            ));
+            document.add(new Paragraph(" "));
+        }
+
+        document.close();
+
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=reporte_perros.pdf");
+        response.getOutputStream().write(baos.toByteArray());
+        response.getOutputStream().flush();
     }
 }
