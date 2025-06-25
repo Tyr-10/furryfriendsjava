@@ -2,9 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Crear Seguimiento</title>
-    <link rel="stylesheet" href="/css/crud.css">
+    <link rel="stylesheet" th:href="@{/css/crudcreate.css}">
 </head>
 <body>
+<div class="waves-bg">
+  <div class="wave wave1"></div>
+  <div class="wave wave2"></div>
+  <div class="wave wave3"></div>
+</div>
     <h1>Subir nuevo seguimiento</h1>
     <form method="post" enctype="multipart/form-data" th:action="@{/seguimientocrud/guardar}">
         <label>Archivo PDF:</label>

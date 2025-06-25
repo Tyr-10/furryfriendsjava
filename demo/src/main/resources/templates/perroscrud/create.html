@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Registrar Perro</title>
-    <link rel="stylesheet" th:href="@{/css/crud.css}">
+    <link rel="stylesheet" th:href="@{/css/crudcreate.css}">
 </head>
 <body>
+<div class="waves-bg">
+  <div class="wave wave1"></div>
+  <div class="wave wave2"></div>
+  <div class="wave wave3"></div>
+</div>
 <h1>Registrar Nuevo Perro</h1>
 
 <form th:action="@{/perroscrud/guardar}" th:object="${perro}" method="post" enctype="multipart/form-data">

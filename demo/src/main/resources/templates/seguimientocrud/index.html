@@ -2,33 +2,92 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Lista de Seguimientos</title>
-    <link rel="stylesheet" href="/css/crud.css">
+    <link rel="stylesheet" th:href="@{/css/crudindex.css}">
+    <link rel="stylesheet" th:href="@{/css/crudindex.seguimiento.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .tabla-seguimiento {
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px #b3e5fc55;
+            background: #fff;
+            margin-top: 30px;
+        }
+        .tabla-seguimiento th, .tabla-seguimiento td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .tabla-seguimiento th {
+            background: linear-gradient(90deg, #42a5f5 0%, #81c784 100%);
+            color: #fff;
+            font-size: 1.08em;
+            border-bottom: 4px solid #b3e5fc;
+        }
+        .tabla-seguimiento tr:nth-child(even) td {
+            background: #e3f2fd;
+        }
+        .tabla-seguimiento tr:hover td {
+            background: #b3e5fc44;
+            transition: background 0.3s;
+        }
+        .tabla-seguimiento td, .tabla-seguimiento th {
+            padding: 16px 10px;
+        }
+        .tabla-seguimiento .acciones a, .tabla-seguimiento .acciones button {
+            margin: 0 4px;
+            font-size: 1em;
+            padding: 7px 16px;
+            border-radius: 20px;
+            background: linear-gradient(90deg, #ffb703 0%, #42a5f5 100%);
+            color: #fff !important;
+            border: none;
+            box-shadow: 0 2px 8px #b3e5fc55;
+            transition: background 0.3s, transform 0.2s;
+            cursor: pointer;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .tabla-seguimiento .acciones a:hover, .tabla-seguimiento .acciones button:hover {
+            background: linear-gradient(90deg, #42a5f5 0%, #ffb703 100%);
+            color: #fff;
+            transform: scale(1.08);
+        }
+        .tabla-seguimiento th i {
+            margin-right: 6px;
+        }
+    </style>
 </head>
 <body>
+<div class="bubbles-bg">
+  <div class="bubble bubble1"></div>
+  <div class="bubble bubble2"></div>
+  <div class="bubble bubble3"></div>
+  <div class="bubble bubble4"></div>
+  <div class="bubble bubble5"></div>
+</div>
     <h1>Seguimientos registrados</h1>
     <a th:href="@{/seguimientocrud/create}">Subir nuevo seguimiento</a>
-    <table border="1">
+    <table class="tabla-seguimiento" border="0">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Archivo</th>
-                <th>Nombre original</th>
-                <th>Acciones</th>
+                <th><i class="fas fa-hashtag"></i>ID</th>
+                <th><i class="fas fa-file-pdf"></i>Archivo</th>
+                <th><i class="fas fa-file-signature"></i>Nombre original</th>
+                <th><i class="fas fa-cogs"></i>Acciones</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="s : ${seguimientos}">
                 <td th:text="${s.id}"></td>
-                <td><a th:href="${s.archivo}" target="_blank">Ver archivo</a></td>
+                <td><a th:href="${s.archivo}" target="_blank"><i class="fas fa-eye"></i> Ver archivo</a></td>
                 <td th:text="${s.nombreOriginal}"></td>
-                <td>
-    <a th:href="@{'/seguimientocrud/edit/' + ${s.id}}">Editar</a>
-
-    <form th:action="@{'/seguimientocrud/eliminar/' + ${s.id}}" method="post" style="display:inline;">
-        <input type="hidden" name="_method" value="delete" />
-        <button type="submit" onclick="return confirm('¿Estás seguro de eliminar este seguimiento?')">Eliminar</button>
-    </form>
-</td>
+                <td class="acciones">
+                    <a th:href="@{'/seguimientocrud/edit/' + ${s.id}}" title="Editar" class="btn-editar"><i class="fas fa-edit"></i></a>
+                    <form th:action="@{'/seguimientocrud/eliminar/' + ${s.id}}" method="post" style="display:inline;">
+                        <input type="hidden" name="_method" value="delete" />
+                        <button type="submit" onclick="return confirm('¿Estás seguro de eliminar este seguimiento?')" title="Eliminar" class="btn-eliminar"><i class="fas fa-trash-alt"></i></button>
+                    </form>
+                </td>
             </tr>
         </tbody>
     </table>

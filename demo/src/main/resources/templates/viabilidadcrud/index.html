@@ -3,28 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <title>Listado de Viabilidades</title>
-    <link rel="stylesheet" th:href="@{/css/crud.css}">
+    <link rel="stylesheet" th:href="@{/css/crudindex.css}">
+    <link rel="stylesheet" th:href="@{/css/crudindex.viabilidad.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .tabla-viabilidad {
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px #b3e5fc55;
+            background: #fff;
+            margin-top: 30px;
+        }
+        .tabla-viabilidad th, .tabla-viabilidad td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .tabla-viabilidad th {
+            background: linear-gradient(90deg, #42a5f5 0%, #81c784 100%);
+            color: #fff;
+            font-size: 1.08em;
+            border-bottom: 4px solid #b3e5fc;
+        }
+        .tabla-viabilidad tr:nth-child(even) td {
+            background: #e3f2fd;
+        }
+        .tabla-viabilidad tr:hover td {
+            background: #b3e5fc44;
+            transition: background 0.3s;
+        }
+        .tabla-viabilidad td, .tabla-viabilidad th {
+            padding: 16px 10px;
+        }
+        .tabla-viabilidad .acciones a, .tabla-viabilidad .acciones button {
+            margin: 0 4px;
+            font-size: 1em;
+            padding: 7px 16px;
+            border-radius: 20px;
+            background: linear-gradient(90deg, #ffb703 0%, #42a5f5 100%);
+            color: #fff !important;
+            border: none;
+            box-shadow: 0 2px 8px #b3e5fc55;
+            transition: background 0.3s, transform 0.2s;
+            cursor: pointer;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .tabla-viabilidad .acciones a:hover, .tabla-viabilidad .acciones button:hover {
+            background: linear-gradient(90deg, #42a5f5 0%, #ffb703 100%);
+            color: #fff;
+            transform: scale(1.08);
+        }
+        .tabla-viabilidad th i {
+            margin-right: 6px;
+        }
+        .btn-editar {
+            background-color: #ffb703;
+            color: #fff;
+        }
+        .btn-editar:hover {
+            background-color: #42a5f5;
+            color: #fff;
+        }
+        .btn-eliminar {
+            background-color: #e57373;
+            color: #fff;
+        }
+        .btn-eliminar:hover {
+            background-color: #ef5350;
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
+<div class="bubbles-bg">
+  <div class="bubble bubble1"></div>
+  <div class="bubble bubble2"></div>
+  <div class="bubble bubble3"></div>
+  <div class="bubble bubble4"></div>
+  <div class="bubble bubble5"></div>
+</div>
+
 <h1>Listado de Viabilidades</h1>
 <a th:href="@{/viabilidadcrud/create}">➕ Subir nueva viabilidad</a>
 
-<table border="1">
+<table class="tabla-viabilidad" border="0">
     <thead>
         <tr>
-            <th>Nombre del archivo</th>
-            <th>Acciones</th>
+            <th><i class="fas fa-file-signature"></i>Nombre del archivo</th>
+            <th><i class="fas fa-cogs"></i>Acciones</th>
         </tr>
     </thead>
     <tbody>
         <tr th:each="viabilidad : ${viabilidades}">
             <td th:text="${viabilidad.nombreOriginal}">Nombre</td>
-            <td>
-                <a th:href="@{/viabilidadcrud/edit/{id}(id=${viabilidad.id})}">✏ Editar</a>
+            <td class="acciones">
+                <a th:href="@{/viabilidadcrud/edit/{id}(id=${viabilidad.id})}" title="Editar" class="btn-editar"><i class="fas fa-edit"></i></a>
                 <form th:action="@{/viabilidadcrud/eliminar/{id}(id=${viabilidad.id})}" method="post" style="display:inline;">
-                    <button type="submit" onclick="return confirm('¿Eliminar este archivo?')">🗑 Eliminar</button>
+                    <button type="submit" onclick="return confirm('¿Eliminar este archivo?')" title="Eliminar" class="btn-eliminar"><i class="fas fa-trash-alt"></i></button>
                 </form>
-                <a th:href="${viabilidad.archivo}" target="_blank">📄 Ver PDF</a>
+                <a th:href="${viabilidad.archivo}" target="_blank" title="Ver PDF"><i class="fas fa-file-pdf"></i></a>
             </td>
         </tr>
     </tbody>

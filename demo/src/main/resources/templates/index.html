@@ -10,6 +10,18 @@
 </head>
 
 <body>
+    <!-- Menú lateral -->
+    <nav class="side-menu" id="sideMenu" style="padding-top: 90px;">
+        <a th:href="@{/estadisticas}"><i class="fas fa-chart-bar"></i> Estadísticas</a>
+        <a th:href="@{/cuidados}"><i class="fas fa-paw"></i> Cuidados</a>
+        <a th:href="@{/testimonios}"><i class="fas fa-heart"></i> Historias de éxito</a>
+        <a th:href="@{/contacto}"><i class="fas fa-envelope"></i> Contacto</a>
+    </nav>
+
+    <div th:if="${session.mensajeDesactivado}" id="mensajeAlerta" class="alert slide-in">
+        <p th:text="${session.mensajeDesactivado}"></p>
+    </div>
+
     <!-- Fondo animado con huellas-corazón -->
     <div class="animated-background">
         <div class="paw-heart">❤🐾</div>
@@ -40,14 +52,6 @@
             <a th:href="@{/registro/adoptante}" class="btn btn-secondary pulse"><i class="fas fa-user-plus"></i> Registrarse</a>
         </div>
     </header>
-
-    <!-- Menú lateral -->
-    <nav class="side-menu" id="sideMenu">
-        <a th:href="@{/estadisticas}"><i class="fas fa-chart-bar"></i> Estadísticas</a>
-        <a th:href="@{/cuidados}"><i class="fas fa-paw"></i> Cuidados</a>
-        <a th:href="@{/testimonios}"><i class="fas fa-heart"></i> Historias de éxito</a>
-        <a th:href="@{/contacto}"><i class="fas fa-envelope"></i> Contacto</a>
-    </nav>
 
     <div th:if="${session.mensajeDesactivado}" id="mensajeAlerta" class="alert slide-in">
         <p th:text="${session.mensajeDesactivado}"></p>
@@ -120,13 +124,7 @@
             <p>Ser el puente entre mascotas que necesitan hogar y personas dispuestas a brindarles amor y cuidado.</p>
         </div>
         
-        <div class="info-card">
-            <div class="info-icon">
-                <i class="fas fa-home"></i>
-            </div>
-            <h3>Adopciones</h3>
-            <p>Proceso seguro y responsable para garantizar el bienestar de cada animal.</p>
-        </div>
+       
         
         <div class="info-card">
             <div class="info-icon">
@@ -142,15 +140,11 @@
         <h2>Historias que nos inspiran</h2>
         <div class="testimonial-slider">
             <div class="testimonial active">
-                <img src="images/testimonial1.jpg" alt="Familia con perro">
+                <img src="/images/famila1.jpg" alt="Familia con perro">
                 <p>"Gracias a Furry Friends encontramos a Max, quien llenó nuestro hogar de alegría."</p>
                 <span>- Familia Rodríguez</span>
             </div>
-            <div class="testimonial">
-                <img src="images/testimonial2.jpg" alt="Mujer con gato">
-                <p>"El proceso fue sencillo y seguro. Ahora Luna tiene un hogar para siempre."</p>
-                <span>- Carla M.</span>
-            </div>
+            
         </div>
     </section>
 
@@ -176,12 +170,12 @@
             </div>
             <div class="footer-section">
                 <h4>Contacto</h4>
-                <p><i class="fas fa-envelope"></i> info@furryfriends.com</p>
-                <p><i class="fas fa-phone"></i> +123 456 7890</p>
+                <p><i class="fas fa-envelope"></i> furryfriendsadopciones@gmail.com</p>
+                
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 Furry Friends - Todos los derechos reservados.</p>
+            <p>&copy; 2025 Furry Friends - Todos los derechos reservados.</p>
         </div>
     </footer>
 

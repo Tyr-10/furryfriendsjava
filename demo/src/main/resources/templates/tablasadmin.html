@@ -3,100 +3,295 @@
 <head>
     <meta charset="UTF-8">
     <title>Sistema de Administración</title>
-    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f8ff;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #e3f2fd 0%, #b3e5fc 100%);
+            font-family: 'Poppins', Arial, sans-serif;
             margin: 0;
             padding: 0;
+            position: relative;
         }
-
-        header {
-            background-color: #3498db;
-            color: white;
-            padding: 15px 30px;
+        .animated-background {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .paw-heart {
+            position: absolute;
+            color: #b3e5fc;
+            font-size: 2.2rem;
+            opacity: 0.18;
+            animation: float 16s linear infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) scale(1) rotate(0deg);}
+            50% { opacity: 0.28; }
+            100% { transform: translateY(-120vh) scale(1.2) rotate(360deg);}
+        }
+        header {
+            background: linear-gradient(90deg, #1976d2 0%, #42a5f5 100%);
+            color: white;
+            padding: 18px 0 18px 0;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 4px 18px #b3e5fc77;
         }
-
-        .logo {
-            width: 50px;
-            height: 50px;
+        .logo-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-left: 40px;
+        }
+        .logo-header img {
+            width: 58px;
+            height: 58px;
             border-radius: 50%;
-            margin-right: 10px;
+            box-shadow: 0 2px 8px #b3e5fc;
         }
-
+        .header-title-admin {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #fff;
+        }
         .btn-volver {
-            background-color: white;
-            color: #3498db;
-            padding: 8px 15px;
-            border-radius: 5px;
-            text-decoration: none;
+            background: #fff;
+            color: #1976d2;
+            padding: 10px 22px;
+            border-radius: 30px;
             font-weight: bold;
-        }
-
-        .container {
-            text-align: center;
-            margin-top: 120px;
-        }
-
-        .btn-custom {
-            display: inline-block;
-            background-color: #3498db;
-            color: white;
-            padding: 15px 30px;
-            margin: 10px;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
             text-decoration: none;
-            transition: background-color 0.3s;
+            margin-right: 40px;
+            border: none;
+            font-size: 1.1em;
+            box-shadow: 0 2px 8px #b3e5fc;
+            transition: background 0.3s, color 0.3s, transform 0.2s;
         }
-
-        .btn-custom:hover {
-            background-color: #217dbb;
+        .btn-volver:hover {
+            background: #b3e5fc;
+            color: #1976d2;
+            transform: scale(1.05);
         }
-
-        footer {
+        .admin-container {
+            max-width: 1100px;
+            margin: 70px auto 0 auto;
+            padding: 40px 24px 24px 24px;
+            background: rgba(255,255,255,0.97);
+            border-radius: 22px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.10);
+            position: relative;
+            z-index: 2;
+        }
+        .admin-title {
             text-align: center;
-            padding: 20px;
-            background-color: #000000;
-            color: white;
-            margin-top: 60px;
+            font-size: 2.2rem;
+            color: #1976d2;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        .admin-lead {
+            text-align: center;
+            color: #388e3c;
+            font-size: 1.2rem;
+            margin-bottom: 38px;
+        }
+        .admin-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+        .admin-card {
+            background: linear-gradient(135deg, #e3f2fd 0%, #fff 100%);
+            border-radius: 18px;
+            box-shadow: 0 4px 18px #b3e5fc55;
+            padding: 38px 38px 28px 38px;
+            min-width: 230px;
+            max-width: 260px;
+            flex: 1 1 220px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+        .admin-card:hover {
+            transform: translateY(-8px) scale(1.04);
+            box-shadow: 0 12px 32px #b3e5fc99;
+        }
+        .admin-icon {
+            font-size: 2.8rem;
+            color: #1976d2;
+            margin-bottom: 18px;
+            background: #fff;
+            border-radius: 50%;
+            padding: 18px;
+            box-shadow: 0 2px 8px #b3e5fc55;
+        }
+        .admin-card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #1976d2;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        .admin-card-desc {
+            color: #388e3c;
+            font-size: 1.05em;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+        .admin-btn {
+            background: linear-gradient(90deg, #1976d2 0%, #42a5f5 100%);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            padding: 14px 32px;
+            font-size: 1.1em;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 2px 8px #b3e5fc;
+            transition: background 0.3s, transform 0.2s;
+            margin-top: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .admin-btn:hover {
+            background: linear-gradient(90deg, #42a5f5 0%, #1976d2 100%);
+            color: #fff;
+            transform: scale(1.07);
+        }
+        /* Nuevo: contenedor para alinear el botón abajo */
+        .admin-card-btn-container {
+            width: 100%;
+            margin-top: auto;
+            display: flex;
+            justify-content: center;
+        }
+        @media (max-width: 900px) {
+            .admin-cards { flex-direction: column; align-items: center; }
+            .admin-card { width: 90%; max-width: 400px; }
+        }
+        @media (max-width: 600px) {
+            .admin-container { padding: 10px 2vw; }
+            .admin-title { font-size: 1.3rem; }
+            .admin-lead { font-size: 1rem; }
+            header { flex-direction: column; gap: 10px; }
+            .logo-header { margin-left: 10px; }
+            .btn-volver { margin-right: 10px; }
         }
     </style>
 </head>
-
 <body>
+    <div class="animated-background">
+        <div class="paw-heart">❤🐾</div>
+        <div class="paw-heart">❤🐾</div>
+        <div class="paw-heart">❤🐾</div>
+        <div class="paw-heart">❤🐾</div>
+        <div class="paw-heart">❤🐾</div>
+        <div class="paw-heart">❤🐾</div>
+    </div>
     <header>
-        <div class="d-flex align-items-center">
-            <img src="/images/logo.jpg" alt="Logo" class="logo">
-            <h1 style="margin: 0; font-size: 1.5rem;">Furry Friends</h1>
+        <div class="logo-header">
+            <img src="/images/logo.jpg" alt="Logo">
+            <span class="header-title-admin">Furry Friends</span>
         </div>
-        <a href="#" onclick="history.back();" class="btn-volver">⬅ Volver</a>
+        <a href="#" onclick="history.back();" class="btn-volver"><i class="fas fa-arrow-left"></i> Volver</a>
     </header>
-
-    <div class="container">
-        <h1>🐾 Bienvenido al <span style="color: #3498db;">Sistema de Administración</span> 🏡</h1>
-        <p class="lead">Seleccione una de las siguientes opciones para comenzar:</p>
-
-        <div class="d-flex flex-wrap justify-content-center gap-3">
-            <a th:href="@{/usuarioscrud}" class="btn-custom">🏠 Usuarios</a>
-            <a th:href="@{/perroscrud}" class="btn-custom">🐶 Perros</a>
-            <a th:href="@{/seguimientocrud}" class="btn-custom">📋 Seguimiento de Visitas</a>
-            <a th:href="@{/viabilidadcrud}" class="btn-custom">📊 Viabilidad de Estudio</a>
+    <div class="admin-container">
+        <h1 class="admin-title">🐾 Sistema de Administración 🏡</h1>
+        <p class="admin-lead">Selecciona una opción para gestionar el sistema:</p>
+        <div class="admin-cards">
+            <div class="admin-card">
+                <div class="admin-icon"><i class="fas fa-users"></i></div>
+                <div class="admin-card-title">Usuarios</div>
+                <div class="admin-card-desc">Gestiona los usuarios registrados en la plataforma.</div>
+                <div class="admin-card-btn-container">
+                    <a th:href="@{/usuarioscrud}" class="admin-btn"><i class="fas fa-arrow-right"></i> Ir a Usuarios</a>
+                </div>
+            </div>
+            <div class="admin-card">
+                <div class="admin-icon"><i class="fas fa-dog"></i></div>
+                <div class="admin-card-title">Perros</div>
+                <div class="admin-card-desc">Administra los perros disponibles para adopción.</div>
+                <div class="admin-card-btn-container">
+                    <a th:href="@{/perroscrud}" class="admin-btn"><i class="fas fa-arrow-right"></i> Ir a Perros</a>
+                </div>
+            </div>
+            <div class="admin-card">
+                <div class="admin-icon"><i class="fas fa-clipboard-list"></i></div>
+                <div class="admin-card-title">Seguimiento de Visitas</div>
+                <div class="admin-card-desc">Controla los seguimientos y visitas de adopción.</div>
+                <div class="admin-card-btn-container">
+                    <a th:href="@{/seguimientocrud}" class="admin-btn"><i class="fas fa-arrow-right"></i> Ir a Seguimiento</a>
+                </div>
+            </div>
+            <div class="admin-card">
+                <div class="admin-icon"><i class="fas fa-balance-scale"></i></div>
+                <div class="admin-card-title">Viabilidad de Estudio</div>
+                <div class="admin-card-desc">Gestiona los estudios de viabilidad para adopciones.</div>
+                <div class="admin-card-btn-container">
+                    <a th:href="@{/viabilidadcrud}" class="admin-btn"><i class="fas fa-arrow-right"></i> Ir a Viabilidad</a>
+                </div>
+            </div>
         </div>
     </div>
-
-    <footer>
-        <p>&copy; 2025 Furry Friends | Todos los derechos reservados</p>
+    <!-- Espacio entre la carta y el footer -->
+    <div style="height: 60px;"></div>
+    <footer style="background: linear-gradient(135deg, #42a5f5 0%, #fff 100%); color: #1976d2; border-radius: 0; box-shadow: 0 2px 24px #b3e5fc77; padding: 56px 0 24px 0; margin: 0; width: 100vw; left: 0; font-family: 'Poppins', Arial, sans-serif; position: relative; z-index: 10;">
+        <div class="footer-content" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 32px; max-width: 1200px; margin: 0 auto;">
+            <div class="footer-section" style="flex: 1; min-width: 220px; margin-bottom: 10px;">
+                <h4 style="color: #1976d2; font-size: 1.35rem; margin-bottom: 14px; font-weight: 800; letter-spacing: 1px; font-family: 'Poppins', Arial, sans-serif;">Furry Friends</h4>
+                <p style="color: #333; font-size: 1.08em; font-weight: 500; font-family: 'Poppins', Arial, sans-serif;">Conectando corazones desde 2024</p>
+                <div class="social-icons" style="display: flex; gap: 16px; margin-top: 18px;">
+                    <a href="#" style="color: #1976d2; font-size: 1.35rem; transition: color 0.2s;"><i class="fab fa-facebook"></i></a>
+                    <a href="#" style="color: #1976d2; font-size: 1.35rem; transition: color 0.2s;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" style="color: #1976d2; font-size: 1.35rem; transition: color 0.2s;"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-section" style="flex: 1; min-width: 220px; margin-bottom: 10px;">
+                <h4 style="color: #1976d2; font-size: 1.2rem; margin-bottom: 14px; font-weight: 700; font-family: 'Poppins', Arial, sans-serif;">Enlaces rápidos</h4>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li><a th:href="@{/perrosdisponibles}" style="color: #388e3c; font-weight: 600; font-size: 1.08em; text-decoration: none; transition: color 0.2s; font-family: 'Poppins', Arial, sans-serif;">Adoptar</a></li>
+                    <li><a th:href="@{/registro/mascota}" style="color: #388e3c; font-weight: 600; font-size: 1.08em; text-decoration: none; transition: color 0.2s; font-family: 'Poppins', Arial, sans-serif;">Dar en adopción</a></li>
+                    <li><a th:href="@{/cuidados}" style="color: #388e3c; font-weight: 600; font-size: 1.08em; text-decoration: none; transition: color 0.2s; font-family: 'Poppins', Arial, sans-serif;">Cuidados</a></li>
+                </ul>
+            </div>
+            <div class="footer-section" style="flex: 1; min-width: 220px; margin-bottom: 10px;">
+                <h4 style="color: #1976d2; font-size: 1.2rem; margin-bottom: 14px; font-weight: 700; font-family: 'Poppins', Arial, sans-serif;">Contacto</h4>
+                <p style="color: #444; font-size: 1.08em; font-family: 'Poppins', Arial, sans-serif;"><i class="fas fa-envelope"></i> furryfriendsadopciones@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom" style="text-align: center; color: #555; font-size: 1em; margin-top: 32px; font-weight: 500; font-family: 'Poppins', Arial, sans-serif;">
+            <p>&copy; 2025 Furry Friends - Todos los derechos reservados.</p>
+        </div>
     </footer>
+    <script>
+        // Animación de huellas-corazón
+        document.addEventListener("DOMContentLoaded", () => {
+            const pawHearts = document.querySelectorAll('.paw-heart');
+            pawHearts.forEach(paw => {
+                const size = Math.random() * 30 + 20;
+                paw.style.fontSize = `${size}px`;
+                paw.style.left = `${Math.random() * 100}%`;
+                paw.style.top = `${Math.random() * 100}%`;
+                paw.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                paw.style.animationDelay = `${Math.random() * 5}s`;
+                paw.style.opacity = Math.random() * 0.4 + 0.1;
+            });
+        });
+    </script>
 </body>
 </html>

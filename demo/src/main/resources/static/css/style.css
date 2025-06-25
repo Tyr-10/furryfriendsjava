@@ -1,18 +1,20 @@
-/* Estilos generales con paleta de 3 colores */
+/* Paleta pastel personalizada */
 :root {
-    --azul-oscuro: #2C3E50;
-    --azul-medio: #3498DB;
-    --azul-claro: #AED6F1;
-    --verde-oscuro: #27AE60;
-    --verde-medio: #58D68D;
-    --verde-claro: #ABEBC6;
-    --amarillo-oscuro: #F39C12;
-    --amarillo-medio: #F4D03F;
-    --amarillo-claro: #F9E79F;
-    --light: #F7F7F7;
+    --azul-oscuro: #1976d2;
+    --azul-medio: #42a5f5;
+    --azul-pastel: #e3f2fd;
+    --azul-pastel2: #b3e5fc;
+    --verde-oscuro: #388e3c;
+    --verde-medio: #81c784;
+    --verde-pastel: #e8f5e9;
+    --verde-pastel2: #b9f6ca;
+    --amarillo: #FFB703;
+    --amarillo-pastel: #fff9e5;
+    --light: #f7fafd;
     --dark: #333333;
 }
 
+/* Estilos generales con paleta de 3 colores */
 * {
     margin: 0;
     padding: 0;
@@ -21,7 +23,7 @@
 }
 
 body {
-    background: linear-gradient(135deg, var(--azul-claro) 0%, var(--verde-claro) 100%);
+    background: linear-gradient(135deg, var(--azul-pastel) 0%, #fff 100%);
     color: var(--dark);
     overflow-x: hidden;
     position: relative;
@@ -29,21 +31,21 @@ body {
 
 /* Fondo animado con huellas-corazón */
 .animated-background {
+    background: linear-gradient(135deg, var(--azul-pastel2) 0%, #fff 100%);
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: -1;
-    background: linear-gradient(135deg, rgba(44, 62, 80, 0.05) 0%, rgba(39, 174, 96, 0.05) 100%);
     overflow: hidden;
 }
 
 .paw-heart {
     position: absolute;
-    color: var(--amarillo-oscuro);
+    color: var(--azul-medio);
     animation: float 15s infinite linear;
-    opacity: 0.3;
+    opacity: 0.18;
     z-index: -1;
 }
 
@@ -65,7 +67,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 15px 5%;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: #eaf6ff;
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
     position: relative;
     z-index: 100;
@@ -83,7 +85,7 @@ header {
     border-radius: 50%;
     object-fit: cover;
     margin-right: 15px;
-    border: 2px solid var(--verde-oscuro);
+    border: 2px solid var(--verde-medio);
 }
 
 .header-title {
@@ -94,17 +96,19 @@ header {
 }
 
 .header-title h1 {
-    font-size: 2rem;
+    font-size: 2.4rem;
     color: var(--azul-oscuro);
-    margin: 0;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(66,165,245,0.10), 0 1px 0 #fff;
 }
 
 .tagline {
-    font-size: 0.9rem;
-    color: var(--dark);
+    font-size: 1.1rem;
+    color: var(--verde-medio);
+    font-weight: 700;
+    text-shadow: 0 1px 0 #fff;
     margin: 0;
-    font-weight: 400;
 }
 
 .header-buttons {
@@ -112,51 +116,57 @@ header {
     gap: 10px;
 }
 
-/* Menú lateral */
+/* Menú Hamburguesa */
+.menu-toggle {
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--azul-oscuro);
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    z-index: 101;
+}
+
+/* Menú Lateral */
 .side-menu {
+    height: 100vh;
+    width: 0;
     position: fixed;
     top: 0;
-    left: -250px;
-    width: 250px;
-    height: 100%;
-    background: linear-gradient(135deg, var(--azul-oscuro) 0%, var(--verde-oscuro) 100%);
-    padding-top: 80px;
-    transition: all 0.3s ease;
-    z-index: 99;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 0 15px 15px 0;
-}
-
-.side-menu.menu-open {
     left: 0;
+    background-color: #f7fafd;
+    overflow-x: hidden;
+    transition: 0.3s;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 99;
+    padding-top: 70px;
 }
-
 .side-menu a {
-    display: block;
-    padding: 15px 20px;
-    color: white;
+    padding: 12px 20px;
     text-decoration: none;
-    font-size: 1.1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s;
+    font-size: 16px;
+    color: var(--azul-oscuro);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    transition: 0.2s;
+    border-left: 4px solid transparent;
 }
 
-.side-menu a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    padding-left: 25px;
-}
-
-.side-menu i {
+.side-menu a i {
     margin-right: 10px;
     width: 20px;
     text-align: center;
 }
 
-.menu-toggle {
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--azul-oscuro);
-    display: none;
+.side-menu a:hover {
+    background-color: var(--azul-medio);
+    color: white;
+    border-left: 4px solid var(--verde-medio);
+}
+
+.side-menu.menu-open {
+    width: 250px;
 }
 
 /* Alertas */
@@ -164,8 +174,9 @@ header {
     padding: 15px;
     margin: 20px auto;
     max-width: 800px;
-    background-color: var(--verde-medio);
-    color: white;
+    background-color: #fff;
+    color: var(--azul-oscuro);
+    border-left: 6px solid var(--azul-medio);
     border-radius: 8px;
     text-align: center;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
@@ -193,7 +204,8 @@ header {
     margin: 30px auto;
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(66, 165, 245, 0.10);
+    background: #fff;
 }
 
 .carousel-slide {
@@ -271,9 +283,9 @@ header {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.7);
+    background: var(--verde-medio);
     border: none;
-    color: var(--azul-oscuro);
+    color: white;
     font-size: 1.5rem;
     padding: 15px;
     cursor: pointer;
@@ -288,8 +300,8 @@ header {
 }
 
 .carousel-control:hover {
-    background: white;
-    transform: translateY(-50%) scale(1.1);
+    background: var(--azul-medio);
+    color: white;
 }
 
 .prev {
@@ -345,39 +357,31 @@ header {
     align-items: center;
     gap: 10px;
     text-decoration: none;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 12px rgba(66, 165, 245, 0.08);
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--azul-medio) 0%, var(--verde-medio) 100%);
+    background: linear-gradient(135deg, var(--azul-medio) 0%, #fff 100%);
+    color: var(--azul-oscuro);
+    border: 1.5px solid var(--azul-medio);
+}
+.btn-secondary {
+    background: #fff;
+    color: var(--verde-oscuro);
+    border: 1.5px solid var(--verde-medio);
+}
+.btn:hover {
+    background: var(--azul-medio);
     color: white;
 }
-
-.btn-secondary {
-    background: white;
-    color: var(--azul-oscuro);
-    border: 2px solid var(--azul-oscuro);
+.btn-warning, .btn-yellow {
+    background: var(--amarillo);
+    color: var(--dark);
+    border: none;
 }
-
-.btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.15);
-}
-
-.pulse {
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7);
-    }
-    70% {
-        box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
-    }
+.btn-warning:hover, .btn-yellow:hover {
+    background: #ffd166;
+    color: var(--dark);
 }
 
 /* Sección de información */
@@ -386,7 +390,7 @@ header {
     justify-content: center;
     gap: 30px;
     padding: 60px 5%;
-    background: white;
+    background: linear-gradient(135deg, #fff 0%, var(--azul-pastel2) 100%);
     margin: 50px 0;
     border-radius: 15px;
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
@@ -397,7 +401,8 @@ header {
     flex: 1;
     min-width: 250px;
     max-width: 300px;
-    background: var(--light);
+    background: #fff;
+    border: 1.5px solid var(--azul-pastel2);
     padding: 30px;
     border-radius: 15px;
     text-align: center;
@@ -414,12 +419,12 @@ header {
     width: 70px;
     height: 70px;
     margin: 0 auto 20px;
-    background: linear-gradient(135deg, var(--azul-medio) 0%, var(--verde-medio) 100%);
+    background: linear-gradient(135deg, var(--azul-medio) 0%, #fff 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: var(--azul-oscuro);
     font-size: 1.8rem;
     box-shadow: 0 5px 15px rgba(44, 62, 80, 0.3);
 }
@@ -438,7 +443,7 @@ header {
 /* Testimonios */
 .testimonials {
     padding: 60px 5%;
-    background: linear-gradient(135deg, rgba(44, 62, 80, 0.05) 0%, rgba(39, 174, 96, 0.05) 100%);
+    background: linear-gradient(135deg, #fff 0%, var(--azul-pastel) 100%);
     text-align: center;
     border-radius: 15px;
     margin: 50px 0;
@@ -458,7 +463,7 @@ header {
 
 .testimonial {
     display: none;
-    background: white;
+    background: var(--light);
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
@@ -486,14 +491,14 @@ header {
 }
 
 .testimonial span {
-    color: var(--azul-oscuro);
+    color: var(--verde-oscuro);
     font-weight: 600;
 }
 
 /* Footer */
 footer {
-    background: linear-gradient(135deg, var(--azul-oscuro) 0%, var(--verde-oscuro) 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--azul-medio) 0%, #fff 100%);
+    color: var(--azul-oscuro);
     padding: 60px 5% 20px;
     margin-top: 50px;
     border-radius: 15px 15px 0 0;
@@ -515,14 +520,21 @@ footer {
 }
 
 .footer-section h4 {
-    color: var(--amarillo-medio);
-    margin-bottom: 20px;
+    color: var(--azul-oscuro);
+    background: #fff;
+    padding: 4px 12px;
+    border-radius: 8px;
     font-size: 1.3rem;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 8px rgba(66,165,245,0.08);
 }
 
 .footer-section p, .footer-section li {
     margin-bottom: 10px;
-    color: #ddd;
+    color: #444; /* Cambiado de #ddd a gris oscuro para mejor visibilidad */
 }
 
 .footer-section ul {
@@ -530,13 +542,13 @@ footer {
 }
 
 .footer-section a {
-    color: #ddd;
+    color: #444; /* Cambiado de #ddd a gris oscuro */
     text-decoration: none;
     transition: color 0.3s;
 }
 
 .footer-section a:hover {
-    color: var(--amarillo-medio);
+    color: var(--verde-medio);
 }
 
 .social-icons {
@@ -553,7 +565,7 @@ footer {
 
 .social-icons a:hover {
     transform: translateY(-5px);
-    color: var(--amarillo-medio);
+    color: var(--amarillo);
 }
 
 .footer-bottom {

@@ -1,48 +1,70 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Perros del Refugio</title>
-    <link rel="stylesheet" th:href="@{/css/crud.css}">
+    <link rel="stylesheet" th:href="@{/css/refugiocrud1.css}">
 </head>
 <body>
-<h1>🐶 Mis Perros</h1>
-
-<a href="/refugiocrud/reporte" class="btn" style="margin-bottom:15px; background:#3498db; color:white; border-radius:5px; padding:8px 18px; text-decoration:none; font-weight:bold;">
-    📄 Descargar reporte PDF
-</a>
-
-<table border="1">
-  <thead>
-    <tr>
-      <th>Imagen</th>
-      <th>Nombre</th>
-      <th>Edad</th>
-      <th>Raza</th>
-      <th>Disponible</th>
-      <th>Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr th:each="perro : ${perros}">
-      <td>
-        <div th:if="${imagenes[perro.id] != null}">
-          <img th:src="'data:image/jpeg;base64,' + ${imagenes[perro.id]}" alt="Foto" width="100"/>
+    <div class="bg-gradient"></div>
+    <!-- Animaciones de perros y huellas con emojis -->
+    <div class="perros-animados">
+        <span class="perro-emoji perro1" aria-label="perro">🐶</span>
+        <span class="perro-emoji perro2" aria-label="perro">🐕</span>
+        <span class="perro-emoji perro3" aria-label="perro">🦮</span>
+        <span class="perro-emoji perro4" aria-label="perro">🐩</span>
+        <span class="perro-emoji perro5" aria-label="perro">🐕‍🦺</span>
+        <span class="huella-emoji huella1" aria-label="huella">🐾</span>
+        <span class="huella-emoji huella2" aria-label="huella">🐾</span>
+        <span class="huella-emoji huella3" aria-label="huella">🐾</span>
+        <span class="huella-emoji huella4" aria-label="huella">🐾</span>
+    </div>
+    <div class="crud-container">
+        <a href="/" class="btn-volver esquina-volver">← Volver</a>
+        <div class="logo-wrap">
+            <img src="images/logo.jpg" alt="Logo Refugio" class="img-uniform">
         </div>
-        <div th:if="${imagenes[perro.id] == null}">No image</div>
-      </td>
-      <td th:text="${perro.nombre}">Nombre</td>
-      <td th:text="${perro.edad}">Edad</td>
-      <td th:text="${perro.raza}">Raza</td>
-      <td th:text="${perro.disponible ? 'Sí' : 'No'}">Disponible</td>
-      <td>
-        <a th:href="@{'/refugiocrud/editar/' + ${perro.id}}">✏ Editar</a>
-        <a th:href="@{'/refugiocrud/eliminar/' + ${perro.id}}"
-           onclick="return confirm('¿Eliminar este perro?')">🗑 Eliminar</a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+        <h1 class="titulo-principal">Gestión de Refugio</h1>
 
+        <a href="/refugiocrud/reporte" class="btn-azul" style="margin-bottom:15px;">
+            📄 Descargar reporte PDF
+        </a>
+
+        <table border="1">
+          <thead>
+            <tr>
+              <th class="col-img">Imagen</th>
+              <th class="col-nombre">Nombre</th>
+              <th class="col-edad">Edad</th>
+              <th class="col-raza">Raza</th>
+              <th class="col-disponible">Disponible</th>
+              <th class="col-acciones">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="perro : ${perros}">
+              <td class="col-img">
+                <div th:if="${imagenes[perro.id] != null}">
+                  <img th:src="'data:image/jpeg;base64,' + ${imagenes[perro.id]}" alt="Foto" width="100"/>
+                </div>
+                <div th:if="${imagenes[perro.id] == null}">No image</div>
+              </td>
+              <td class="col-nombre" th:text="${perro.nombre}">Nombre</td>
+              <td class="col-edad" th:text="${perro.edad}">Edad</td>
+              <td class="col-raza" th:text="${perro.raza}">Raza</td>
+              <td class="col-disponible" th:text="${perro.disponible ? 'Sí' : 'No'}">Disponible</td>
+              <td class="col-acciones">
+                <a th:href="@{'/refugiocrud/editar/' + ${perro.id}}" class="btn-accion btn-editar">✏ Editar</a>
+                <a th:href="@{'/refugiocrud/eliminar/' + ${perro.id}}"
+                   class="btn-accion btn-eliminar"
+                   onclick="return confirm('¿Eliminar este perro?')">🗑 Eliminar</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+    <footer class="footer-copyright">
+        &copy; 2024 Furry Friends. Todos los derechos reservados.
+    </footer>
 </body>
 </html>

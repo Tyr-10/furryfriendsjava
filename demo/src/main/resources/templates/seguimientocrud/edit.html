@@ -2,9 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Editar Seguimiento</title>
-    <link rel="stylesheet" href="/css/crud.css">
+    <link rel="stylesheet" th:href="@{/css/crudedit.css}">
 </head>
 <body>
+<div class="lines-bg">
+  <div class="line line1"></div>
+  <div class="line line2"></div>
+  <div class="line line3"></div>
+  <div class="line line4"></div>
+</div>
     <h1>Editar archivo</h1>
     <form method="post" enctype="multipart/form-data" th:action="@{'/seguimientocrud/actualizar/' + ${seguimiento.id}}">
         <label>Nuevo archivo PDF:</label>

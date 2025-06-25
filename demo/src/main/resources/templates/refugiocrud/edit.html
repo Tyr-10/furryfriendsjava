@@ -3,41 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <title>Editar Perro</title>
+    <link rel="stylesheet" th:href="@{/css/refugiocrud2.css}">
 </head>
 <body>
-<h1>Editar Perro</h1>
-<form th:action="@{/refugiocrud/actualizar}" method="post" enctype="multipart/form-data" th:object="${perro}">
-    <input type="hidden" th:field="*{id}"/>
+<div class="edit-container">
+    <a th:href="@{/refugiocrud}" class="close-btn" title="Ir al CRUD">✖</a>
+    <h1 class="edit-title">Editar Perro</h1>
+    <form class="edit-form" th:action="@{/refugiocrud/actualizar}" method="post" enctype="multipart/form-data" th:object="${perro}">
+        <input type="hidden" th:field="*{id}"/>
 
-    <label>Nombre:</label>
-    <input type="text" th:field="*{nombre}" required><br>
+        <div class="form-group">
+            <label class="form-label">Nombre:</label>
+            <input class="form-input" type="text" th:field="*{nombre}" required>
+        </div>
 
-    <label>Edad:</label>
-    <input type="number" th:field="*{edad}" required><br>
+        <div class="form-group">
+            <label class="form-label">Edad:</label>
+            <input class="form-input" type="number" th:field="*{edad}" required>
+        </div>
 
-    <label>Tamaño:</label>
-    <select th:field="*{tamanio}">
-        <option th:each="t : ${tamanos}" th:value="${t}" th:text="${t}"></option>
-    </select><br>
+        <div class="form-group">
+            <label class="form-label">Tamaño:</label>
+            <select class="form-input" th:field="*{tamanio}">
+                <option th:each="t : ${tamanos}" th:value="${t}" th:text="${t}"></option>
+            </select>
+        </div>
 
-    <label>Color:</label>
-    <input type="text" th:field="*{color}" required><br>
+        <div class="form-group">
+            <label class="form-label">Color:</label>
+            <input class="form-input" type="text" th:field="*{color}" required>
+        </div>
 
-    <label>Sexo:</label>
-    <select th:field="*{sexo}">
-        <option th:each="s : ${sexos}" th:value="${s}" th:text="${s}"></option>
-    </select><br>
+        <div class="form-group">
+            <label class="form-label" for="sexoSelect">Sexo:</label>
+            <select class="form-input" id="sexoSelect" th:field="*{sexo}" required>
+                <option value="" disabled selected>Selecciona una opción</option>
+                <option value="Macho">Macho</option>
+                <option value="Hembra">Hembra</option>
+            </select>
+        </div>
 
-    <label>Descripción:</label>
-    <textarea th:field="*{descripcion}"></textarea><br>
+        <div class="form-group">
+            <label class="form-label">Descripción:</label>
+            <textarea class="form-input" th:field="*{descripcion}"></textarea>
+        </div>
 
-    <label>Disponible:</label>
-    <input type="checkbox" th:field="*{disponible}"><br>
+        <div class="form-group">
+            <label class="form-label">Imagen (si deseas cambiarla):</label>
+            <input class="form-input" type="file" name="imagenFile">
+        </div>
 
-    <label>Imagen (si deseas cambiarla):</label>
-    <input type="file" name="imagenFile"><br>
+        <div class="form-group form-check">
+            <label class="form-label" for="disponibleSwitch">Disponible:</label>
+            <label class="switch">
+                <input type="checkbox" id="disponibleSwitch" class="form-checkbox" name="disponible" th:field="*{disponible}">
+                <span class="slider"></span>
+            </label>
+        </div>
 
-    <button type="submit">Actualizar</button>
-</form>
+        <button class="form-button" type="submit">Actualizar</button>
+    </form>
+</div>
 </body>
 </html>
