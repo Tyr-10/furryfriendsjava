@@ -3,14 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Furry Friends</title>
-
+    <title>Furry Friends - Conectando mascotas con hogares amorosos</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    
+    <!-- Fondo animado con huellas-corazón -->
+    <div class="animated-background">
+        <div class="paw-heart">❤🐾</div>
+        <div class="paw-heart">❤🐾</div>
+        <div class="paw-heart">❤🐾</div>
+        <div class="paw-heart">❤🐾</div>
+        <div class="paw-heart">❤🐾</div>
+        <div class="paw-heart">❤🐾</div>
+    </div>
+
     <!-- Header -->
     <header>
         <div class="menu-toggle" onclick="toggleMenu()">
@@ -19,51 +28,61 @@
 
         <div class="logo-container">
             <img src="images/logo.jpg" alt="logo" class="logo">
+        </div>
+
+        <div class="header-title">
             <h1>Furry Friends</h1>
+            <p class="tagline">Conectando mascotas con hogares amorosos</p>
         </div>
 
         <div class="header-buttons">
-            <a th:href="@{/login}" class="btn btn-primary">Iniciar Sesión</a>
-            <a th:href="@{/registro/adoptante}" class="btn btn-secondary"><i class="fas-fa-user-plus"></i>Registrarse</a>
+            <a th:href="@{/login}" class="btn btn-primary pulse">Iniciar Sesión</a>
+            <a th:href="@{/registro/adoptante}" class="btn btn-secondary pulse"><i class="fas fa-user-plus"></i> Registrarse</a>
         </div>
     </header>
 
     <!-- Menú lateral -->
     <nav class="side-menu" id="sideMenu">
         <a th:href="@{/estadisticas}"><i class="fas fa-chart-bar"></i> Estadísticas</a>
-        <a th:href="@{/cuidados}"><i class="fas fa-cog"></i> Cuidados</a>
+        <a th:href="@{/cuidados}"><i class="fas fa-paw"></i> Cuidados</a>
+        <a th:href="@{/testimonios}"><i class="fas fa-heart"></i> Historias de éxito</a>
+        <a th:href="@{/contacto}"><i class="fas fa-envelope"></i> Contacto</a>
     </nav>
-    <div th:if="${session.mensajeDesactivado}" id="mensajeAlerta" class="alert">
-    <p th:text="${session.mensajeDesactivado}"></p>
-</div>
 
-<script>
-    // Oculta el mensaje después de 5 segundos
-    setTimeout(() => {
-        const alerta = document.getElementById('mensajeAlerta');
-        if (alerta) {
-            alerta.style.display = 'none';
-        }
-    }, 5000);
-</script>
+    <div th:if="${session.mensajeDesactivado}" id="mensajeAlerta" class="alert slide-in">
+        <p th:text="${session.mensajeDesactivado}"></p>
+    </div>
 
     <!-- Carrusel -->
     <main>
         <div class="carousel-container">
             <div class="carousel-slide active">
-                <img src="images/ppp.jpg" alt="a.jpg" class="carousel-image">
+                <img src="images/ppp.jpg" alt="Perro en adopción" class="carousel-image">
+                <div class="slide-caption bounce-in">
+                    <h3>Encuentra tu compañero perfecto</h3>
+                    <p>Cada mascota merece un hogar lleno de amor</p>
+                </div>
             </div>
-
             <div class="carousel-slide">
-                <img src="images/cute.jpg" alt="cute.jpg 1" class="carousel-image">
+                <img src="images/cute.jpg" alt="Perro jugando" class="carousel-image">
+                <div class="slide-caption bounce-in">
+                    <h3>Adopción responsable</h3>
+                    <p>Cambia una vida para siempre</p>
+                </div>
             </div>
-
             <div class="carousel-slide">
-                <img src="images/f.jpg" alt="retriver2.jpeg" class="carousel-image">
+                <img src="images/f.jpg" alt="Golden Retriever" class="carousel-image">
+                <div class="slide-caption bounce-in">
+                    <h3>Proceso seguro</h3>
+                    <p>Conectamos adoptantes con refugios confiables</p>
+                </div>
             </div>
-
             <div class="carousel-slide">
-                <img src="images/chanda.jpg" alt="chanda.jpg" class="carousel-image">
+                <img src="images/chanda.jpg" alt="Cachorro" class="carousel-image">
+                <div class="slide-caption bounce-in">
+                    <h3>Segundas oportunidades</h3>
+                    <p>Ellos te esperan con amor incondicional</p>
+                </div>
             </div>
 
             <button class="carousel-control prev" onclick="moveSlide(-1)">
@@ -72,31 +91,120 @@
             <button class="carousel-control next" onclick="moveSlide(1)">
                 <i class="fas fa-chevron-right"></i>
             </button>
+            
+            <div class="carousel-indicators">
+                <span class="indicator active" onclick="goToSlide(0)"></span>
+                <span class="indicator" onclick="goToSlide(1)"></span>
+                <span class="indicator" onclick="goToSlide(2)"></span>
+                <span class="indicator" onclick="goToSlide(3)"></span>
+            </div>
         </div>
 
         <div class="action-buttons">
-            <a th:href="@{/perrosdisponibles}" class="btn btn-primary">
+            <a th:href="@{/perrosdisponibles}" class="btn btn-primary pulse">
                 <i class="fas fa-search"></i> Ver Perros en Adopción
+            </a>
+            <a th:href="@{/registro/mascota}" class="btn btn-secondary pulse">
+                <i class="fas fa-dog"></i> Dar en Adopción
             </a>
         </div>
     </main>
 
-    <!-- Scripts -->
+    <!-- Sección Informativa -->
+    <section class="info-section">
+        <div class="info-card">
+            <div class="info-icon">
+                <i class="fas fa-paw"></i>
+            </div>
+            <h3>Nuestra Misión</h3>
+            <p>Ser el puente entre mascotas que necesitan hogar y personas dispuestas a brindarles amor y cuidado.</p>
+        </div>
+        
+        <div class="info-card">
+            <div class="info-icon">
+                <i class="fas fa-home"></i>
+            </div>
+            <h3>Adopciones</h3>
+            <p>Proceso seguro y responsable para garantizar el bienestar de cada animal.</p>
+        </div>
+        
+        <div class="info-card">
+            <div class="info-icon">
+                <i class="fas fa-heart"></i>
+            </div>
+            <h3>Comunidad</h3>
+            <p>Únete a nuestra red de amantes de los animales y comparte experiencias.</p>
+        </div>
+    </section>
+
+    <!-- Testimonios -->
+    <section class="testimonials">
+        <h2>Historias que nos inspiran</h2>
+        <div class="testimonial-slider">
+            <div class="testimonial active">
+                <img src="images/testimonial1.jpg" alt="Familia con perro">
+                <p>"Gracias a Furry Friends encontramos a Max, quien llenó nuestro hogar de alegría."</p>
+                <span>- Familia Rodríguez</span>
+            </div>
+            <div class="testimonial">
+                <img src="images/testimonial2.jpg" alt="Mujer con gato">
+                <p>"El proceso fue sencillo y seguro. Ahora Luna tiene un hogar para siempre."</p>
+                <span>- Carla M.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Furry Friends</h4>
+                <p>Conectando corazones desde 2024</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Enlaces rápidos</h4>
+                <ul>
+                    <li><a th:href="@{/perrosdisponibles}">Adoptar</a></li>
+                    <li><a th:href="@{/registro/mascota}">Dar en adopción</a></li>
+                    <li><a th:href="@{/cuidados}">Cuidados</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p><i class="fas fa-envelope"></i> info@furryfriends.com</p>
+                <p><i class="fas fa-phone"></i> +123 456 7890</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Furry Friends - Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
     <script>
         function toggleMenu() {
             const menu = document.getElementById("sideMenu");
             menu.classList.toggle("menu-open");
-            document.body.style.marginLeft = menu.classList.contains("menu-open") ? "250px" : "0";
+            document.body.style.overflow = menu.classList.contains("menu-open") ? "hidden" : "auto";
         }
 
         let currentSlide = 0;
         const slides = document.querySelectorAll(".carousel-slide");
+        const indicators = document.querySelectorAll(".indicator");
 
         function showSlide(n) {
             slides.forEach(slide => slide.classList.remove("active"));
+            indicators.forEach(ind => ind.classList.remove("active"));
+            
             if (n >= slides.length) currentSlide = 0;
             if (n < 0) currentSlide = slides.length - 1;
+            
             slides[currentSlide].classList.add("active");
+            indicators[currentSlide].classList.add("active");
         }
 
         function moveSlide(n) {
@@ -104,18 +212,28 @@
             showSlide(currentSlide);
         }
 
+        function goToSlide(n) {
+            currentSlide = n;
+            showSlide(currentSlide);
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             showSlide(0);
             setInterval(() => moveSlide(1), 5000);
+            
+            // Animación de huellas-corazón
+            const pawHearts = document.querySelectorAll('.paw-heart');
+pawHearts.forEach(paw => {
+    const size = Math.random() * 30 + 20;
+    paw.style.fontSize = `${size}px`;
+    paw.style.left = `${Math.random() * 100}%`;
+    paw.style.top = `${Math.random() * 100}%`;
+    paw.style.animationDuration = `${Math.random() * 20 + 10}s`;
+    paw.style.animationDelay = `${Math.random() * 5}s`;
+
+                paw.style.opacity = Math.random() * 0.4 + 0.1;
+            });
         });
     </script>
-
-    <script th:src="@{/js/carousel.js}"></script>
-    <script th:src="@{/js/menu.js}"></script>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 Furry Friends - Todos los derechos reservados.</p>
-    </footer>
 </body>
 </html>
