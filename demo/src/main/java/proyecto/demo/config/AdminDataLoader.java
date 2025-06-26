@@ -73,6 +73,7 @@ public class AdminDataLoader {
                 usuarioRepository.save(juan);
                 System.out.println("Admin Juan creado.");
             }
+            //creado por Emilia, Mamari y Juansitobonito
         };
     }
 }
