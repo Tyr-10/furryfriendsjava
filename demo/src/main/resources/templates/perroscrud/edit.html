@@ -6,6 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/crudedit.css}">
 </head>
 <body>
+<a href="/tablasadmin" class="btn-volver" style="margin: 18px 0 0 18px; display: inline-block;">← Volver</a>
 <div class="lines-bg">
   <div class="line line1"></div>
   <div class="line line2"></div>
@@ -21,26 +22,23 @@
     <label>Tamaño:
         <select th:field="*{tamanio}">
             <option value="">-- Selecciona --</option>
-            <option value="Grande" th:selected="${perro.tamanio == 'Grande'}">Grande</option>
-            <option value="Mediano" th:selected="${perro.tamanio == 'Mediano'}">Mediano</option>
-            <option value="Pequeño" th:selected="${perro.tamanio == 'Pequeño'}">Pequeño</option>
+            <option value="Grande">Grande</option>
+            <option value="Mediano">Mediano</option>
+            <option value="Pequeño">Pequeño</option>
         </select>
     </label><br>
     <label>Descripción: <input type="text" th:field="*{descripcion}" /></label><br>
     <label>Sexo:
         <select th:field="*{sexo}">
             <option value="">-- Selecciona --</option>
-            <option value="Macho" th:selected="${perro.sexo == 'Macho'}">Macho</option>
-            <option value="Hembra" th:selected="${perro.sexo == 'Hembra'}">Hembra</option>
+            <option value="Macho">Macho</option>
+            <option value="Hembra">Hembra</option>
         </select>
     </label><br>
     <label>Color: <input type="text" th:field="*{color}" /></label><br>
     <label>Historial Clínico: <input type="text" th:field="*{historialClinico}" /></label><br>
     <label>Imagen: <input type="file" name="imagen" /></label><br>
-    <label>Disponible: <input type="checkbox" th:field="*{disponible}" /></label><br>
-
     <button type="submit">Actualizar</button>
 </form>
-<a th:href="@{/perroscrud}">🔙 Volver</a>
 </body>
 </html>

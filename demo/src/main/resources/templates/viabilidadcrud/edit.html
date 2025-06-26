@@ -5,21 +5,16 @@
     <link rel="stylesheet" th:href="@{/css/crudedit.css}">
 </head>
 <body>
-<div class="lines-bg">
-  <div class="line line1"></div>
-  <div class="line line2"></div>
-  <div class="line line3"></div>
-  <div class="line line4"></div>
-</div>
+<a href="/tablasadmin" class="btn-volver" style="margin: 18px 0 0 18px; display: inline-block;">← Volver</a>
 
-    <h1>Editar archivo de viabilidad</h1>
+<h1>Editar archivo de viabilidad</h1>
 
-    <form method="post" enctype="multipart/form-data" th:action="@{'/viabilidadcrud/actualizar/' + ${viabilidad.id}}">
-        <label>Nuevo archivo PDF:</label>
-        <input type="file" name="archivo" accept="application/pdf" required />
-        <button type="submit">Actualizar</button>
-    </form>
+<form method="post" enctype="multipart/form-data" th:action="@{'/viabilidadcrud/actualizar/' + ${viabilidad.id}}">
+    <label>Nuevo archivo PDF:</label>
+    <input type="file" name="archivo" accept="application/pdf" required />
+    <button type="submit">Actualizar</button>
+</form>
 
-    <a th:href="@{/viabilidadcrud}">Volver</a>
+<a th:href="@{/viabilidadcrud}">Volver</a>
 </body>
 </html>

@@ -139,6 +139,27 @@ button:hover, .btn:hover, a.btn:hover {
     color: #fff !important;
 }
 
+/* Botón Volver */
+.btn-volver {
+    background: #fff;
+    color: #1976d2;
+    padding: 8px 20px;
+    border-radius: 22px;
+    font-weight: bold;
+    text-decoration: none;
+    border: 1px solid #1976d2;
+    font-size: 1em;
+    box-shadow: 0 2px 8px #b3e5fc55;
+    transition: background 0.3s, color 0.3s, transform 0.2s;
+    display: inline-block;
+    margin-bottom: 18px;
+}
+.btn-volver:hover {
+    background: #b3e5fc;
+    color: #1976d2;
+    transform: scale(1.05);
+}
+
 /* Responsive */
 @media (max-width: 600px) {
     form { padding: 18px 4vw; }
