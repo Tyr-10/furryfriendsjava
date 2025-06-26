@@ -5,6 +5,7 @@
     <title>Listado de Perros</title>
     <link rel="stylesheet" th:href="@{/css/crudindex.css}">
     <link rel="stylesheet" th:href="@{/css/crudindex.perros.css}">
+    <link rel="stylesheet" th:href="@{/css/crudbusqueda.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Estilos amigables para la tabla */
@@ -57,6 +58,47 @@
         .tabla-perros th i {
             margin-right: 6px;
         }
+        /* Estilos para el formulario de búsqueda */
+        .busqueda-form {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .busqueda-form input[type="text"] {
+            padding: 10px;
+            border: 1px solid #42a5f5;
+            border-radius: 20px 0 0 20px;
+            outline: none;
+            width: 300px;
+            max-width: 100%;
+        }
+        .busqueda-form button.btn-buscar {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 0 20px 20px 0;
+            background: linear-gradient(90deg, #ffb703 0%, #42a5f5 100%);
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .busqueda-form button.btn-buscar:hover {
+            background: linear-gradient(90deg, #42a5f5 0%, #ffb703 100%);
+        }
+        .busqueda-form a.btn-limpiar {
+            margin-left: 10px;
+            padding: 10px 20px;
+            border: 1px solid #ffb703;
+            border-radius: 20px;
+            background: transparent;
+            color: #ffb703;
+            text-decoration: none;
+            transition: background 0.3s, color 0.3s;
+        }
+        .busqueda-form a.btn-limpiar:hover {
+            background: #ffb703;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -69,6 +111,11 @@
 </div>
 <a href="/tablasadmin" class="btn-volver" style="margin: 18px 0 0 18px; display: inline-block;">← Volver</a>
 <h1>Listado de Perros</h1>
+<form class="busqueda-form" th:action="@{/perroscrud}" method="get">
+    <input type="text" name="nombre" placeholder="Buscar por nombre" th:value="${nombre}">
+    <button type="submit" class="btn-buscar">Buscar</button>
+    <a th:href="@{/perroscrud}" class="btn-limpiar">Limpiar</a>
+</form>
 <a th:href="@{/perroscrud/create}">➕ Registrar nuevo perro</a>
 
 <table class="tabla-perros" border="0">

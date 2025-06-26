@@ -198,7 +198,7 @@
     <h1>Registro</h1>
     <div th:replace="registerform :: rol-buttons('natural')"></div>
     <div id="form-container">
-        <form th:action="@{/registro/natural}" th:object="${usuario}" method="post" onsubmit="return validarContrasena()">
+        <form th:action="@{/registro/natural}" th:object="${usuario}" method="post" onsubmit="return validarContrasenaYCorreo()">
             <input type="hidden" th:field="*{rol}" value="natural">
             
             <label>Nombre:</label>
@@ -208,7 +208,7 @@
             <input type="text" name="apellido" required>
 
             <label>Correo Electrónico:</label>
-            <input type="email" th:field="*{correo}" required>
+            <input type="email" th:field="*{correo}" id="correo" required>
 
             <label>Contraseña:</label>
             <input type="password" id="password" th:field="*{password}" required
@@ -223,12 +223,18 @@
         </form>
     </div>
     <script>
-        function validarContrasena() {
+        function validarContrasenaYCorreo() {
             const password = document.getElementById("password").value;
             const confirm = document.getElementById("passwordConfirm").value;
             const errorDiv = document.getElementById("errorMensaje");
+            const correo = document.getElementById("correo").value;
 
             const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&.,\-_;:]).{8,}$/;
+
+            if (!correo.includes(".com") && !correo.includes(".co")) {
+                errorDiv.textContent = "El correo debe contener '.com' o '.co'.";
+                return false;
+            }
 
             if (!regex.test(password)) {
                 errorDiv.textContent = "La contraseña debe tener mínimo 8 caracteres, una mayúscula, un número y un símbolo.";

@@ -23,7 +23,7 @@
 </div>
         <div class="formulario">
             <h2>Iniciar sesión</h2>
-            <form th:action="@{/login}" method="post">
+            <form th:action="@{/login}" method="post" onsubmit="return validarCorreoLogin()">
                 <label for="email">Correo electrónico:</label>
                 <input type="email" id="username" name="username" placeholder="Introduce tu correo">
 
@@ -44,5 +44,15 @@
             </div>
         </div>
     </div>
+    <script>
+        function validarCorreoLogin() {
+            const correo = document.getElementById("username").value;
+            if (!correo.includes(".com") && !correo.includes(".co")) {
+                alert("El correo debe contener '.com' o '.co'.");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </body>
 </html>

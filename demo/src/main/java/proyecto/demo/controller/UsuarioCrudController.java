@@ -18,11 +18,15 @@ public class UsuarioCrudController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    // ✅ Mostrar solo usuarios disponibles
+    // ✅ Mostrar solo usuarios disponibles con filtro de búsqueda
     @GetMapping
-    public String index(Model model) {
-        List<Usuario> usuarios = usuarioRepository.findByDisponibleTrue();
+    public String index(@RequestParam(required = false) String nombre,
+                        @RequestParam(required = false) String correo,
+                        Model model) {
+        List<Usuario> usuarios = usuarioRepository.buscarPorNombreYCorreo(nombre, correo);
         model.addAttribute("usuarios", usuarios);
+        model.addAttribute("nombre", nombre);
+        model.addAttribute("correo", correo);
         return "usuarioscrud/index";
     }
 

@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import proyecto.demo.model.Usuario;
 import proyecto.demo.repository.UsuarioRepository;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.SimpleMailMessage;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
 @Controller
@@ -18,6 +21,9 @@ public class RecuperacionController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     // 👉 Mostrar formulario de recuperación
     @GetMapping("/recuperar")
@@ -35,16 +41,27 @@ public class RecuperacionController {
 
         if (usuario != null && usuario.isDisponible()) {
             // ✅ Generar nueva contraseña aleatoria
-            String nuevaPassword = generarPasswordAleatoria(8);
+            String nuevaPassword = generarPasswordProvisional();
             String passwordCodificada = passwordEncoder.encode(nuevaPassword);
 
             usuario.setPassword(passwordCodificada);
             usuarioRepository.save(usuario);
 
+            // Enviar correo
+            SimpleMailMessage mensaje = new SimpleMailMessage();
+            mensaje.setTo(correo);
+            mensaje.setSubject("Recuperación de contraseña - Furry Friends");
+            mensaje.setText("Hola,\n\nTu nueva contraseña provisional es: " + nuevaPassword +
+                    "\n\nPor favor, inicia sesión y cámbiala lo antes posible.\n\nFurry Friends");
+
+            mailSender.send(mensaje);
+
             // ✅ Mostrar la nueva contraseña en la misma vista
             model.addAttribute("nuevaPassword", nuevaPassword);
+            model.addAttribute("mensajeExito", "La nueva contraseña ha sido enviada a tu correo.");
         } else {
             model.addAttribute("nuevaPassword", null);
+            model.addAttribute("mensajeExito", "Si el correo está registrado, recibirás una nueva contraseña.");
         }
         model.addAttribute("correo", correo);
         return "recuperar";
@@ -77,5 +94,15 @@ public class RecuperacionController {
             arr[j] = tmp;
         }
         return new String(arr);
+    }
+
+    private String generarPasswordProvisional() {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&";
+        SecureRandom rnd = new SecureRandom();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 10; i++) {
+            sb.append(chars.charAt(rnd.nextInt(chars.length())));
+        }
+        return sb.toString();
     }
 }

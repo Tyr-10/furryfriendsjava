@@ -5,6 +5,7 @@
     <title>Usuarios - Lista</title>
     <link rel="stylesheet" th:href="@{/css/crudindex.css}">
     <link rel="stylesheet" th:href="@{/css/crudindex.usuarios.css}">
+    <link rel="stylesheet" th:href="@{/css/crudbusqueda.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .tabla-usuarios {
@@ -56,6 +57,36 @@
         .tabla-usuarios th i {
             margin-right: 6px;
         }
+        .busqueda-form {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .busqueda-form input {
+            padding: 10px;
+            margin: 0 10px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            width: 250px;
+            max-width: 100%;
+        }
+        .busqueda-form button, .busqueda-form a {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 20px;
+            background: linear-gradient(90deg, #ffb703 0%, #42a5f5 100%);
+            color: #fff;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .busqueda-form button:hover, .busqueda-form a:hover {
+            background: linear-gradient(90deg, #42a5f5 0%, #ffb703 100%);
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
@@ -68,6 +99,12 @@
 </div>
 <a href="/tablasadmin" class="btn-volver" style="margin: 18px 0 0 18px; display: inline-block;">← Volver</a>
 <h1>Listado de Usuarios</h1>
+<form class="busqueda-form" th:action="@{/usuarioscrud}" method="get">
+    <input type="text" name="nombre" placeholder="Buscar por nombre" th:value="${nombre}">
+    <input type="text" name="correo" placeholder="Buscar por correo" th:value="${correo}">
+    <button type="submit" class="btn-buscar">Buscar</button>
+    <a th:href="@{/usuarioscrud}" class="btn-limpiar">Limpiar</a>
+</form>
 <a th:href="@{/usuarioscrud/create}">➕ Crear nuevo usuario</a>
 <table class="tabla-usuarios" border="0">
     <thead>

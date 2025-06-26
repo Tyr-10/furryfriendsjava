@@ -30,9 +30,10 @@ public class SeguimientoCrudController {
     private UsuarioRepository usuarioRepository;
 
     @GetMapping
-    public String index(Model model) {
-        List<Seguimiento> seguimientos = seguimientoRepository.findByActivoTrueOrderByIdDesc();
+    public String index(@RequestParam(required = false) String nombreOriginal, Model model) {
+        List<Seguimiento> seguimientos = seguimientoRepository.buscarPorNombreOriginal(nombreOriginal);
         model.addAttribute("seguimientos", seguimientos);
+        model.addAttribute("nombreOriginal", nombreOriginal);
         return "seguimientocrud/index";
     }
 

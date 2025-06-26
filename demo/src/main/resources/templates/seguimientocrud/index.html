@@ -4,6 +4,7 @@
     <title>Lista de Seguimientos</title>
     <link rel="stylesheet" th:href="@{/css/crudindex.css}">
     <link rel="stylesheet" th:href="@{/css/crudindex.seguimiento.css}">
+    <link rel="stylesheet" th:href="@{/css/crudbusqueda.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .tabla-seguimiento {
@@ -55,6 +56,45 @@
         .tabla-seguimiento th i {
             margin-right: 6px;
         }
+        .busqueda-form {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .busqueda-form input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 20px 0 0 20px;
+            width: 300px;
+            max-width: 80%;
+        }
+        .busqueda-form button, .busqueda-form a {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            margin-left: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1em;
+        }
+        .busqueda-form button {
+            background: linear-gradient(90deg, #42a5f5 0%, #ffb703 100%);
+            color: #fff;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .busqueda-form button:hover {
+            background: linear-gradient(90deg, #ffb703 0%, #42a5f5 100%);
+            transform: scale(1.05);
+        }
+        .btn-limpiar {
+            background: #e57373;
+            color: #fff;
+        }
+        .btn-limpiar:hover {
+            background: #ef5350;
+        }
     </style>
 </head>
 <body>
@@ -67,11 +107,15 @@
 </div>
 <a href="/tablasadmin" class="btn-volver" style="margin: 18px 0 0 18px; display: inline-block;">← Volver</a>
     <h1>Seguimientos registrados</h1>
+    <form class="busqueda-form" th:action="@{/seguimientocrud}" method="get">
+        <input type="text" name="nombreOriginal" placeholder="Buscar por nombre de archivo" th:value="${nombreOriginal}">
+        <button type="submit" class="btn-buscar">Buscar</button>
+        <a th:href="@{/seguimientocrud}" class="btn-limpiar">Limpiar</a>
+    </form>
     <a th:href="@{/seguimientocrud/create}">Subir nuevo seguimiento</a>
     <table class="tabla-seguimiento" border="0">
         <thead>
             <tr>
-                <th><i class="fas fa-hashtag"></i>ID</th>
                 <th><i class="fas fa-file-pdf"></i>Archivo</th>
                 <th><i class="fas fa-file-signature"></i>Nombre original</th>
                 <th><i class="fas fa-cogs"></i>Acciones</th>
@@ -79,7 +123,6 @@
         </thead>
         <tbody>
             <tr th:each="s : ${seguimientos}">
-                <td th:text="${s.id}"></td>
                 <td><a th:href="${s.archivo}" target="_blank"><i class="fas fa-eye"></i> Ver archivo</a></td>
                 <td th:text="${s.nombreOriginal}"></td>
                 <td class="acciones">

@@ -30,9 +30,10 @@ public class ViabilidadCrudController {
     private UsuarioRepository usuarioRepository;
 
     @GetMapping
-    public String index(Model model) {
-        List<Viabilidad> viabilidades = viabilidadRepository.findByActivoTrueOrderByIdDesc();
+    public String index(@RequestParam(required = false) String nombreOriginal, Model model) {
+        List<Viabilidad> viabilidades = viabilidadRepository.buscarPorNombreOriginal(nombreOriginal);
         model.addAttribute("viabilidades", viabilidades);
+        model.addAttribute("nombreOriginal", nombreOriginal);
         return "viabilidadcrud/index";
     }
 

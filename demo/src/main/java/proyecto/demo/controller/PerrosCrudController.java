@@ -19,11 +19,12 @@ public class PerrosCrudController {
     @Autowired
     private PerrosRepository perrosRepository;
 
-    // Mostrar perros disponibles
+    // Mostrar perros disponibles con filtro por nombre
     @GetMapping
-    public String index(Model model) {
-        List<Perros> perros = perrosRepository.findByDisponibleTrue();
+    public String index(@RequestParam(required = false) String nombre, Model model) {
+        List<Perros> perros = perrosRepository.buscarPorNombre(nombre);
         model.addAttribute("perros", perros);
+        model.addAttribute("nombre", nombre);
         return "perroscrud/index";
     }
 

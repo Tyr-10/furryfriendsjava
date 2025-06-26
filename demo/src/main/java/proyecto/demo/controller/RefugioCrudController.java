@@ -2,6 +2,9 @@ package proyecto.demo.controller;
 
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfWriter;
+import com.lowagie.text.pdf.PdfPageEventHelper;
+import com.lowagie.text.pdf.PdfContentByte;
+import com.lowagie.text.pdf.ColumnText;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,22 +144,54 @@ public class RefugioCrudController {
 
         Document document = new Document();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PdfWriter.getInstance(document, baos);
+        PdfWriter writer = PdfWriter.getInstance(document, baos);
+
+        // Pie de página personalizado con nombre de empresa y logo alineado al título
+        writer.setPageEvent(new PdfPageEventHelper() {
+            Image logoImg = null;
+            {
+                try {
+                    InputStream logoStream = new ClassPathResource("static/images/logo.jpg").getInputStream();
+                    logoImg = Image.getInstance(logoStream.readAllBytes());
+                    logoImg.scaleToFit(40, 40);
+                } catch (Exception e) {
+                    logoImg = null;
+                }
+            }
+            @Override
+            public void onEndPage(PdfWriter writer, Document document) {
+                PdfContentByte cb = writer.getDirectContent();
+                float y = document.top() + 18; // más arriba para el título
+                // Logo alineado a la altura del título
+                if (logoImg != null) {
+                    logoImg.setAbsolutePosition(document.left(), y - 12);
+                    try { cb.addImage(logoImg); } catch (Exception ignored) {}
+                }
+                // Nombre de la empresa centrado más arriba
+                com.lowagie.text.pdf.ColumnText.showTextAligned(
+                        cb,
+                        Element.ALIGN_CENTER,
+                        new Phrase("Furry Friends", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14)),
+                        (document.right() + document.left()) / 2,
+                        y,
+                        0
+                );
+            }
+        });
+
+        // Margen superior ajustado para dejar espacio solo necesario
+        document.setMargins(document.leftMargin(), document.rightMargin(), 70f, document.bottomMargin());
+
         document.open();
 
-        // Logo
-        try {
-            InputStream logoStream = new ClassPathResource("static/images/logo.jpg").getInputStream();
-            Image logo = Image.getInstance(logoStream.readAllBytes());
-            logo.scaleToFit(80, 80);
-            logo.setAlignment(Image.ALIGN_CENTER);
-            document.add(logo);
-        } catch (Exception e) {
-            // Si no hay logo, ignora
-        }
+        // Solo un salto de línea para separar del encabezado
+        document.add(new Paragraph(" "));
 
         document.add(new Paragraph("Reporte de Perros Registrados", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18)));
         document.add(new Paragraph("Refugio: " + refugio.getNombre() + " (" + refugio.getCorreo() + ")\n\n"));
+
+        // Espacio antes de la información de los perros
+        document.add(new Paragraph(" "));
 
         for (Perros p : perros) {
             // Imagen del perro (solo si es una imagen válida)
@@ -164,6 +199,7 @@ public class RefugioCrudController {
                 try {
                     Image img = Image.getInstance(p.getImagenperro());
                     img.scaleToFit(100, 100);
+                    img.setSpacingBefore(10f); // espacio suficiente para no tapar el logo/título
                     document.add(img);
                 } catch (Exception ex) {
                     // Si la imagen no es válida, ignora y sigue con el resto del reporte
