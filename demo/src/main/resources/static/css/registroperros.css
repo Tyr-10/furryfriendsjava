@@ -1,3 +1,6 @@
+/* Importa los estilos del footer desde style.css */
+@import url('style.css');
+
 body {
     font-family: 'Arial', sans-serif;
     background-color: #e3f2fd;
@@ -307,4 +310,16 @@ button:hover, .btn-registrar:hover {
 }
 .toast-error {
     border-left: 6px solid #00c853;
+}
+
+.footer-section h4 {
+    text-align: center;
+    width: 100%;
+}
+
+.btn-volver-topright {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    z-index: 2;
 }

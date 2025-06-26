@@ -155,6 +155,7 @@ h2 {
 .btn-adoptar:hover {
     background-color: #43a047;
 }
+
 /* Fondo animado con huellas */
 .huellas-bg {
     position: fixed;
@@ -193,5 +194,112 @@ h2 {
     100% {
         transform: translateY(-130vh) translateX(30px) rotate(360deg);
         opacity: 0.1;
+    }
+}
+
+/* Footer igual que index */
+.footer-perros {
+    background: linear-gradient(135deg, #42a5f5 0%, #fff 100%);
+    color: #1976d2;
+    padding: 60px 5% 20px;
+    margin-top: 50px;
+    border-radius: 15px 15px 0 0;
+    /* Elimina width: 100vw y max-width: 100vw */
+    width: auto;
+    max-width: none;
+    box-sizing: border-box;
+}
+
+.footer-perros .footer-content {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    gap: 30px;
+    /* padding igual que index */
+    padding: 0;
+}
+
+.footer-perros .footer-section {
+    flex: 1;
+    min-width: 250px;
+    margin-bottom: 30px;
+}
+
+.footer-perros .footer-section h4 {
+    color: #1976d2;
+    background: #fff;
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 8px rgba(66,165,245,0.08);
+    text-align: center;
+    width: 100%;
+}
+
+.footer-perros .footer-section p,
+.footer-perros .footer-section li {
+    margin-bottom: 10px;
+    color: #444;
+}
+
+.footer-perros .footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-perros .footer-section a {
+    color: #444;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-perros .footer-section a:hover {
+    color: #81c784;
+}
+
+.footer-perros .social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.footer-perros .social-icons a {
+    color: white;
+    font-size: 1.2rem;
+    transition: transform 0.3s;
+}
+
+.footer-perros .social-icons a:hover {
+    transform: translateY(-5px);
+    color: #FFB703;
+}
+
+.footer-perros .footer-bottom {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 30px;
+    color: #aaa;
+    font-size: 0.9rem;
+    background: transparent;
+}
+
+/* Responsive footer */
+@media (max-width: 992px) {
+    .footer-perros .footer-content {
+        flex-direction: column;
+        align-items: center;
+        padding: 0 2vw;
+    }
+    .footer-perros .footer-section {
+        min-width: 200px;
+        width: 100%;
+        text-align: center;
     }
 }

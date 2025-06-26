@@ -32,17 +32,34 @@
             box-shadow: 0 2px 8px #b3e5fc;
         }
 
-        .cuidados-header .volver-btn-cuadro {
+        .btn-volver-topright {
             position: absolute;
             left: 18px;
             top: 14px;
-            padding: 4px 14px;
-            font-size: 0.95em;
+            background: #fff;
+            color: #42a5f5;
+            border: none;
             border-radius: 12px;
-            min-width: 0;
-            height: 28px;
-            line-height: 18px;
-            box-shadow: 0 1px 4px #b3e5fc33;
+            padding: 4px 16px;
+            font-size: 1em;
+            font-weight: 600;
+            box-shadow: 0 2px 8px #b3e5fc;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        .btn-volver-topright:hover {
+            background: #42a5f5;
+            color: #fff;
+            box-shadow: 0 4px 12px #90caf9;
+        }
+
+        .btn-volver-topright i {
+            margin-right: 6px;
         }
 
         .cuidados-header .cuidados-title {
@@ -79,7 +96,9 @@
 <body>
 
     <header class="cuidados-header">
-        <a href="/" class="volver-btn-cuadro" style="font-size:0.95em;">← Volver</a>
+        <a class="btn-volver-topright" href="javascript:void(0);" onclick="window.history.back();">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
         <img src="images/logo.jpg" alt="logo" class="logo-cuidados">
         <div class="cuidados-title">🐶 Cuidados y Amor para los Perritos 🐶</div>
     </header>

@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <title>Seguimiento de Visitas</title>
     <link rel="stylesheet" href="/css/seguimiento.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
+    <div class="background-animated"></div>
     <div class="container">
-        <a href="#" onclick="history.back();" class="btn btn-primary" style="margin-top: 20px;">←Volver</a>
+        <a href="#" onclick="history.back();" class="btn btn-primary btn-volver">← Volver</a>
 
-        <div class="header">
+        <div class="header" style="text-align:center;">
             <img src="/images/logo.jpg" alt="logo" class="logo">
             <h2>Subir Seguimiento de Visitas</h2>
         </div>
@@ -18,7 +20,7 @@
         <form method="post" enctype="multipart/form-data" th:action="@{/seguimiento/subir}" class="upload-form">
             <label for="archivo">Seleccionar Archivo</label>
             <input type="file" name="archivo" id="archivo" accept="application/pdf" required>
-            <button type="submit">Subir Archivo</button>
+            <button type="submit" class="btn btn-submit btn-gradient">⬆ Subir Archivo</button>
         </form>
 
         <!-- Mensajes -->
@@ -27,34 +29,58 @@
 
         <div class="search-section">
             <h2>Buscar Seguimientos</h2>
-            <form method="get" th:action="@{/seguimiento}">
+            <form method="get" th:action="@{/seguimiento}" class="search-form">
                 <label for="buscar">Nombre del archivo</label>
                 <input type="text" name="archivo" id="buscar" placeholder="Buscar...">
-                <button type="submit">🔍 Buscar</button>
-                <a th:href="@{/seguimiento}">
-                    <button type="button">❌ Limpiar</button>
-                </a>
+                <button type="submit" class="btn btn-search btn-gradient">🔍 Buscar</button>
+                <button type="button" class="btn btn-clear btn-red" onclick="window.location.href='/seguimiento'">❌ Limpiar</button>
             </form>
         </div>
 
         <!-- Mostrar resultados solo si hay búsqueda -->
-        <div th:if="${seguimientos != null and !seguimientos.isEmpty()}">
+        <div th:if="${seguimientos != null and !seguimientos.isEmpty()}" class="result-section">
             <ul>
                 <li th:each="s : ${seguimientos}">
                     <span th:text="${s.nombreOriginal}"></span> |
-                    <a th:if="${s.archivo != null}" th:href="@{${s.archivo}}" target="_blank">Ver</a>
+                    <a th:if="${s.archivo != null}" th:href="@{${s.archivo}}" target="_blank" class="btn btn-view btn-green">Ver</a>
                 </li>
             </ul>
         </div>
 
         <!-- Mensaje si no se encontraron resultados -->
-        <div th:if="${seguimientos != null and seguimientos.isEmpty()}">
-            <p style="color: gray; margin-top: 20px;">😢 No se encontraron resultados.</p>
+        <div th:if="${seguimientos != null and seguimientos.isEmpty()}" class="no-results">
+            <p>😢 No se encontraron resultados.</p>
         </div>
     </div>
 
-    <footer style="text-align: center; padding: 15px; background-color: #000000; color: white; margin-top: 50px;">
-        © 2025 Sistema de Adopciones | Todos los derechos reservados
+    <!-- Footer igual al de index -->
+    <footer class="footer-index">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Furry Friends</h4>
+                <p>Conectando corazones desde 2024</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Enlaces rápidos</h4>
+                <ul>
+                    <li><a th:href="@{/perrosdisponibles}">Adoptar</a></li>
+                    <li><a th:href="@{/registro/mascota}">Dar en adopción</a></li>
+                    <li><a th:href="@{/cuidados}">Cuidados</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p><i class="fas fa-envelope"></i> furryfriendsadopciones@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Furry Friends - Todos los derechos reservados.</p>
+        </div>
     </footer>
 </body>
 </html>

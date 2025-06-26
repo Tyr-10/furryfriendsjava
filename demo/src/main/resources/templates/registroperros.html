@@ -70,7 +70,7 @@
         </span>
         Volver
     </a>
-    <a th:if="${#authorization.expression('hasRole(''ADMIN'')') == false}" th:href="@{/vistarefugio}" class="btn-volver mb-3">
+    <a th:if="${#authorization.expression('hasRole(''ADMIN'')') == false}" href="javascript:void(0);" onclick="window.history.back();" class="btn-volver btn-volver-topright mb-3">
         <span class="volver-icon">
             <svg width="22" height="22" viewBox="0 0 22 22" style="vertical-align: middle;">
                 <polyline points="15,4 7,11 15,18" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -177,5 +177,35 @@ window.addEventListener('DOMContentLoaded', function() {
     showToast('errorToast');
 });
 </script>
+
+<!-- Footer agregado desde index.html -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>Furry Friends</h4>
+            <p>Conectando corazones desde 2024</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Enlaces rápidos</h4>
+            <ul>
+                <li><a th:href="@{/perrosdisponibles}">Adoptar</a></li>
+                <li><a th:href="@{/registro/mascota}">Dar en adopción</a></li>
+                <li><a th:href="@{/cuidados}">Cuidados</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Contacto</h4>
+            <p><i class="fas fa-envelope"></i> furryfriendsadopciones@gmail.com</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 Furry Friends - Todos los derechos reservados.</p>
+    </div>
+</footer>
 </body>
 </html>

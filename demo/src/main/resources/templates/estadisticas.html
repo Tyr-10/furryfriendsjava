@@ -1,91 +1,92 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Estadísticas</title>
+    <title>Estadísticas - Furry Friends</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            background-color: #f6fbff;
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        .estadisticas-container {
-            max-width: 900px;
-            margin: 40px auto 0 auto;
-            background: #fff;
-            border-radius: 18px;
-            box-shadow: 0 4px 18px rgba(0,0,0,0.12);
-            padding: 36px 32px 32px 32px;
-        }
-        h1 {
-            font-size: 2.2rem;
-            color: #3498db;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .resumen {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-bottom: 30px;
-            font-size: 1.3rem;
-        }
-        .resumen span {
-            background: #e3f2fd;
-            color: #217dbb;
-            padding: 16px 32px;
-            border-radius: 12px;
-            font-weight: bold;
-            box-shadow: 0 2px 8px rgba(52,152,219,0.08);
-        }
-        .grafica-interactiva {
-            width: 100%;
-            min-height: 420px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .boton {
-            margin-top: 32px;
-            display: inline-block;
-            background-color: #4CAF50;
-            color: white;
-            padding: 12px 28px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: background 0.2s;
-        }
-        .boton:hover {
-            background-color: #3498db;
-        }
-        @media (max-width: 700px) {
-            .estadisticas-container {
-                padding: 18px 4vw 18px 4vw;
-            }
-            .resumen {
-                flex-direction: column;
-                gap: 18px;
-                align-items: center;
-            }
-        }
-    </style>
 </head>
 <body>
-    <div class="estadisticas-container">
-        <h1>Estadísticas del Sistema</h1>
-        <div class="resumen">
-            <span>Total de usuarios: <span th:text="${usuariosTotales}">0</span></span>
-            <span>Total de perros: <span th:text="${perrosTotales}">0</span></span>
-        </div>
-        <div class="grafica-interactiva">
-            <canvas id="graficoEstadisticas"></canvas>
-        </div>
-        <a href="/" class="boton">Volver al inicio</a>
+    <!-- Fondo animado con huellas-corazón -->
+    <div class="animated-background">
+        <div class="paw-heart">❤🐾</div>
+        <div class="paw-heart">❤🐾</div>
+        <div class="paw-heart">❤🐾</div>
+        <div class="paw-heart">❤🐾</div>
+        <div class="paw-heart">❤🐾</div>
+        <div class="paw-heart">❤🐾</div>
     </div>
+
+    <!-- Header igual al index -->
+    <header>
+        <div class="logo-container">
+            <img src="images/logo.jpg" alt="logo" class="logo">
+        </div>
+        <div class="header-title">
+            <h1>Furry Friends</h1>
+            <p class="tagline">Conectando mascotas con hogares amorosos</p>
+        </div>
+        <div class="header-buttons">
+            <a href="javascript:void(0);" onclick="window.history.back();" class="btn btn-secondary pulse">
+                <i class="fas fa-home"></i> Inicio
+            </a>
+        </div>
+    </header>
+
+    <!-- Contenido principal de estadísticas -->
+    <main>
+        <div class="estadisticas-container" style="max-width: 900px; margin: 40px auto 0 auto; background: #fff; border-radius: 18px; box-shadow: 0 4px 18px rgba(0,0,0,0.12); padding: 36px 32px 32px 32px;">
+            <h2 style="font-size: 2.2rem; color: #1976d2; text-align: center; margin-bottom: 30px;">Estadísticas del Sistema</h2>
+            <div class="resumen" style="display: flex; justify-content: center; gap: 40px; margin-bottom: 30px; font-size: 1.3rem;">
+                <span style="background: #e3f2fd; color: #217dbb; padding: 16px 32px; border-radius: 12px; font-weight: bold; box-shadow: 0 2px 8px rgba(52,152,219,0.08);">
+                    Total de usuarios: <span th:text="${usuariosTotales}">0</span>
+                </span>
+                <span style="background: #e3f2fd; color: #217dbb; padding: 16px 32px; border-radius: 12px; font-weight: bold; box-shadow: 0 2px 8px rgba(52,152,219,0.08);">
+                    Total de perros: <span th:text="${perrosTotales}">0</span>
+                </span>
+            </div>
+            <div class="grafica-interactiva" style="width: 100%; min-height: 420px; display: flex; justify-content: center; align-items: center;">
+                <canvas id="graficoEstadisticas"></canvas>
+            </div>
+            <div style="display: flex; justify-content: center; margin-top: 32px;">
+                
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer igual al index -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Furry Friends</h4>
+                <p>Conectando corazones desde 2024</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Enlaces rápidos</h4>
+                <ul>
+                    <li><a th:href="@{/perrosdisponibles}">Adoptar</a></li>
+                    <li><a th:href="@{/registro/mascota}">Dar en adopción</a></li>
+                    <li><a th:href="@{/cuidados}">Cuidados</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p><i class="fas fa-envelope"></i> furryfriendsadopciones@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Furry Friends - Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
     <script th:inline="javascript">
         /*<![CDATA[*/
         var usuariosTotales = /*[[${usuariosTotales}]]*/ 0;
@@ -98,17 +99,17 @@
                 label: 'Cantidad',
                 data: [usuariosTotales, perrosTotales],
                 backgroundColor: [
-                    '#3498db',
-                    '#4CAF50'
+                    '#42a5f5',
+                    '#81c784'
                 ],
                 borderColor: [
-                    '#217dbb',
+                    '#1976d2',
                     '#388e3c'
                 ],
                 borderWidth: 2,
                 borderRadius: 12,
                 hoverBackgroundColor: [
-                    '#217dbb',
+                    '#1976d2',
                     '#388e3c'
                 ]
             }]
@@ -132,7 +133,7 @@
                     title: {
                         display: true,
                         text: 'Usuarios y Perros Registrados',
-                        color: '#3498db',
+                        color: '#1976d2',
                         font: { size: 20, weight: 'bold' }
                     }
                 },
@@ -153,6 +154,18 @@
         window.addEventListener('DOMContentLoaded', () => {
             const ctx = document.getElementById('graficoEstadisticas').getContext('2d');
             new Chart(ctx, config);
+
+            // Animación de huellas-corazón igual que en index
+            const pawHearts = document.querySelectorAll('.paw-heart');
+            pawHearts.forEach(paw => {
+                const size = Math.random() * 30 + 20;
+                paw.style.fontSize = `${size}px`;
+                paw.style.left = `${Math.random() * 100}%`;
+                paw.style.top = `${Math.random() * 100}%`;
+                paw.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                paw.style.animationDelay = `${Math.random() * 5}s`;
+                paw.style.opacity = Math.random() * 0.4 + 0.1;
+            });
         });
         /*]]>*/
     </script>

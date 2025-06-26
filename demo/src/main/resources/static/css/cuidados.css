@@ -149,6 +149,10 @@ footer {
 .footer-content, .footer-section, .footer-bottom, .social-icons {
     /* No sobrescribir, usar style.css */
 }
+.footer-section h4 {
+    text-align: center;
+    width: 100%;
+}
 
 
 /* Animación perritos */

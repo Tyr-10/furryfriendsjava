@@ -530,6 +530,8 @@ footer {
     margin-bottom: 20px;
     letter-spacing: 1px;
     box-shadow: 0 2px 8px rgba(66,165,245,0.08);
+    text-align: center; /* <-- centrado */
+    width: 100%;        /* <-- centrado en todo el bloque */
 }
 
 .footer-section p, .footer-section li {

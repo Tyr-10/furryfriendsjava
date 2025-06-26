@@ -1,150 +1,314 @@
-/* 🔹 Reset y Fuente */
+/* Reset y fuente */
 body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #d0e8ff, #8ecae6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    background: linear-gradient(135deg, #e3f2fd 0%, #b3e5fc 100%);
+    min-height: 100vh;
 }
 
-/* 📌 Contenedor principal centrado */
+/* Header de perfil */
+.perfil-header-bar {
+    width: 100vw;
+    max-width: 100vw;
+    background: linear-gradient(90deg, #1976d2 0%, #42a5f5 100%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 32px 18px 32px;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 4px 18px #b3e5fc77;
+}
+.perfil-header-bar .logo-title {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+.perfil-header-bar img {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px #b3e5fc;
+    background: #fff;
+}
+.perfil-header-bar .perfil-title {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #fff;
+}
+.perfil-header-bar .btn-volver {
+    background: #fff;
+    color: #1976d2;
+    padding: 10px 22px;
+    border-radius: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    font-size: 1.1em;
+    box-shadow: 0 2px 8px #b3e5fc;
+    transition: background 0.3s, color 0.3s, transform 0.2s;
+    margin-left: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.perfil-header-bar .btn-volver:hover {
+    background: #b3e5fc;
+    color: #1976d2;
+    transform: scale(1.05);
+}
+
+/* Botón volver en la esquina superior derecha */
+.btn-volver-topright {
+    position: absolute;
+    right: 32px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fff;
+    color: #1976d2;
+    padding: 10px 22px;
+    border-radius: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    font-size: 1.1em;
+    box-shadow: 0 2px 8px #b3e5fc;
+    transition: background 0.3s, color 0.3s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 20;
+}
+.btn-volver-topright:hover {
+    background: #b3e5fc;
+    color: #1976d2;
+    transform: scale(1.05);
+}
+
+/* Ajuste para que no se duplique el botón de volver en mobile */
+@media (max-width: 700px) {
+    .btn-volver-topright {
+        right: 10px;
+        padding: 8px 16px;
+        font-size: 1em;
+    }
+}
+
+/* Contenedor principal */
+.main-content-perfil {
+    flex: 1 0 auto;
+    width: 100%;
+}
 .profile-container {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    margin-top: 60px;
+    margin-bottom: 40px;
     width: 100%;
-    height: 100%;
 }
 
-/* 🔹 Tarjeta del Perfil */
+/* Tarjeta del Perfil */
 .profile-card {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-    width: 400px;
+    background: #fff;
+    padding: 38px 38px 28px 38px;
+    border-radius: 22px;
+    box-shadow: 0 8px 32px #b3e5fc55;
+    width: 420px;
+    max-width: 98vw;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px; /* Espaciado uniforme entre los elementos */
+    position: relative;
+    z-index: 2;
+    margin-bottom: 40px;
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+.profile-card:hover {
+    box-shadow: 0 16px 48px #b3e5fc99;
+    transform: scale(1.015);
 }
 
-/* 🔹 Encabezado */
+/* Encabezado y avatar */
 .profile-header {
-    margin-bottom: 10px;
+    margin-bottom: 18px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-
-/* ✅ Avatar con inicial */
 .profile-avatar {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
-    background: #0077b6; /* Azul */
-    color: white;
-    font-size: 40px;
+    background: linear-gradient(135deg, #42a5f5 0%, #81c784 100%);
+    color: #fff;
+    font-size: 2.8rem;
     font-weight: bold;
     display: flex;
     justify-content: center;
     align-items: center;
-    text-transform: uppercase;
-    border: 3px solid #023e8a;
-    animation: pulse 1.5s infinite alternate;
+    margin: 0 auto 10px auto;
+    border: 4px solid #fff;
+    box-shadow: 0 2px 8px #b3e5fc77;
+    letter-spacing: 2px;
 }
 
-/* ✅ Animación Avatar */
-@keyframes pulse {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.05); }
-}
-
-/* 📌 Nombre del Usuario */
+/* Nombre y datos */
 .profile-name {
-    font-size: 22px;
-    color: #023e8a;
-    margin: 10px 0 5px;
+    font-size: 1.5rem;
+    color: #1976d2;
+    font-weight: 700;
+    margin-bottom: 4px;
 }
-
 .profile-email {
-    font-size: 14px;
-    color: #555;
+    font-size: 1.05rem;
+    color: #388e3c;
+    margin-bottom: 2px;
 }
 
-/* 📌 Campos de Entrada */
+/* Campos de Entrada */
 .input-group {
     text-align: left;
     margin-bottom: 15px;
     width: 100%;
 }
-
 .input-group label {
     font-size: 14px;
     font-weight: 600;
-    color: #333;
-    margin-left: -10%; /* Mover la etiqueta hacia la izquierda */
-
+    color: #1976d2;
+    margin-bottom: 4px;
+    display: block;
 }
-
-/* 🔹 Hacer los campos más largos */
 .input-group input {
-    width: 120%;
-    padding: 10px; /* Aumentado */
-    border: 1px solid #ccc;
-    border-radius: 8px; /* Bordes más redondeados */
-    font-size: 16px; /* Texto más grande */
-    transition: 0.3s;
-    margin-left: -10%; /* Desplazar a la derecha */
-
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #b3e5fc;
+    border-radius: 10px;
+    background: #fff;
+    font-size: 1em;
+    margin-bottom: 2px;
+    box-sizing: border-box;
+    transition: border 0.3s, box-shadow 0.3s;
 }
-
 .input-group input:focus {
-    border-color: #0077b6;
+    border: 2px solid #42a5f5;
     outline: none;
-    box-shadow: 0px 0px 8px rgba(0, 119, 182, 0.5);
+    box-shadow: 0 0 8px #b3e5fc77;
 }
 
-/* 🔹 Botón Principal */
-.btn {
+/* Botones */
+.btn, .btn-secondary, .btn-success, .btn-danger {
+    margin: 10px 0 0 0;
     width: 80%;
-    background: #48cae4; /* Azul claro */
-    color: white;
-    padding: 12px;
+    padding: 12px 0;
+    border-radius: 30px;
+    font-size: 1.08em;
+    font-weight: 600;
     border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
     cursor: pointer;
-    transition: 0.3s;
-    text-align: center;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s, color 0.3s, transform 0.2s;
+    box-shadow: 0 2px 8px #b3e5fc33;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
-
-.btn:hover {
-    background: #0096c7; /* Azul oscuro al hacer hover */
-    transform: scale(1.05);
-}
-
-/* 🔹 Botón Secundario */
 .btn-secondary {
-    width: 80%;
-    background: #90e0ef; /* Azul más claro */
-    color: #023e8a;
-    text-decoration: none;
-    padding: 12px;
-    border-radius: 8px;
-    transition: 0.3s;
-    text-align: center;
-    font-weight: bold;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(90deg, #42a5f5 0%, #81c784 100%);
+    color: #fff;
+}
+.btn-secondary:hover {
+    background: linear-gradient(90deg, #81c784 0%, #42a5f5 100%);
+}
+.btn-success {
+    background: linear-gradient(90deg, #388e3c 0%, #81c784 100%);
+    color: #fff;
+}
+.btn-success:hover {
+    background: linear-gradient(90deg, #81c784 0%, #388e3c 100%);
+}
+.btn-danger {
+    background: linear-gradient(90deg, #ff6f61 0%, #ff1744 100%);
+    color: #fff;
+}
+.btn-danger:hover {
+    background: linear-gradient(90deg, #ff1744 0%, #ff6f61 100%);
 }
 
-.btn-secondary:hover {
-    background: #48cae4; /* Azul claro al hacer hover */
-    transform: scale(1.05);
+/* Formulario de edición */
+#editForm {
+    margin-top: 18px;
+    background: #f7fafd;
+    border-radius: 16px;
+    padding: 18px 12px 10px 12px;
+    box-shadow: 0 2px 8px #b3e5fc33;
+    animation: fadeIn 0.5s;
+}
+#editForm .input-group {
+    margin-bottom: 12px;
+    text-align: left;
+}
+#editForm label {
+    color: #1976d2;
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-size: 1em;
+}
+#editForm input[type="text"],
+#editForm input[type="email"],
+#editForm input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #b3e5fc;
+    border-radius: 10px;
+    background: #fff;
+    font-size: 1em;
+    margin-bottom: 2px;
+    box-sizing: border-box;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+#editForm input:focus {
+    border: 2px solid #42a5f5;
+    outline: none;
+    box-shadow: 0 0 8px #b3e5fc77;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+
+/* Footer (ajuste para que sea extremo a extremo) */
+footer {
+    width: 100vw;
+    left: 0;
+    border-radius: 0 !important;
+    box-shadow: 0 2px 24px #b3e5fc77;
+    padding: 56px 0 24px 0;
+    position: relative;
+    z-index: 10;
+    background: linear-gradient(135deg, #42a5f5 0%, #fff 100%);
+}
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.footer-section h4 {
+    text-align: center;
+    width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .perfil-header-bar {
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px 4vw;
+    }
+    .perfil-header-bar .perfil-title {
+        font-size: 1.2rem;
+    }
+    .profile-card { padding: 12px 2vw; }
+    .profile-avatar { width: 70px; height: 70px; font-size: 2rem; }
 }
