@@ -4,43 +4,46 @@
     <meta charset="UTF-8">
     <title>Furry Friends - Iniciar sesión</title>
     <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
-    <div class="login-container">
-        <h1 class="titulo">Furry Friends</h1>
-        <a href="/" class="boton-inicio">Inicio</a>
+    <div class="login-container animated-fadein">
+        <h1 class="titulo"><i class="fa-solid fa-paw"></i> Furry Friends</h1>
+        <a href="/" class="boton-inicio btn-animado"><i class="fa-solid fa-house"></i> Inicio</a>
         <!-- Mensaje de éxito aquí -->
         <div th:if="${mensajeExito}" class="alert alert-success" style="color: green; font-weight: bold; text-align: center; margin-bottom: 20px;">
             <p th:text="${mensajeExito}"></p>
         </div>
         <div th:if="${param.error}" style="color:red; text-align:center; margin-bottom:10px; font-weight: bold;">
-    <span th:switch="${param.error}">
-        <span th:case="'credenciales'">Correo o contraseña incorrectos.</span>
-        <span th:case="'desactivada'">Tu cuenta ha sido desactivada. Contacta con soporte.</span>
-        <span th:case="'no_encontrado'">Usuario no encontrado.</span>
-        <span th:case="*">Credenciales incorrectas o cuenta no existente en el sistema.</span>
-    </span>
-</div>
-        <div class="formulario">
-            <h2>Iniciar sesión</h2>
+            <span th:switch="${param.error}">
+                <span th:case="'credenciales'">Correo o contraseña incorrectos.</span>
+                <span th:case="'desactivada'">Tu cuenta ha sido desactivada. Contacta con soporte.</span>
+                <span th:case="'no_encontrado'">Usuario no encontrado.</span>
+                <span th:case="*">Credenciales incorrectas o cuenta no existente en el sistema.</span>
+            </span>
+        </div>
+        <div class="formulario card-animado">
+            <h2><i class="fa-solid fa-user"></i> Iniciar sesión</h2>
             <form th:action="@{/login}" method="post" onsubmit="return validarCorreoLogin()">
-                <label for="email">Correo electrónico:</label>
-                <input type="email" id="username" name="username" placeholder="Introduce tu correo">
+                <label for="email"><i class="fa-solid fa-envelope"></i> Correo electrónico:</label>
+                <input type="email" id="username" name="username" placeholder="Introduce tu correo" required>
 
-                <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" placeholder="Introduce la contraseña">
+                <label for="password"><i class="fa-solid fa-lock"></i> Contraseña:</label>
+                <input type="password" id="password" name="password" placeholder="Introduce la contraseña" required>
 
                 <div class="recordar">
-                    <input type="checkbox" id="recordar">
-                    <label for="recordar">Recordar contraseña</label>
+                    <label for="recordar" class="recordar-label">
+                        <input type="checkbox" id="recordar">
+                        Recordar contraseña
+                    </label>
                 </div>
 
-                <button type="submit" class="btn-login">Iniciar sesión</button>
+                <button type="submit" class="btn-login btn-animado"><span>Iniciar sesión</span><i class="fa-solid fa-arrow-right"></i></button>
             </form>
 
             <div class="links">
-                <a th:href="@{/registro/adoptante}"><i class="fas fa-chart-bar"></i> ¿No tienes cuenta? Regístrate aquí</a><br>
-                <a th:href="@{/recuperar}"><i class="fas fa-chart-bar"></i> ¿Olvidaste tu contraseña?</a>
+                <a th:href="@{/registro/adoptante}" class="link-animado"><i class="fa-solid fa-user-plus"></i> ¿No tienes cuenta? Regístrate aquí</a><br>
+                <a th:href="@{/recuperar}" class="link-animado"><i class="fa-solid fa-key"></i> ¿Olvidaste tu contraseña?</a>
             </div>
         </div>
     </div>
