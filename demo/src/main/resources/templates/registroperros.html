@@ -2,53 +2,109 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
+    <!-- ...existing code... -->
     <meta charset="UTF-8">
     <title>Registro de Perros</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/registroperros.css}">
+    <!-- ...existing code... -->
     <style>
-        body {
-            background-color: #e3f2fd;
-        }
-        
-        .container {
-            max-width: 600px;
-            margin: 40px auto;
-        }
+        /* Logo pequeño y redondo */
         
         .logo {
-            width: 100px;
-            height: auto;
-        }
-        
-        h1,
-        h2 {
-            color: #004080;
+            width: 70px !important;
+            height: 70px !important;
+            border-radius: 50% !important;
+            object-fit: cover;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 8px #b3e5fc;
         }
     </style>
 </head>
 
 <body>
+    <!-- Fondo animado de corazones -->
+    <div class="heart-bg">
+        <svg class="heart" viewBox="0 0 32 29">
+        <path d="M23.6,2.6c-2.6,0-5,1.6-6.6,4C15.4,4.2,13,2.6,10.4,2.6C6.1,2.6,2.6,6.1,2.6,10.4c0,7.1,13.4,15.9,13.4,15.9
+        s13.4-8.8,13.4-15.9C29.4,6.1,25.9,2.6,23.6,2.6z" fill="#fff"/>
+    </svg>
+        <svg class="heart" viewBox="0 0 32 29">
+        <path d="M23.6,2.6c-2.6,0-5,1.6-6.6,4C15.4,4.2,13,2.6,10.4,2.6C6.1,2.6,2.6,6.1,2.6,10.4c0,7.1,13.4,15.9,13.4,15.9
+        s13.4-8.8,13.4-15.9C29.4,6.1,25.9,2.6,23.6,2.6z" fill="#ff9800"/>
+    </svg>
+        <svg class="heart" viewBox="0 0 32 29">
+        <path d="M23.6,2.6c-2.6,0-5,1.6-6.6,4C15.4,4.2,13,2.6,10.4,2.6C6.1,2.6,2.6,6.1,2.6,10.4c0,7.1,13.4,15.9,13.4,15.9
+        s13.4-8.8,13.4-15.9C29.4,6.1,25.9,2.6,23.6,2.6z" fill="#fff"/>
+    </svg>
+        <svg class="heart" viewBox="0 0 32 29">
+        <path d="M23.6,2.6c-2.6,0-5,1.6-6.6,4C15.4,4.2,13,2.6,10.4,2.6C6.1,2.6,2.6,6.1,2.6,10.4c0,7.1,13.4,15.9,13.4,15.9
+        s13.4-8.8,13.4-15.9C29.4,6.1,25.9,2.6,23.6,2.6z" fill="#ff9800"/>
+    </svg>
+        <svg class="heart" viewBox="0 0 32 29">
+        <path d="M23.6,2.6c-2.6,0-5,1.6-6.6,4C15.4,4.2,13,2.6,10.4,2.6C6.1,2.6,2.6,6.1,2.6,10.4c0,7.1,13.4,15.9,13.4,15.9
+        s13.4-8.8,13.4-15.9C29.4,6.1,25.9,2.6,23.6,2.6z" fill="#fff"/>
+    </svg>
+        <svg class="heart" viewBox="0 0 32 29">
+        <path d="M23.6,2.6c-2.6,0-5,1.6-6.6,4C15.4,4.2,13,2.6,10.4,2.6C6.1,2.6,2.6,6.1,2.6,10.4c0,7.1,13.4,15.9,13.4,15.9
+        s13.4-8.8,13.4-15.9C29.4,6.1,25.9,2.6,23.6,2.6z" fill="#ff9800"/>
+    </svg>
+        <svg class="heart" viewBox="0 0 32 29">
+        <path d="M23.6,2.6c-2.6,0-5,1.6-6.6,4C15.4,4.2,13,2.6,10.4,2.6C6.1,2.6,2.6,6.1,2.6,10.4c0,7.1,13.4,15.9,13.4,15.9
+        s13.4-8.8,13.4-15.9C29.4,6.1,25.9,2.6,23.6,2.6z" fill="#fff"/>
+    </svg>
+        <svg class="heart" viewBox="0 0 32 29">
+        <path d="M23.6,2.6c-2.6,0-5,1.6-6.6,4C15.4,4.2,13,2.6,10.4,2.6C6.1,2.6,2.6,6.1,2.6,10.4c0,7.1,13.4,15.9,13.4,15.9
+        s13.4-8.8,13.4-15.9C29.4,6.1,25.9,2.6,23.6,2.6z" fill="#ff9800"/>
+    </svg>
+    </div>
 
     <div class="container">
         <div style="text-align: center;">
             <img th:src="@{/images/logo.jpg}" alt="logo" class="logo">
         </div>
 
-        <a href="/" onclick="event.preventDefault(); window.history.length > 1 ? history.back() : window.location='/'" class="btn btn-primary mb-3">⬅ Volver</a>
+        <!-- Botón Volver: redirige según el rol del usuario -->
+        <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/vistaadmin}" class="btn-volver mb-3">
+            <span class="volver-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" style="vertical-align: middle;">
+                <polyline points="15,4 7,11 15,18" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </span> Volver
+        </a>
+        <a th:if="${#authorization.expression('hasRole(''ADMIN'')') == false}" href="javascript:void(0);" onclick="window.history.back();" class="btn-volver btn-volver-topright mb-3">
+            <span class="volver-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" style="vertical-align: middle;">
+                <polyline points="15,4 7,11 15,18" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </span> Volver
+        </a>
 
-        <h2 class="mb-4 text-center">🐶 Furry Friends 🐶</h2>
-        <h1 class="text-center">🐶 Registro de Perros 🐶</h1>
+        <h2 class="mb-2 text-center titulo-principal">Furry Friends</h2>
+        <h1 class="text-center titulo-secundario anim-registro">Registro de Perros</h1>
 
-        <div th:if="${success}" class="alert alert-success text-center">
+        <!-- Notificaciones flotantes -->
+        <div id="successToast" th:if="${success}" class="toast-notify toast-success">
+            <span class="toast-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22">
+                <circle cx="11" cy="11" r="10" fill="#b9f6ca"/>
+                <polyline points="6,12 10,16 16,7" fill="none" stroke="#388e3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </span>
             <span th:text="${success}"></span>
         </div>
-
-        <div th:if="${error}" class="alert alert-danger text-center">
+        <div id="errorToast" th:if="${error}" class="toast-notify toast-error">
+            <span class="toast-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22">
+                <circle cx="11" cy="11" r="10" fill="#b9f6ca"/>
+                <line x1="7" y1="7" x2="15" y2="15" stroke="#388e3c" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="15" y1="7" x2="7" y2="15" stroke="#388e3c" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+        </span>
             <span th:text="${error}"></span>
         </div>
 
-        <form th:action="@{/registroperros}" method="post" enctype="multipart/form-data" class="p-4 shadow-lg rounded" style="background: #ffffff;">
+        <form th:action="@{/registroperros}" method="post" enctype="multipart/form-data" class="p-4 shadow-lg rounded">
             <div class="mb-3">
                 <label class="form-label">📛 Nombre</label>
                 <input type="text" name="nombre" class="form-control" th:value="${perro.nombre}" required>
@@ -101,10 +157,57 @@
                 <textarea name="descripcion" class="form-control" th:text="${perro.descripcion}" required></textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary w-100">🐾 Registrar Perro 🐾</button>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-registrar">Registrar Perro</button>
+            </div>
         </form>
     </div>
 
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            function showToast(id) {
+                var el = document.getElementById(id);
+                if (el) {
+                    el.classList.add('show');
+                    setTimeout(function() {
+                        el.classList.remove('show');
+                    }, 3500);
+                }
+            }
+            showToast('successToast');
+            showToast('errorToast');
+        });
+    </script>
+
+    <!-- Footer agregado desde index.html -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Furry Friends</h4>
+                <p>Conectando corazones desde 2024</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Enlaces rápidos</h4>
+                <ul>
+                    <li><a th:href="@{/perrosdisponibles}">Adoptar</a></li>
+                    <li><a th:href="@{/registro/mascota}">Dar en adopción</a></li>
+                    <li><a th:href="@{/cuidados}">Cuidados</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p><i class="fas fa-envelope"></i> furryfriendsadopciones@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Furry Friends - Todos los derechos reservados.</p>
+        </div>
+    </footer>
 </body>
 
 </html>
