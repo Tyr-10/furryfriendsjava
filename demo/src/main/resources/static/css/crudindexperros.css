@@ -1,0 +1,27 @@
+.btn-editar {
+    background: linear-gradient(90deg, #ffe066 0%, #ffd60a 100%) !important;
+    color: #333 !important;
+    border: none;
+    box-shadow: 0 2px 8px #fff3cd;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.btn-editar:hover {
+    background: linear-gradient(90deg, #ffd60a 0%, #ffe066 100%) !important;
+    color: #333 !important;
+    transform: scale(1.08);
+}
+
+.btn-eliminar {
+    background: linear-gradient(90deg, #ff6f61 0%, #ff1744 100%) !important;
+    color: #fff !important;
+    border: none;
+    box-shadow: 0 2px 8px #ffb3b3;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.btn-eliminar:hover {
+    background: linear-gradient(90deg, #ff1744 0%, #ff6f61 100%) !important;
+    color: #fff !important;
+    transform: scale(1.08);
+}
