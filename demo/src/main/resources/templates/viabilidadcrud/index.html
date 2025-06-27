@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Viabilidades</title>
+    <link rel="stylesheet" th:href="@{/css/crudindex.css}">
+    <link rel="stylesheet" th:href="@{/css/crudindex.viabilidad.css}">
+    <link rel="stylesheet" th:href="@{/css/crudbusqueda.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .tabla-viabilidad {
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px #b3e5fc55;
+            background: #fff;
+            margin-top: 30px;
+        }
+        .tabla-viabilidad th, .tabla-viabilidad td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .tabla-viabilidad th {
+            background: linear-gradient(90deg, #42a5f5 0%, #81c784 100%);
+            color: #fff;
+            font-size: 1.08em;
+            border-bottom: 4px solid #b3e5fc;
+        }
+        .tabla-viabilidad tr:nth-child(even) td {
+            background: #e3f2fd;
+        }
+        .tabla-viabilidad tr:hover td {
+            background: #b3e5fc44;
+            transition: background 0.3s;
+        }
+        .tabla-viabilidad td, .tabla-viabilidad th {
+            padding: 16px 10px;
+        }
+        .tabla-viabilidad .acciones a, .tabla-viabilidad .acciones button {
+            margin: 0 4px;
+            font-size: 1em;
+            padding: 7px 16px;
+            border-radius: 20px;
+            background: linear-gradient(90deg, #ffb703 0%, #42a5f5 100%);
+            color: #fff !important;
+            border: none;
+            box-shadow: 0 2px 8px #b3e5fc55;
+            transition: background 0.3s, transform 0.2s;
+            cursor: pointer;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .tabla-viabilidad .acciones a:hover, .tabla-viabilidad .acciones button:hover {
+            background: linear-gradient(90deg, #42a5f5 0%, #ffb703 100%);
+            color: #fff;
+            transform: scale(1.08);
+        }
+        .tabla-viabilidad th i {
+            margin-right: 6px;
+        }
+        .btn-editar {
+            background-color: #ffb703;
+            color: #fff;
+        }
+        .btn-editar:hover {
+            background-color: #42a5f5;
+            color: #fff;
+        }
+        .btn-eliminar {
+            background-color: #e57373;
+            color: #fff;
+        }
+        .btn-eliminar:hover {
+            background-color: #ef5350;
+            color: #fff;
+        }
+        .busqueda-form {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .busqueda-form input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 20px 0 0 20px;
+            outline: none;
+            width: 300px;
+            max-width: 100%;
+        }
+        .busqueda-form button.btn-buscar {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 0 20px 20px 0;
+            background: linear-gradient(90deg, #ffb703 0%, #42a5f5 100%);
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .busqueda-form button.btn-buscar:hover {
+            background: linear-gradient(90deg, #42a5f5 0%, #ffb703 100%);
+        }
+        .busqueda-form a.btn-limpiar {
+            margin-left: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background-color: #e57373;
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .busqueda-form a.btn-limpiar:hover {
+            background-color: #ef5350;
+        }
+    </style>
+</head>
+<body>
+<div class="bubbles-bg">
+  <div class="bubble bubble1"></div>
+  <div class="bubble bubble2"></div>
+  <div class="bubble bubble3"></div>
+  <div class="bubble bubble4"></div>
+  <div class="bubble bubble5"></div>
+</div>
+<a href="/tablasadmin" class="btn-volver" style="margin: 18px 0 0 18px; display: inline-block;">← Volver</a>
+<h1>Listado de Viabilidades</h1>
+<form class="busqueda-form" th:action="@{/viabilidadcrud}" method="get">
+    <input type="text" name="nombreOriginal" placeholder="Buscar por nombre de archivo" th:value="${nombreOriginal}">
+    <button type="submit" class="btn-buscar">Buscar</button>
+    <a th:href="@{/viabilidadcrud}" class="btn-limpiar">Limpiar</a>
+</form>
+<a th:href="@{/viabilidadcrud/create}">➕ Subir nueva viabilidad</a>
+
+<table class="tabla-viabilidad" border="0">
+    <thead>
+        <tr>
+            <th><i class="fas fa-file-pdf"></i>Archivo</th>
+            <th><i class="fas fa-file-signature"></i>Nombre del archivo</th>
+            <th><i class="fas fa-cogs"></i>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="viabilidad : ${viabilidades}">
+            <td>
+                <a th:href="${viabilidad.archivo}" target="_blank"><i class="fas fa-eye"></i> Ver archivo</a>
+            </td>
+            <td th:text="${viabilidad.nombreOriginal}">Nombre</td>
+            <td class="acciones">
+                <a th:href="@{/viabilidadcrud/edit/{id}(id=${viabilidad.id})}" title="Editar" class="btn-editar"><i class="fas fa-edit"></i></a>
+                <form th:action="@{/viabilidadcrud/eliminar/{id}(id=${viabilidad.id})}" method="post" style="display:inline;">
+                    <button type="submit" onclick="return confirm('¿Eliminar este archivo?')" title="Eliminar" class="btn-eliminar"><i class="fas fa-trash-alt"></i></button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

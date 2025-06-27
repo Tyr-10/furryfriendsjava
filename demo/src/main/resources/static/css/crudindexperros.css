@@ -1,0 +1,169 @@
+/* Fondo animado con burbujas */
+body {
+    font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(120deg, #e3f2fd 0%, #b3e5fc 100%);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    overflow-x: hidden;
+}
+.bubbles-bg {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+.bubble {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.18;
+    background: linear-gradient(135deg, #42a5f5 60%, #fff 100%);
+    animation: floatBubble 18s linear infinite;
+}
+.bubble1 { width: 80px; height: 80px; left: 10vw; top: 90vh; animation-delay: 0s;}
+.bubble2 { width: 60px; height: 60px; left: 30vw; top: 110vh; animation-delay: 3s;}
+.bubble3 { width: 100px; height: 100px; left: 60vw; top: 120vh; animation-delay: 6s;}
+.bubble4 { width: 50px; height: 50px; left: 80vw; top: 100vh; animation-delay: 9s;}
+.bubble5 { width: 70px; height: 70px; left: 50vw; top: 130vh; animation-delay: 12s;}
+@keyframes floatBubble {
+    0% { transform: translateY(0) scale(1);}
+    100% { transform: translateY(-130vh) scale(1.2);}
+}
+
+/* Encabezado */
+h1 {
+    text-align: center;
+    color: #1976d2;
+    font-size: 2.3rem;
+    margin-top: 40px;
+    margin-bottom: 18px;
+    letter-spacing: 1px;
+    font-weight: 800;
+    z-index: 2;
+    position: relative;
+    text-shadow: 0 2px 8px #b3e5fc77;
+}
+
+/* Botón principal */
+a, .btn, button {
+    background: linear-gradient(90deg, #42a5f5 0%, #81c784 100%);
+    color: #fff !important;
+    padding: 10px 22px;
+    border-radius: 30px;
+    font-weight: bold;
+    border: none;
+    font-size: 1.08em;
+    box-shadow: 0 2px 8px #b3e5fc;
+    text-decoration: none;
+    margin: 10px 6px 18px 0;
+    transition: background 0.3s, color 0.3s, transform 0.2s;
+    cursor: pointer;
+    display: inline-block;
+}
+a:hover, .btn:hover, button:hover {
+    background: linear-gradient(90deg, #81c784 0%, #42a5f5 100%);
+    color: #fff;
+    transform: scale(1.06);
+    text-decoration: none;
+}
+
+/* Tabla moderna */
+table {
+    width: 90%;
+    margin: 0 auto 40px auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px #b3e5fc55;
+    overflow: hidden;
+    z-index: 2;
+    position: relative;
+    animation: fadeInTable 1.2s;
+}
+@keyframes fadeInTable {
+    from { opacity: 0; transform: translateY(30px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+th, td {
+    padding: 18px 14px;
+    text-align: left;
+    font-size: 1.08em;
+}
+th {
+    background: linear-gradient(90deg, #42a5f5 0%, #81c784 100%);
+    color: #fff;
+    font-weight: bold;
+    border-bottom: 4px solid #b3e5fc;
+    letter-spacing: 1px;
+}
+tr:nth-child(even) td {
+    background: #e3f2fd;
+}
+tr:hover td {
+    background: #b3e5fc44;
+    transition: background 0.3s;
+}
+td {
+    border-bottom: 1.5px solid #b3e5fc33;
+    vertical-align: middle;
+}
+.actions, td:last-child {
+    text-align: center;
+}
+.actions a, td a, td button {
+    margin: 0 4px;
+    font-size: 1em;
+    padding: 7px 16px;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #ffb703 0%, #42a5f5 100%);
+    color: #fff !important;
+    border: none;
+    box-shadow: 0 2px 8px #b3e5fc55;
+    transition: background 0.3s, transform 0.2s;
+    cursor: pointer;
+    display: inline-block;
+}
+.actions a:hover, td a:hover, td button:hover {
+    background: linear-gradient(90deg, #42a5f5 0%, #ffb703 100%);
+    color: #fff;
+    transform: scale(1.08);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    table, thead, tbody, th, td, tr { display: block; }
+    table { width: 98vw; }
+    th, td { padding: 12px 8vw; }
+    tr { margin-bottom: 18px; }
+    th { border-radius: 0; }
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+
+/* Navegación flotante */
+.nav-float {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 10;
+}
+.nav-float a {
+    background: #fff;
+    color: #1976d2 !important;
+    border: 2px solid #42a5f5;
+    box-shadow: 0 2px 8px #b3e5fc77;
+    margin: 0 0 8px 0;
+    display: block;
+    font-size: 1.1em;
+}
+.nav-float a:hover {
+    background: #42a5f5;
+    color: #fff !important;
+}

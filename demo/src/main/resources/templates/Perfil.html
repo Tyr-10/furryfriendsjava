@@ -4,58 +4,126 @@
     <meta charset="UTF-8">
     <title>Perfil de Usuario</title>
     <link rel="stylesheet" href="/css/perfil.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-
-<div style="position: absolute; top: 20px; left: 20px;">
-    <a href="/vistaadmin" class="btn-secondary">⬅ Volver</a>
-</div>
-
-<div class="profile-container">
-    <div class="profile-card">
-        <div class="profile-header">
-            <div class="profile-avatar" th:text="${usuario.nombre != null ? usuario.nombre.substring(0,1).toUpperCase() : usuario.correo.substring(0,1).toUpperCase()}"></div>
-            <h1 class="profile-name" th:text="${usuario.nombre}">Usuario</h1>
-            <p class="profile-email"><strong>Email:</strong> <span th:text="${usuario.correo}">correo</span></p>
-
-            <p class="profile-email" th:if="${usuario.telefono != null}"><strong>Teléfono:</strong> <span th:text="${usuario.telefono}"></span></p>
-            <p class="profile-email" th:if="${usuario.direccion != null}"><strong>Dirección:</strong> <span th:text="${usuario.direccion}"></span></p>
-        </div>
-
-        <button id="editButton" class="btn btn-secondary">Editar</button>
-
-        <form id="editForm" th:action="@{/perfil/actualizar}" method="post" th:object="${usuario}" style="display: none;">
-            <div class="input-group">
-                <label>Nombre:</label>
-                <input type="text" name="nombre" th:value="${usuario.nombre}" required>
-            </div>
-            <div class="input-group">
-                <label>Email:</label>
-                <input type="email" name="correo" th:value="${usuario.correo}" required>
-            </div>
-            <div class="input-group">
-                <label>Teléfono:</label>
-                <input type="text" name="telefono" th:value="${usuario.telefono}">
-            </div>
-            <div class="input-group">
-                <label>Dirección:</label>
-                <input type="text" name="direccion" th:value="${usuario.direccion}">
-            </div>
-            <button type="submit" class="btn btn-success">Guardar cambios</button>
-        </form>
-
-        <form th:action="@{/perfil/eliminar}" method="post" onsubmit="return confirm('¿Estás seguro que deseas eliminar tu cuenta?');">
-            <button type="submit" class="btn btn-danger">Eliminar Cuenta</button>
-        </form>
+    <!-- Fondo animado -->
+    <div class="animated-background">
+        <div class="paw-heart">❤🐾</div>
+        <div class="paw-heart">❤🐾</div>
+        <div class="paw-heart">❤🐾</div>
+        <div class="paw-heart">❤🐾</div>
+        <div class="paw-heart">❤🐾</div>
+        <div class="paw-heart">❤🐾</div>
     </div>
-</div>
 
-<script>
-    document.getElementById('editButton').addEventListener('click', function() {
-        document.getElementById('editForm').style.display = 'block';
-        this.style.display = 'none';
-    });
-</script>
+    <!-- Header de perfil: Título, logo y botón volver -->
+    <div class="perfil-header-bar" style="position: relative;">
+        <div class="logo-title">
+            <img src="/images/logo.jpg" alt="Logo">
+            <span class="perfil-title">Perfil de Usuario</span>
+        </div>
+        <!-- Botón volver: ir a la página anterior del historial -->
+        <a class="btn-volver-topright" href="javascript:void(0);" onclick="window.history.back();">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
+    </div>
 
+    <div class="main-content-perfil">
+        <div class="profile-container">
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="profile-avatar"
+                         th:text="${usuario.nombre != null ? usuario.nombre.substring(0,1).toUpperCase() : usuario.correo.substring(0,1).toUpperCase()}">
+                    </div>
+                    <div class="profile-name" th:text="${usuario.nombre}">Usuario</div>
+                    <div class="profile-email"><strong>Email:</strong> <span th:text="${usuario.correo}">correo</span></div>
+                    <div class="profile-email" th:if="${usuario.telefono != null}"><strong>Teléfono:</strong> <span th:text="${usuario.telefono}"></span></div>
+                    <div class="profile-email" th:if="${usuario.direccion != null}"><strong>Dirección:</strong> <span th:text="${usuario.direccion}"></span></div>
+                </div>
+
+                <button id="editButton" class="btn btn-secondary">Editar</button>
+
+                <form id="editForm" th:action="@{/perfil/actualizar}" method="post" th:object="${usuario}" style="display: none;">
+                    <div class="input-group">
+                        <label>Nombre:</label>
+                        <input type="text" name="nombre" th:value="${usuario.nombre}" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Email:</label>
+                        <input type="email" name="correo" th:value="${usuario.correo}" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Teléfono:</label>
+                        <input type="text" name="telefono" th:value="${usuario.telefono}">
+                    </div>
+                    <div class="input-group">
+                        <label>Dirección:</label>
+                        <input type="text" name="direccion" th:value="${usuario.direccion}">
+                    </div>
+                    <div class="input-group">
+                        <label>Contraseña (dejar vacío si no quieres cambiarla):</label>
+                        <input type="password" name="nuevaPassword">
+                    </div>
+                    <button type="submit" class="btn btn-success">Guardar cambios</button>
+                </form>
+
+                <form th:action="@{/perfil/eliminar}" method="post" onsubmit="return confirm('¿Estás seguro que deseas eliminar tu cuenta?');">
+                    <button type="submit" class="btn btn-danger">Eliminar Cuenta</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer igual que index -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Furry Friends</h4>
+                <p>Conectando corazones desde 2024</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Enlaces rápidos</h4>
+                <ul>
+                    <li><a th:href="@{/perrosdisponibles}">Adoptar</a></li>
+                    <li><a th:href="@{/registro/mascota}">Dar en adopción</a></li>
+                    <li><a th:href="@{/cuidados}">Cuidados</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p><i class="fas fa-envelope"></i> furryfriendsadopciones@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Furry Friends - Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Animación de huellas-corazón
+        document.addEventListener("DOMContentLoaded", () => {
+            const pawHearts = document.querySelectorAll('.paw-heart');
+            pawHearts.forEach(paw => {
+                const size = Math.random() * 30 + 20;
+                paw.style.fontSize = `${size}px`;
+                paw.style.left = `${Math.random() * 100}%`;
+                paw.style.top = `${Math.random() * 100}%`;
+                paw.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                paw.style.animationDelay = `${Math.random() * 5}s`;
+                paw.style.opacity = Math.random() * 0.4 + 0.1;
+            });
+        });
+
+        document.getElementById('editButton').addEventListener('click', function () {
+            document.getElementById('editForm').style.display = 'block';
+            this.style.display = 'none';
+        });
+    </script>
 </body>
 </html>

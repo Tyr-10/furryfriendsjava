@@ -1,172 +1,154 @@
-/* Estilos generales */
-
 body {
-    font-family: 'Arial', sans-serif;
+    background: linear-gradient(120deg, #a9d4f1, #ffffff, #bae6fd, #ffffff);
+    background-size: 300% 300%;
+    animation: gradientMove 8s ease-in-out infinite;
+    font-family: 'Segoe UI', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #ffffff;
-    /* Azul pastel claro */
 }
 
-
-/* Cabecera */
-
-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #42a5f5;
-    /* Azul más intenso */
-    padding: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+@keyframes gradientMove {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
 }
 
-.logo-container {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+.edit-container {
+    max-width: 650px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(60, 60, 120, 0.15);
+    padding: 48px 56px 40px 56px;
+    position: relative;
 }
 
-.logo {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: 3px solid white;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-h1 {
-    color: rgb(0, 0, 0);
-    font-size: 24px;
-    margin: 0;
-}
-
-
-/* Contenedor principal */
-
-.container {
-    max-width: 600px;
-    margin: 30px auto;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.edit-title {
     text-align: center;
+    color: #199a5d; /* verde suave, no fosforescente */
+    margin-bottom: 28px;
+    font-size: 2.1rem;
+    letter-spacing: 1px;
+    font-weight: 700;
 }
 
-
-/* Botones */
-
-.buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin: 20px 0;
-}
-
-.btn {
-    padding: 12px 18px;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    background-color: #64b5f6;
-    /* Azul pastel */
-    color: white;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-}
-
-.btn:hover {
-    background-color: #42a5f5;
-    /* Azul más intenso */
-    transform: scale(1.1);
-}
-
-.rol-buttons {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.btn-rol {
-    padding: 12px 18px;
-    border-radius: 8px;
-    border: none;
-    background: #3498db;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.2s;
-    font-size: 16px;
-    box-shadow: 0 2px 8px rgba(52,152,219,0.08);
-    outline: none;
-}
-
-.btn-rol.active,
-.btn-rol:focus,
-.btn-rol:hover {
-    background: #4CAF50;
-    color: white;
-    transform: translateY(-2px) scale(1.04);
-    box-shadow: 0 4px 16px rgba(76,175,80,0.12);
-}
-
-
-/* Formulario */
-
-#form-container {
-    margin-top: 20px;
-    text-align: left;
-}
-
-form {
+.edit-form .form-group {
+    margin-bottom: 28px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    position: relative;
 }
 
-label {
-    font-weight: bold;
-    color: #333;
+.form-label {
+    margin-bottom: 7px;
+    color: #199a5d;
+    font-weight: 600;
+    font-size: 1.07rem;
+    letter-spacing: 0.5px;
+    transition: color 0.3s;
 }
 
-input,
-textarea,
-button {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+/* Inputs más lindos y modernos */
+.form-input, select, textarea {
+    border: 2px solid #6fcf97;
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-size: 1.08rem;
+    transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+    outline: none;
+    background: #f8fafc;
+    color: #22223b;
+    box-shadow: 0 2px 12px rgba(52, 211, 153, 0.08);
+    margin-top: 2px;
 }
 
-button[type="submit"] {
-    background-color: #0288d1;
-    color: white;
+.form-input:focus, select:focus, textarea:focus {
+    border-color: #199a5d;
+    box-shadow: 0 0 0 4px #bbf7d0;
+    background: #f0fdf4;
+}
+
+textarea.form-input {
+    min-height: 70px;
+    resize: vertical;
+}
+
+
+/* Botones en verde suave */
+.form-button {
+    width: 100%;
+    padding: 12px 0;
+    background: linear-gradient(90deg, #6fcf97 0%, #199a5d 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(52, 211, 153, 0.12);
+    transition: background 0.3s, transform 0.2s;
+    margin-top: 10px;
+}
+
+.form-button:hover, .form-button:focus {
+    background: linear-gradient(90deg, #199a5d 0%, #6fcf97 100%);
+    transform: translateY(-2px) scale(1.03);
+}
+
+.btn-accion {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s, transform 0.2s;
+    margin: 0 4px;
+    cursor: pointer;
+    background: linear-gradient(90deg, #6fcf97 0%, #199a5d 100%);
+    color: #fff;
+    border: none;
+}
+
+.btn-accion:hover, .btn-accion:focus {
+    background: linear-gradient(90deg, #199a5d 0%, #6fcf97 100%);
+    color: #fff;
+    transform: scale(1.08);
+}
+
+.btn-editar {
+    /* Hereda de .btn-accion */
+}
+
+.btn-equis {
+    /* Hereda de .btn-accion */
+}
+
+.close-btn {
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    font-size: 1.5rem;
+    color: #6fcf97;
+    background: none;
     border: none;
     cursor: pointer;
-    transition: 0.3s;
-}
-
-button[type="submit"]:hover {
-    background-color: #0277bd;
-    transform: scale(1.05);
-}
-
-.back-button {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.back-button .btn {
-    background-color: #0288d1;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
     text-decoration: none;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
+    z-index: 10;
+    transition: color 0.2s, transform 0.2s;
 }
 
-.back-button .btn:hover {
-    background-color: #0277bd;
+.close-btn:hover, .close-btn:focus {
+    color: #199a5d;
+    transform: scale(1.18) rotate(90deg);
+}
+
+@media (max-width: 600px) {
+    .edit-container {
+        padding: 18px 8px 16px 8px;
+        max-width: 98vw;
+    }
+    .edit-title {
+        font-size: 1.3rem;
+    }
 }
