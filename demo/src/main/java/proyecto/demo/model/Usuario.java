@@ -1,6 +1,7 @@
 package proyecto.demo.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Usuario {
@@ -20,12 +21,17 @@ public class Usuario {
     private String responsable;
     private String servicios;
 
+    @Column(nullable = false)
+    private boolean disponible = true;
+
+    private LocalDateTime fechaRegistro;
+
     @ManyToOne
     @JoinColumn(name = "id_rol")
     private Rol rol;
 
-    // Getters y Setters (puedes generarlos con Lombok si usas @Data)
-    
+    // Getters y Setters
+
     public Long getId() {
         return id;
     }
@@ -112,6 +118,22 @@ public class Usuario {
 
     public void setServicios(String servicios) {
         this.servicios = servicios;
+    }
+
+    public boolean isDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
+    }
+
+    public LocalDateTime getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(LocalDateTime fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
     }
 
     public Rol getRol() {
