@@ -11,3 +11,4 @@ public class VistaAdminController {
         return "vistaadmin"; // Este debe coincidir con el nombre del archivo HTML: admin.html
     }
 }
+
