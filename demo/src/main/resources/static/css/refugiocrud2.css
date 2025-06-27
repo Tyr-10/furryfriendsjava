@@ -1,0 +1,171 @@
+body {
+    background: linear-gradient(120deg, #a9d4f1, #ffffff, #bae6fd, #ffffff);
+    background-size: 300% 300%;
+    animation: gradientMove 8s ease-in-out infinite;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.edit-container {
+    max-width: 650px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(60, 60, 120, 0.15);
+    padding: 48px 56px 40px 56px;
+    position: relative;
+}
+
+.edit-title {
+    text-align: center;
+    color: #199a5d;
+    /* verde suave, no fosforescente */
+    margin-bottom: 28px;
+    font-size: 2.1rem;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+.edit-form .form-group {
+    margin-bottom: 28px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.form-label {
+    margin-bottom: 7px;
+    color: #199a5d;
+    font-weight: 600;
+    font-size: 1.07rem;
+    letter-spacing: 0.5px;
+    transition: color 0.3s;
+}
+
+
+/* Inputs más lindos y modernos */
+
+.form-input,
+select,
+textarea {
+    border: 2px solid #6fcf97;
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-size: 1.08rem;
+    transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+    outline: none;
+    background: #f8fafc;
+    color: #22223b;
+    box-shadow: 0 2px 12px rgba(52, 211, 153, 0.08);
+    margin-top: 2px;
+}
+
+.form-input:focus,
+select:focus,
+textarea:focus {
+    border-color: #199a5d;
+    box-shadow: 0 0 0 4px #bbf7d0;
+    background: #f0fdf4;
+}
+
+textarea.form-input {
+    min-height: 70px;
+    resize: vertical;
+}
+
+
+/* Botones en verde suave */
+
+.form-button {
+    width: 100%;
+    padding: 12px 0;
+    background: linear-gradient(90deg, #6fcf97 0%, #199a5d 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(52, 211, 153, 0.12);
+    transition: background 0.3s, transform 0.2s;
+    margin-top: 10px;
+}
+
+.form-button:hover,
+.form-button:focus {
+    background: linear-gradient(90deg, #199a5d 0%, #6fcf97 100%);
+    transform: translateY(-2px) scale(1.03);
+}
+
+.btn-accion {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s, transform 0.2s;
+    margin: 0 4px;
+    cursor: pointer;
+    background: linear-gradient(90deg, #6fcf97 0%, #199a5d 100%);
+    color: #fff;
+    border: none;
+}
+
+.btn-accion:hover,
+.btn-accion:focus {
+    background: linear-gradient(90deg, #199a5d 0%, #6fcf97 100%);
+    color: #fff;
+    transform: scale(1.08);
+}
+
+.btn-editar {
+    /* Hereda de .btn-accion */
+}
+
+.btn-equis {
+    /* Hereda de .btn-accion */
+}
+
+.close-btn {
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    font-size: 1.5rem;
+    color: #6fcf97;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    z-index: 10;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #199a5d;
+    transform: scale(1.18) rotate(90deg);
+}
+
+@media (max-width: 600px) {
+    .edit-container {
+        padding: 18px 8px 16px 8px;
+        max-width: 98vw;
+    }
+    .edit-title {
+        font-size: 1.3rem;
+    }
+}

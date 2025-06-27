@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Perro</title>
+    <link rel="stylesheet" th:href="@{/css/crudcreate.css}">
+</head>
+
+<body>
+    <div class="waves-bg">
+        <div class="wave wave1"></div>
+        <div class="wave wave2"></div>
+        <div class="wave wave3"></div>
+    </div>
+    <h1>Registrar Nuevo Perro</h1>
+
+    <form th:action="@{/perroscrud/guardar}" th:object="${perro}" method="post" enctype="multipart/form-data">
+        <label>Nombre: <input type="text" th:field="*{nombre}" /></label><br>
+        <label>Edad: <input type="number" th:field="*{edad}" /></label><br>
+        <label>Raza: <input type="text" th:field="*{raza}" /></label><br>
+        <label>Tamaño:
+        <select th:field="*{tamanio}">
+            <option value="">-- Selecciona --</option>
+            <option value="Grande">Grande</option>
+            <option value="Mediano">Mediano</option>
+            <option value="Pequeño">Pequeño</option>
+        </select>
+    </label><br>
+        <label>Descripción: <input type="text" th:field="*{descripcion}" /></label><br>
+        <label>Sexo:
+        <select th:field="*{sexo}">
+            <option value="">-- Selecciona --</option>
+            <option value="Macho">Macho</option>
+            <option value="Hembra">Hembra</option>
+        </select>
+    </label><br>
+        <label>Color: <input type="text" th:field="*{color}" /></label><br>
+        <label>Historial Clínico: <input type="text" th:field="*{historialClinico}" /></label><br>
+        <label>Imagen: <input type="file" name="imagen" /></label><br>
+        <label>Disponible: <input type="checkbox" th:field="*{disponible}" /></label><br>
+
+        <button type="submit">Guardar</button>
+    </form>
+    <a th:href="@{/perroscrud}">🔙 Volver</a>
+</body>
+
+</html>

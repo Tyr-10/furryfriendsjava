@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+:root {
+    --azul: #42a5f5;
+    --verde: #4CAF50;
+    --amarillo: #FFB703;
+    --fondo1: #e3f2fd;
+    --fondo2: #fffbea;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, var(--fondo1), var(--fondo2));
+    color: #333;
+    overflow-x: hidden;
+}
+
+
+/* Header */
+
+header {
+    background: linear-gradient(to right, var(--azul), var(--verde));
+    color: white;
+    padding: 20px 40px;
+    font-size: 1.8rem;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.volver-btn {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: white;
+    color: var(--azul);
+    border: 2px solid var(--azul);
+    padding: 6px 10px;
+    border-radius: 50%;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.volver-btn:hover {
+    background: var(--azul);
+    color: white;
+}
+
+
+/* Botón volver cuadrado con puntas redondas */
+
+.volver-btn-cuadro {
+    display: inline-block;
+    background: linear-gradient(135deg, #42a5f5 0%, #81c784 100%);
+    color: #fff;
+    border: none;
+    border-radius: 18px;
+    padding: 10px 28px;
+    font-weight: bold;
+    font-size: 1.08em;
+    text-decoration: none;
+    margin-right: 18px;
+    margin-left: 0;
+    box-shadow: 0 2px 8px #b3e5fc55;
+    transition: background 0.3s, color 0.3s, transform 0.2s;
+}
+
+.volver-btn-cuadro:hover {
+    background: linear-gradient(135deg, #81c784 0%, #42a5f5 100%);
+    color: #fff;
+    transform: scale(1.05);
+}
+
+
+/* Contenido */
+
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
+}
+
+h2 {
+    text-align: center;
+    color: var(--verde);
+    margin-bottom: 30px;
+}
+
+.comentarios,
+.consejos {
+    margin-bottom: 40px;
+}
+
+h3 {
+    color: var(--amarillo);
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+p,
+li {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+ul li::before {
+    content: "🐾 ";
+    color: var(--verde);
+}
+
+.youtube-button {
+    display: inline-block;
+    margin-top: 20px;
+    background: var(--amarillo);
+    color: #333;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.youtube-button:hover {
+    background: #ffa500;
+    color: white;
+}
+
+
+/* Footer */
+
+footer {
+    /* No sobrescribir estilos, usar los de style.css */
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: inherit;
+    box-shadow: none;
+}
+
+.footer-content,
+.footer-section,
+.footer-bottom,
+.social-icons {
+    /* No sobrescribir, usar style.css */
+}
+
+.footer-section h4 {
+    text-align: center;
+    width: 100%;
+}
+
+
+/* Animación perritos */
+
+.dog-animation {
+    position: fixed;
+    bottom: -40px;
+    left: -100px;
+    font-size: 2.5rem;
+    animation: runAcross 15s linear infinite;
+    z-index: 0;
+    opacity: 0.3;
+}
+
+@keyframes runAcross {
+    0% {
+        left: -100px;
+        bottom: 10px;
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(10deg);
+    }
+    100% {
+        left: 110%;
+        bottom: 10px;
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
