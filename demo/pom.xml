@@ -95,9 +95,29 @@
 
     <version>1.5.3</version>
 
+
+	
+
 </dependency>
 
+<dependency>
+    <groupId>commons-codec</groupId>
+    <artifactId>commons-codec</artifactId>
+    <version>1.15</version> <!-- o cualquier versión compatible -->
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-mail</artifactId>
+</dependency>
+<dependency>
+			<groupId>com.github.librepdf</groupId>
+			<artifactId>openpdf</artifactId>
+			<version>1.3.30</version>
+		</dependency>
+
+
 	</dependencies>
+	
 
 	<build>
 		<plugins>
