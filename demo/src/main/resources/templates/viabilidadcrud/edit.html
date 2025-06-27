@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Editar Viabilidad</title>
+    <link rel="stylesheet" th:href="@{/css/crudedit.css}">
+</head>
+
+<body>
+    <a href="/tablasadmin" class="btn-volver" style="margin: 18px 0 0 18px; display: inline-block;">← Volver</a>
+
+    <h1>Editar archivo de viabilidad</h1>
+
+    <form method="post" enctype="multipart/form-data" th:action="@{'/viabilidadcrud/actualizar/' + ${viabilidad.id}}">
+        <label>Nuevo archivo PDF:</label>
+        <input type="file" name="archivo" accept="application/pdf" required />
+        <button type="submit">Actualizar</button>
+    </form>
+
+    <a th:href="@{/viabilidadcrud}">Volver</a>
+</body>
+
+</html>

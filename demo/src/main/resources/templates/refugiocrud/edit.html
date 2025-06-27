@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Perro</title>
+    <link rel="stylesheet" th:href="@{/css/refugiocrud2.css}">
+</head>
+
+<body>
+    <div class="edit-container">
+        <a th:href="@{/refugiocrud}" class="close-btn" title="Ir al CRUD">✖</a>
+        <h1 class="edit-title">Editar Perro</h1>
+        <form class="edit-form" th:action="@{/refugiocrud/actualizar}" method="post" enctype="multipart/form-data" th:object="${perro}">
+            <input type="hidden" th:field="*{id}" />
+
+            <div class="form-group">
+                <label class="form-label">Nombre:</label>
+                <input class="form-input" type="text" th:field="*{nombre}" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Edad:</label>
+                <input class="form-input" type="number" th:field="*{edad}" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Tamaño:</label>
+                <select class="form-input" th:field="*{tamanio}">
+                <option th:each="t : ${tamanos}" th:value="${t}" th:text="${t}"></option>
+            </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Color:</label>
+                <input class="form-input" type="text" th:field="*{color}" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="sexoSelect">Sexo:</label>
+                <select class="form-input" id="sexoSelect" th:field="*{sexo}" required>
+                <option value="" disabled selected>Selecciona una opción</option>
+                <option value="Macho">Macho</option>
+                <option value="Hembra">Hembra</option>
+            </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Descripción:</label>
+                <textarea class="form-input" th:field="*{descripcion}"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Imagen (si deseas cambiarla):</label>
+                <input class="form-input" type="file" name="imagenFile">
+            </div>
+
+
+
+            <button class="form-button" type="submit">Actualizar</button>
+        </form>
+    </div>
+</body>
+
+</html>

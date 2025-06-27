@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Usuario</title>
+    <link rel="stylesheet" th:href="@{/css/crudedit.css}">
+</head>
+
+<body>
+    <a href="/tablasadmin" class="btn-volver" style="margin: 18px 0 0 18px; display: inline-block;">← Volver</a>
+    <div class="lines-bg">
+        <div class="line line1"></div>
+        <div class="line line2"></div>
+        <div class="line line3"></div>
+        <div class="line line4"></div>
+    </div>
+    <h1>Editar Usuario</h1>
+    <form th:action="@{'/usuarioscrud/actualizar/' + ${usuario.id}}" th:object="${usuario}" method="post">
+        <label>Nombre: <input type="text" th:field="*{nombre}" /></label><br>
+        <label>Correo: <input type="email" th:field="*{correo}" /></label><br>
+        <label>Contraseña: <input type="password" th:field="*{password}" /></label><br>
+        <label>Teléfono: <input type="text" th:field="*{telefono}" /></label><br>
+        <label>Dirección: <input type="text" th:field="*{direccion}" /></label><br>
+        <label>Ciudad: <input type="text" th:field="*{ciudad}" /></label><br>
+        <label>Capacidad: <input type="number" th:field="*{capacidad}" /></label><br>
+        <label>Horarios: <input type="text" th:field="*{horarios}" /></label><br>
+        <label>Responsable: <input type="text" th:field="*{responsable}" /></label><br>
+        <label>Servicios: <input type="text" th:field="*{servicios}" /></label><br>
+
+
+        <label>Rol:
+    <select th:field="*{rol.id}">
+        <option value="">-- Selecciona un rol --</option>
+        <option value="1" th:selected="${usuario.rol?.id == 1}">Adoptante</option>
+        <option value="2" th:selected="${usuario.rol?.id == 2}">Refugio Natural</option>
+        <option value="3" th:selected="${usuario.rol?.id == 3}">Refugio Físico</option>
+    </select>
+</label><br>
+        <button type="submit">Actualizar</button>
+    </form>
+    <a th:href="@{/usuarioscrud}">🔙 Volver</a>
+</body>
+
+</html>
