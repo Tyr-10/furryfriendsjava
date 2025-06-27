@@ -25,7 +25,7 @@ public class AdminDataLoader {
                 Usuario mariana = new Usuario();
                 mariana.setNombre("Admin Mariana");
                 mariana.setCorreo("mariana@gmail.com");
-                mariana.setPassword(encoder.encode("admin123"));
+                mariana.setPassword(encoder.encode("Admin123."));
                 mariana.setTelefono("1234567890");
                 mariana.setDireccion("Calle 21");
                 mariana.setCiudad("Ciudad Ejemplo");
@@ -43,7 +43,7 @@ public class AdminDataLoader {
                 Usuario emilly = new Usuario();
                 emilly.setNombre("Admin Emilly");
                 emilly.setCorreo("emilly@gmail.com");
-                emilly.setPassword(encoder.encode("admin1234"));
+                emilly.setPassword(encoder.encode("Admin1234."));
                 emilly.setTelefono("1234567890");
                 emilly.setDireccion("Calle Falsa 31");
                 emilly.setCiudad("Ciudad Ejemplo");
@@ -61,7 +61,7 @@ public class AdminDataLoader {
                 Usuario juan = new Usuario();
                 juan.setNombre("Admin Juan");
                 juan.setCorreo("juan@gmail.com");
-                juan.setPassword(encoder.encode("admin12345"));
+                juan.setPassword(encoder.encode("Admin12345."));
                 juan.setTelefono("1234567890");
                 juan.setDireccion("Calle 41");
                 juan.setCiudad("Ciudad Ejemplo");
@@ -73,6 +73,7 @@ public class AdminDataLoader {
                 usuarioRepository.save(juan);
                 System.out.println("Admin Juan creado.");
             }
+            // creado por Emilia, Mamari y Juansitobonito
         };
     }
 }
