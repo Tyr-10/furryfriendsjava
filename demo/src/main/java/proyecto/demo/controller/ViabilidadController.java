@@ -1,70 +1,112 @@
 package proyecto.demo.controller;
 
 import proyecto.demo.model.Viabilidad;
+import proyecto.demo.model.Usuario;
 import proyecto.demo.repository.ViabilidadRepository;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import proyecto.demo.repository.UsuarioRepository;
+
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.Optional;
+import java.nio.file.*;
+import java.security.Principal;
+import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
+@RequestMapping("/viabilidad")
 public class ViabilidadController {
 
-    @Autowired
-    private ViabilidadRepository repo;
+    private final ViabilidadRepository viabilidadRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    @GetMapping("/viabilidad")
-    public String mostrarVista() {
+    @Value("${upload.path}")
+    private String uploadDir;
+
+    // Mostrar archivos SOLO si hay búsqueda
+    @GetMapping
+    public String mostrar(@RequestParam(value = "archivo", required = false) String archivo,
+            Model model,
+            @RequestParam(value = "success", required = false) String success,
+            @RequestParam(value = "error", required = false) String error) {
+
+        List<Viabilidad> viabilidades = null;
+
+        if (archivo != null && !archivo.isEmpty()) {
+            viabilidades = viabilidadRepository
+                    .findByActivoTrueAndNombreOriginalContainingIgnoreCaseOrderByIdDesc(archivo);
+        }
+
+        model.addAttribute("viabilidades", viabilidades);
+
+        if (success != null)
+            model.addAttribute("success", success);
+        if (error != null)
+            model.addAttribute("error", error);
+
         return "viabilidad";
     }
 
-    @PostMapping("/viabilidad/subir")
-    public String subirDocumento(@RequestParam("archivo") MultipartFile archivo, Model model) {
-        try {
-            String nombre = StringUtils.cleanPath(archivo.getOriginalFilename());
-            Viabilidad doc = new Viabilidad();
-            doc.setNombre(nombre);
-            doc.setTipo(archivo.getContentType());
-            doc.setContenido(archivo.getBytes()); // Asegúrate que el nombre del método sea correcto
-            repo.save(doc);
-            model.addAttribute("mensaje", "Documento subido correctamente.");
-        } catch (IOException e) {
-            model.addAttribute("mensaje", "Error al subir documento.");
+    // Subir archivo
+    @PostMapping("/subir")
+    public String subir(@RequestParam("archivo") MultipartFile archivo,
+            Principal principal,
+            Model model) throws IOException {
+
+        if (archivo == null || archivo.isEmpty()) {
+            model.addAttribute("error", "Debes subir un archivo.");
+            return "viabilidad";
         }
-        return "viabilidad";
+
+        // Guardar archivo físico
+        String nombreOriginal = Path.of(archivo.getOriginalFilename()).getFileName().toString();
+        Path destino = Paths.get("src/main/resources/static/uploads").resolve(nombreOriginal);
+        Files.createDirectories(destino.getParent());
+        Files.write(destino, archivo.getBytes());
+
+        // Obtener usuario autenticado
+        Usuario usuario = obtenerUsuarioDesdePrincipal(principal);
+
+        // Guardar en base de datos
+        Viabilidad viabilidad = new Viabilidad();
+        viabilidad.setArchivo("/uploads/" + nombreOriginal);
+        viabilidad.setNombreOriginal(nombreOriginal);
+        viabilidad.setUsuarioId(usuario.getId());
+        viabilidad.setRolId(usuario.getRol().getId());
+        viabilidad.setActivo(true);
+
+        viabilidadRepository.save(viabilidad);
+
+        model.addAttribute("success", "Archivo subido con éxito.");
+        return "redirect:/viabilidad?success=Archivo subido con éxito.";
     }
 
-    @GetMapping("/viabilidad/buscar")
-    public String buscarDocumento(@RequestParam("nombre") String nombre, Model model) {
-        Optional<Viabilidad> resultado = repo.findByNombre(nombre);
-        if (resultado.isPresent()) {
-            model.addAttribute("viabilidadEncontrada", resultado.get());
-        } else {
-            model.addAttribute("mensaje", "No se encontraron resultados.");
-        }
-        return "viabilidad";
+    // Desactivar archivo
+    @PostMapping("/desactivar/{id}")
+    public String desactivar(@PathVariable Long id) {
+        Viabilidad estudio = viabilidadRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("ID no válido: " + id));
+        estudio.setActivo(false);
+        viabilidadRepository.save(estudio);
+        return "redirect:/viabilidad?success=Documento desactivado con éxito.";
     }
 
-    @GetMapping("/viabilidad/descargar/{id}")
-    public void descargarDocumento(@PathVariable Long id, HttpServletResponse response) throws IOException {
-        Optional<Viabilidad> resultado = repo.findById(id);
-        if (resultado.isPresent()) {
-            Viabilidad documento = resultado.get();
-            response.setContentType(documento.getTipo());
-            String headerValue = "attachment; filename=\"" +
-                    URLEncoder.encode(documento.getNombre(), StandardCharsets.UTF_8) + "\"";
-            response.setHeader("Content-Disposition", headerValue);
-            response.getOutputStream().write(documento.getContenido());
-        } else {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Documento no encontrado");
+    // Obtener usuario autenticado desde Spring Security
+    private Usuario obtenerUsuarioDesdePrincipal(Principal principal) {
+        if (principal != null) {
+            String correo = principal.getName();
+            Usuario usuario = usuarioRepository.findByCorreo(correo);
+            if (usuario != null) {
+                return usuario;
+            }
         }
+        throw new IllegalStateException("No se pudo obtener el usuario autenticado.");
     }
 }
