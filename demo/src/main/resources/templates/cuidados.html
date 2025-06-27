@@ -1,95 +1,109 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Cuidados y Amor para los Perritos</title>
+    <link rel="stylesheet" href="css/cuidados.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="https://kit.fontawesome.com/yourkitcode.js" crossorigin="anonymous"></script>
+    <!-- Reemplaza 'yourkitcode' con tu código de FontAwesome si lo tienes -->
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            background: linear-gradient(to bottom, #a8dcff, #ffffff);
-        }
-
-        header {
-            background-color: #62b4f7;
+        /* Ajustes específicos para el header de cuidados */
+        
+        .cuidados-header {
+            background: linear-gradient(to right, var(--azul, #42a5f5), var(--verde, #4CAF50));
             color: white;
+            padding: 12px 0 18px 0;
             text-align: center;
-            padding: 1rem;
-            font-size: 1.5rem;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
         }
-
-        .container {
-            max-width: 700px;
-            margin: 2rem auto;
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        
+        .cuidados-header .logo-cuidados {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 2px;
+            box-shadow: 0 2px 8px #b3e5fc;
         }
-
-        h2, h3 {
-            text-align: center;
-            color: #333;
-        }
-
-        .btn {
-            display: block;
-            margin: 1rem auto;
-            background-color: #4d89c1;
-            color: white;
-            padding: 0.5rem 1.5rem;
+        
+        .btn-volver-topright {
+            position: absolute;
+            left: 18px;
+            top: 14px;
+            background: #fff;
+            color: #42a5f5;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
+            padding: 4px 16px;
+            font-size: 1em;
+            font-weight: 600;
+            box-shadow: 0 2px 8px #b3e5fc;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
             text-decoration: none;
-            font-weight: bold;
         }
-
-        .comentarios, .consejos {
-            margin-top: 2rem;
+        
+        .btn-volver-topright:hover {
+            background: #42a5f5;
+            color: #fff;
+            box-shadow: 0 4px 12px #90caf9;
         }
-
-        .comentarios p, .consejos li {
-            background: #f5f9ff;
-            padding: 0.6rem;
-            margin: 0.5rem 0;
-            border-radius: 6px;
+        
+        .btn-volver-topright i {
+            margin-right: 6px;
         }
-
-        ul {
-            padding-left: 1.5rem;
-        }
-
-        footer {
+        
+        .cuidados-header .cuidados-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin: 0 auto;
+            color: #fff;
+            letter-spacing: 0.5px;
             text-align: center;
-            margin-top: 3rem;
-            padding: 1rem;
-            background-color: #62b4f7;
-            color: white;
-            font-size: 0.9rem;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
+            margin-top: 8px;
+            margin-bottom: 0;
+            width: 100%;
         }
-
-        .youtube-button {
-            background-color: #ff2d75;
-            color: white;
-            padding: 0.6rem 1.2rem;
-            border-radius: 8px;
-            text-align: center;
-            display: block;
-            margin: 1rem auto;
-            text-decoration: none;
+        
+        @media (max-width: 600px) {
+            .cuidados-header .cuidados-title {
+                font-size: 1em;
+            }
+            .cuidados-header .logo-cuidados {
+                width: 36px;
+                height: 36px;
+            }
+            .cuidados-header .volver-btn-cuadro {
+                font-size: 0.85em;
+                padding: 2px 10px;
+                height: 22px;
+            }
         }
     </style>
 </head>
+
 <body>
-    <header>
-        🐶 Cuidados y Amor para los Perritos 🐶
+
+    <header class="cuidados-header">
+        <a class="btn-volver-topright" href="javascript:void(0);" onclick="window.history.back();">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
+        <img src="images/logo.jpg" alt="logo" class="logo-cuidados">
+        <div class="cuidados-title">🐶 Cuidados y Amor para los Perritos 🐶</div>
     </header>
 
     <div class="container">
         <h2>Aprende a cuidar a tu perrito con amor</h2>
-        <a href="#" class="btn">← Volver</a>
 
         <div class="comentarios">
             <h3>❤ Comentarios sobre cuidados ❤</h3>
@@ -110,12 +124,40 @@
                 <li>🎓 Enséñale trucos y obedece comandos básicos para su educación.</li>
                 <li>⏰ Dale tiempo de calidad para fortalecer el vínculo con él.</li>
             </ul>
-            <a href="https://www.youtube.com" class="youtube-button">🎥 Ver más consejos en YouTube</a>
+            <a href="https://www.youtube.com" class="youtube-button" target="_blank">🎥 Ver más consejos en YouTube</a>
         </div>
     </div>
 
+    <!-- Footer igual al de la página principal, estilos desde style.css -->
     <footer>
-        © 2025 Furry Friends - Todos los derechos reservados 🐾
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Furry Friends</h4>
+                <p>Conectando corazones desde 2024</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Enlaces rápidos</h4>
+                <ul>
+                    <li><a th:href="@{/perrosdisponibles}">Adoptar</a></li>
+                    <li><a th:href="@{/registro/mascota}">Dar en adopción</a></li>
+                    <li><a th:href="@{/cuidados}">Cuidados</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p><i class="fas fa-envelope"></i> furryfriendsadopciones@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Furry Friends - Todos los derechos reservados.</p>
+        </div>
     </footer>
+
 </body>
+
 </html>

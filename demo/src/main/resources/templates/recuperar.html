@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Recuperar Contraseña | Furry Friends</title>
+    <link rel="stylesheet" th:href="@{/css/recuperar.css}">
+</head>
+
+<body>
+    <!-- Fondo animado con candados -->
+    <div class="candados-bg">
+        <img src="/images/candado.png" class="candado c1" alt="candado">
+        <img src="/images/candado.png" class="candado c2" alt="candado">
+        <img src="/images/candado.png" class="candado c3" alt="candado">
+        <img src="/images/candado.png" class="candado c4" alt="candado">
+        <img src="/images/candado.png" class="candado c5" alt="candado">
+        <img src="/images/candado.png" class="candado c6" alt="candado">
+    </div>
+
+    <div class="contenedor-recuperar">
+        <h2 class="titulo">🔒 Recuperar Contraseña</h2>
+
+        <div th:if="${mensajeExito}">
+            <div class="mensaje-exito">
+                <p th:text="${mensajeExito}"></p>
+            </div>
+        </div>
+
+        <form th:action="@{/recuperar/enviar}" method="post" class="form-recuperar" th:if="${mensajeExito == null}">
+            <label for="correo">Correo electrónico:</label>
+            <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com" required th:value="${correo}" />
+
+            <button type="submit">Enviar nueva contraseña</button>
+        </form>
+
+        <div class="volver">
+            <a th:href="@{/login}">← Volver al inicio de sesión</a>
+        </div>
+    </div>
+</body>
+
+</html>
