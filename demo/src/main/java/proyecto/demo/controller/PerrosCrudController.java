@@ -43,6 +43,7 @@ public class PerrosCrudController {
             perro.setImagenperro(imagenFile.getBytes());
         }
 
+        // Nuevo perro siempre inicia como disponible
         perro.setDisponible(true);
         perro.setUserId(1L); // Asigna automáticamente el id del usuario creador
         perrosRepository.save(perro);
@@ -61,7 +62,7 @@ public class PerrosCrudController {
         }
     }
 
-    // Actualizar perro
+    // Actualizar perro (sin modificar el campo disponible)
     @PostMapping("/actualizar/{id}")
     public String actualizar(@PathVariable Long id,
                              @ModelAttribute Perros perroForm,
@@ -78,7 +79,8 @@ public class PerrosCrudController {
             perro.setColor(perroForm.getColor());
             perro.setSexo(perroForm.getSexo());
             perro.setHistorialClinico(perroForm.getHistorialClinico());
-            perro.setDisponible(perroForm.isDisponible());
+
+            // 👇 No se toca "disponible", se conserva como está en BD
 
             // Si se sube una nueva imagen, actualizarla
             if (!imagenFile.isEmpty()) {

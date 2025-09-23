@@ -31,7 +31,16 @@ public class ViabilidadCrudController {
 
     @GetMapping
     public String index(@RequestParam(required = false) String nombreOriginal, Model model) {
-        List<Viabilidad> viabilidades = viabilidadRepository.buscarPorNombreOriginal(nombreOriginal);
+        List<Viabilidad> viabilidades;
+
+        if (nombreOriginal != null && !nombreOriginal.isEmpty()) {
+            // Solo viabilidades activas que coincidan con la búsqueda
+            viabilidades = viabilidadRepository.findByActivoTrueAndNombreOriginalContainingIgnoreCaseOrderByIdDesc(nombreOriginal);
+        } else {
+            // Todas las viabilidades activas
+            viabilidades = viabilidadRepository.findByActivoTrueOrderByIdDesc();
+        }
+
         model.addAttribute("viabilidades", viabilidades);
         model.addAttribute("nombreOriginal", nombreOriginal);
         return "viabilidadcrud/index";
