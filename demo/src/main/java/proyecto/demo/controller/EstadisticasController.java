@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import proyecto.demo.repository.UsuarioRepository;
 import proyecto.demo.repository.PerrosRepository;
+import proyecto.demo.model.Usuario;
+import proyecto.demo.model.Perros;
 
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.*;
@@ -17,6 +19,7 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.util.List;
 
 @Controller
 public class EstadisticasController {
@@ -36,16 +39,19 @@ public class EstadisticasController {
         model.addAttribute("usuariosTotales", usuariosTotales);
         model.addAttribute("perrosTotales", perrosTotales);
 
-        return "estadisticas";  // estadisticas.html en templates
+        return "estadisticas";
     }
 
-    // Nuevo: generar PDF de estadísticas
+    // Generar PDF
     @GetMapping("/estadisticas/reporte")
     public void generarReporteEstadisticas(HttpServletResponse response) throws Exception {
         long usuariosTotales = usuarioRepository.count();
         long perrosTotales = perrosRepository.count();
 
-        Document document = new Document();
+        List<Usuario> usuarios = usuarioRepository.findAll();
+        List<Perros> perros = perrosRepository.findAll();
+
+        Document document = new Document(PageSize.A4.rotate()); // Horizontal para que quepa mejor
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PdfWriter writer = PdfWriter.getInstance(document, baos);
 
@@ -88,13 +94,76 @@ public class EstadisticasController {
         document.setMargins(document.leftMargin(), document.rightMargin(), 70f, document.bottomMargin());
         document.open();
 
-        // Contenido del PDF
-        document.add(new Paragraph(" "));
+        // Título
         document.add(new Paragraph("Reporte General de Estadísticas", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18)));
         document.add(new Paragraph("\nFecha de generación: " + java.time.LocalDate.now() + "\n\n"));
 
         document.add(new Paragraph("Usuarios registrados en el sistema: " + usuariosTotales));
         document.add(new Paragraph("Perros registrados en el sistema: " + perrosTotales));
+        document.add(new Paragraph("\n\n"));
+
+        // ===== Tabla de Usuarios =====
+        Paragraph tituloUsuarios = new Paragraph("Usuarios", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
+        tituloUsuarios.setSpacingBefore(10);
+        tituloUsuarios.setSpacingAfter(10);
+        document.add(tituloUsuarios);
+
+        PdfPTable tablaUsuarios = new PdfPTable(6);
+        tablaUsuarios.setWidthPercentage(100);
+        tablaUsuarios.setWidths(new int[]{3, 5, 4, 4, 2, 2});
+
+        tablaUsuarios.addCell("Nombre");
+        tablaUsuarios.addCell("Correo");
+        tablaUsuarios.addCell("Responsable");
+        tablaUsuarios.addCell("Teléfono");
+        tablaUsuarios.addCell("Disponible");
+        tablaUsuarios.addCell("Rol ID");
+
+        for (Usuario u : usuarios) {
+            tablaUsuarios.addCell(u.getNombre());
+            tablaUsuarios.addCell(u.getCorreo());
+            tablaUsuarios.addCell(u.getResponsable() != null ? u.getResponsable() : "null");
+            tablaUsuarios.addCell(u.getTelefono() != null ? u.getTelefono() : "null");
+            tablaUsuarios.addCell(String.valueOf(u.isDisponible()));
+            tablaUsuarios.addCell(u.getRol() != null ? u.getRol().getNombre() : "null");
+
+
+        }
+
+        document.add(tablaUsuarios);
+        document.add(new Paragraph("\n"));
+
+        // ===== Tabla de Perros =====
+        Paragraph tituloPerros = new Paragraph("Perros", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
+        tituloPerros.setSpacingBefore(10);
+        tituloPerros.setSpacingAfter(10);
+        document.add(tituloPerros);
+
+        PdfPTable tablaPerros = new PdfPTable(4);
+        tablaPerros.setWidthPercentage(100);
+        tablaPerros.setWidths(new int[]{3, 3, 2, 2});
+
+        tablaPerros.addCell("Nombre");
+        tablaPerros.addCell("Dueño Actual");
+        tablaPerros.addCell("Disponible");
+        tablaPerros.addCell("Sexo");
+
+      for (Perros p : perros) {
+    tablaPerros.addCell(p.getNombre());
+
+    Usuario usuario = usuarioRepository.findById(p.getUserId()).orElse(null);
+    tablaPerros.addCell(usuario != null ? usuario.getNombre() : "null");
+
+    tablaPerros.addCell(String.valueOf(p.isDisponible()));
+    tablaPerros.addCell(p.getSexo());
+
+
+
+
+}
+
+
+        document.add(tablaPerros);
 
         document.close();
 
