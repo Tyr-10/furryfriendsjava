@@ -114,4 +114,5 @@ public class RegistroController {
         model.addAttribute("error", "Error al asignar el rol.");
         return "registerrefugio";
     }
+    
 }
