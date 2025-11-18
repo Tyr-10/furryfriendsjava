@@ -47,7 +47,7 @@ public class PerfilController {
 
         usuarioRepository.save(usuario);
         session.setAttribute("success", "Perfil actualizado exitosamente.");
-        return "redirect:/perfil";
+        return "/perfil";
     }
 
     @PostMapping("/eliminar")

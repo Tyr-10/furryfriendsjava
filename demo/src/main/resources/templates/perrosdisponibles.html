@@ -32,8 +32,8 @@
         <!-- Mensaje de éxito -->
         <div th:if="${mensajeExito}" class="alert alert-success" style="text-align:center; color:green; font-weight:bold;">
             <span th:text="${mensajeExito}"></span><br>
-            <span th:if="${adoptanteNombre}">Nombre: <span th:text="${adoptanteNombre}"></span></span><br>
-            <span th:if="${adoptanteCorreo}">Correo: <span th:text="${adoptanteCorreo}"></span></span>
+            <span th:if="${adoptanteNombre}">Tu Nombre: <span th:text="${adoptanteNombre}"></span></span><br>
+            <span th:if="${adoptanteCorreo}">Tu Correo: <span th:text="${adoptanteCorreo}"></span></span>
         </div>
         <div th:if="${mensajeError}" class="alert alert-danger" style="text-align:center; color:red; font-weight:bold;">
             <span th:text="${mensajeError}"></span>
