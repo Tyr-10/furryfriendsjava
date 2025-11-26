@@ -48,71 +48,116 @@ public class RegistroController {
     }
 
     private boolean validarPassword(String password) {
-        // Al menos 8 caracteres, una mayúscula, un número y un símbolo
         return password != null && password.matches("^(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&.,\\-_;:]).{8,}$");
     }
 
+    // =====================================================================================
+    // REGISTRO ADOPTANTE
+    // =====================================================================================
     @PostMapping("/adoptante")
-    public String registrarAdoptante(@ModelAttribute("usuario") Usuario usuario, @RequestParam String passwordConfirm, Model model) {
+    public String registrarAdoptante(@ModelAttribute("usuario") Usuario usuario,
+                                     @RequestParam String passwordConfirm,
+                                     Model model) {
+
+        // Validar correo repetido
+        if (usuarioRepository.findByCorreo(usuario.getCorreo()) != null) {
+            model.addAttribute("error", "El correo ingresado ya está registrado. Usa uno diferente.");
+            return "registeradoptante";
+        }
+
+        // Validar contraseñas
         if (!usuario.getPassword().equals(passwordConfirm)) {
             model.addAttribute("error", "Las contraseñas no coinciden.");
             return "registeradoptante";
         }
+
         if (!validarPassword(usuario.getPassword())) {
             model.addAttribute("error", "La contraseña debe tener mínimo 8 caracteres, una mayúscula, un número y un símbolo.");
             return "registeradoptante";
         }
+
         Rol rol = rolRepository.findById(1L).orElse(null);
+
         if (rol != null) {
             usuario.setRol(rol);
             usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
             usuarioRepository.save(usuario);
             return "redirect:/login";
         }
+
         model.addAttribute("error", "Error al asignar el rol.");
         return "registeradoptante";
     }
 
+    // =====================================================================================
+    // REGISTRO NATURAL
+    // =====================================================================================
     @PostMapping("/natural")
-    public String registrarNatural(@ModelAttribute("usuario") Usuario usuario, @RequestParam String passwordConfirm, Model model) {
+    public String registrarNatural(@ModelAttribute("usuario") Usuario usuario,
+                                   @RequestParam String passwordConfirm,
+                                   Model model) {
+
+        if (usuarioRepository.findByCorreo(usuario.getCorreo()) != null) {
+            model.addAttribute("error", "El correo ingresado ya está registrado. Usa uno diferente.");
+            return "registernatural";
+        }
+
         if (!usuario.getPassword().equals(passwordConfirm)) {
             model.addAttribute("error", "Las contraseñas no coinciden.");
             return "registernatural";
         }
+
         if (!validarPassword(usuario.getPassword())) {
             model.addAttribute("error", "La contraseña debe tener mínimo 8 caracteres, una mayúscula, un número y un símbolo.");
             return "registernatural";
         }
+
         Rol rol = rolRepository.findById(2L).orElse(null);
+
         if (rol != null) {
             usuario.setRol(rol);
             usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
             usuarioRepository.save(usuario);
             return "redirect:/login";
         }
+
         model.addAttribute("error", "Error al asignar el rol.");
         return "registernatural";
     }
 
+    // =====================================================================================
+    // REGISTRO REFUGIO
+    // =====================================================================================
     @PostMapping("/refugio")
-    public String registrarRefugio(@ModelAttribute("usuario") Usuario usuario, @RequestParam String passwordConfirm, Model model) {
+    public String registrarRefugio(@ModelAttribute("usuario") Usuario usuario,
+                                   @RequestParam String passwordConfirm,
+                                   Model model) {
+
+        if (usuarioRepository.findByCorreo(usuario.getCorreo()) != null) {
+            model.addAttribute("error", "El correo ingresado ya está registrado. Usa uno diferente.");
+            return "registerrefugio";
+        }
+
         if (!usuario.getPassword().equals(passwordConfirm)) {
             model.addAttribute("error", "Las contraseñas no coinciden.");
             return "registerrefugio";
         }
+
         if (!validarPassword(usuario.getPassword())) {
             model.addAttribute("error", "La contraseña debe tener mínimo 8 caracteres, una mayúscula, un número y un símbolo.");
             return "registerrefugio";
         }
+
         Rol rol = rolRepository.findById(3L).orElse(null);
+
         if (rol != null) {
             usuario.setRol(rol);
             usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
             usuarioRepository.save(usuario);
             return "redirect:/login";
         }
+
         model.addAttribute("error", "Error al asignar el rol.");
         return "registerrefugio";
     }
-    
 }

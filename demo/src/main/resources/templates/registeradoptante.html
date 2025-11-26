@@ -205,6 +205,10 @@
             <label>Correo Electrónico:</label>
             <input type="email" th:field="*{correo}" id="correo" required>
 
+            <div th:if="${error}" class="alert alert-danger">
+    <p th:text="${error}"></p>
+</div>
+
             <label>Contraseña:</label>
             <input type="password" id="password" th:field="*{password}" required
                    placeholder="Mínimo 8 caracteres, una mayúscula, un número y un símbolo">
