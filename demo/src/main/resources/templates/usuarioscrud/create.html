@@ -13,10 +13,27 @@
 </div>
     
 <h1>Crear Nuevo Usuario</h1>
-<form th:action="@{/usuarioscrud/guardar}" th:object="${usuario}" method="post">
-    <label>Nombre: <input type="text" th:field="*{nombre}" /></label><br>
-    <label>Correo: <input type="email" th:field="*{correo}" /></label><br>
-    <label>Contraseña: <input type="password" th:field="*{password}" /></label><br>
+<form th:action="@{/usuarioscrud/guardar}" th:object="${usuario}" method="post" id="createForm" novalidate>
+    <label>Nombre: <input type="text" th:field="*{nombre}" required/></label><br>
+    <label>Correo: <input id="email" type="email" th:field="*{correo}" required
+          pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.(com|co)$"
+          title="Debe ser un correo válido y terminar en .com o .co" /></label><br>
+    <div id="emailError" class="error" th:if="${errorEmail}" th:text="${errorEmail}"></div>
+
+    <label>Contraseña: <input id="password" type="password" th:field="*{password}" required
+          pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$"
+          title="Mínimo 8 caracteres, 1 mayúscula, 1 minúscula, 1 número y 1 símbolo" /></label><br>
+    <div id="passwordServerError" class="error" th:if="${errorPassword}" th:text="${errorPassword}"></div>
+
+    <!-- Indicadores de contraseña (cliente) -->
+    <ul id="pwdCriteria" class="pwd-criteria">
+        <li data-test="lower" class="invalid">1 minúscula</li>
+        <li data-test="upper" class="invalid">1 mayúscula</li>
+        <li data-test="digit" class="invalid">1 número</li>
+        <li data-test="symbol" class="invalid">1 símbolo</li>
+        <li data-test="length" class="invalid">Mínimo 8 caracteres</li>
+    </ul>
+
     <label>Teléfono: <input type="text" th:field="*{telefono}" /></label><br>
     <label>Dirección: <input type="text" th:field="*{direccion}" /></label><br>
     <label>Ciudad: <input type="text" th:field="*{ciudad}" /></label><br>
@@ -30,13 +47,74 @@
         <option value="1">Adoptante</option>
         <option value="2">Refugio Natural</option>
         <option value="3">Refugio Físico</option>
+        <option value="4">Administrador</option>
     </select>
-</label><br>
+    </label><br>
 
-    <label>Disponible: <input type="checkbox" th:field="*{disponible}" /></label><br>
-    <button type="submit">Guardar</button>
+    <button id="submitBtn" type="submit">Guardar</button>
 </form>
 <a th:href="@{/usuarioscrud}">🔙 Volver</a>
-</body>
 
+<script>
+  // Validación cliente y control de estado del botón
+  (function(){
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const submitBtn = document.getElementById('submitBtn');
+    const pwdCriteria = document.getElementById('pwdCriteria');
+
+    const tests = {
+      lower: /[a-z]/,
+      upper: /[A-Z]/,
+      digit: /\d/,
+      symbol: /[^A-Za-z0-9]/,
+      length: /.{8,}/
+    };
+
+    function updatePwdIndicators(value) {
+      Array.from(pwdCriteria.querySelectorAll('li')).forEach(li => {
+        const key = li.getAttribute('data-test');
+        li.className = tests[key].test(value) ? 'valid' : 'invalid';
+      });
+    }
+
+    function checkFormValidity() {
+      const emailOk = email.checkValidity();
+      const pwdOk = password.checkValidity();
+      // activar solo si ambos ok
+      submitBtn.disabled = !(emailOk && pwdOk);
+    }
+
+    email.addEventListener('input', function(){ checkFormValidity(); });
+    password.addEventListener('input', function(e){ updatePwdIndicators(e.target.value); checkFormValidity(); });
+
+    // Inicial
+    updatePwdIndicators(password.value || '');
+    checkFormValidity();
+
+    // Previene envío si algo no cumple (defensa extra)
+    document.getElementById('createForm').addEventListener('submit', function(e){
+      if (!email.checkValidity() || !password.checkValidity()) {
+        e.preventDefault();
+        // Mensajes breves para usuario
+        if (!email.checkValidity()) {
+          document.getElementById('emailError').textContent = 'El correo debe ser válido y terminar en .com o .co';
+        }
+        if (!password.checkValidity()) {
+          document.getElementById('passwordServerError').textContent = 'La contraseña debe tener mínimo 8 caracteres, 1 mayúscula, 1 minúscula, 1 número y 1 símbolo.';
+        }
+      }
+    });
+  })();
+</script>
+
+<style>
+  .error { color: #b00020; margin:4px 0; }
+  .pwd-criteria { list-style: none; padding-left: 0; margin: 6px 0; }
+  .pwd-criteria li { font-size: 0.9em; }
+  .pwd-criteria .valid { color: green; }
+  .pwd-criteria .invalid { color: #b00020; }
+</style>
+
+</body>
 </html>

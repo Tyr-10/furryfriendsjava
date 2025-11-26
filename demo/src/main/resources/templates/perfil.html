@@ -51,11 +51,13 @@
                     </div>
                     <div class="input-group">
                         <label>Email:</label>
-                        <input type="email" name="correo" th:value="${usuario.correo}" required>
+                        <input type="email" id="correo" name="correo" th:value="${usuario.correo}" required>
+                        <span class="error-message" id="correoError"></span>
                     </div>
                     <div class="input-group">
                         <label>Teléfono:</label>
-                        <input type="text" name="telefono" th:value="${usuario.telefono}">
+                        <input type="text" id="telefono" name="telefono" th:value="${usuario.telefono}" maxlength="12">
+                        <span class="error-message" id="telefonoError"></span>
                     </div>
                     <div class="input-group">
                         <label>Dirección:</label>
@@ -63,7 +65,18 @@
                     </div>
                     <div class="input-group">
                         <label>Contraseña (dejar vacío si no quieres cambiarla):</label>
-                        <input type="password" name="nuevaPassword">
+                        <input type="password" id="nuevaPassword" name="nuevaPassword">
+                        <div class="password-requirements">
+                            <p style="font-size: 12px; color: #666; margin: 8px 0 4px 0;">Requisitos de contraseña:</p>
+                            <ul style="font-size: 11px; color: #666; margin: 4px 0; padding-left: 20px;">
+                                <li id="req-length">✗ Mínimo 8 caracteres</li>
+                                <li id="req-uppercase">✗ Una mayúscula (A-Z)</li>
+                                <li id="req-lowercase">✗ Una minúscula (a-z)</li>
+                                <li id="req-number">✗ Un número (0-9)</li>
+                                <li id="req-symbol">✗ Un símbolo especial (!@#$%^&*)</li>
+                            </ul>
+                        </div>
+                        <span class="error-message" id="passwordError"></span>
                     </div>
                     <button type="submit" class="btn btn-success">Guardar cambios</button>
                 </form>
@@ -123,6 +136,130 @@
         document.getElementById('editButton').addEventListener('click', function () {
             document.getElementById('editForm').style.display = 'block';
             this.style.display = 'none';
+        });
+
+        // Validaciones del formulario
+        const correoInput = document.getElementById('correo');
+        const telefonoInput = document.getElementById('telefono');
+        const passwordInput = document.getElementById('nuevaPassword');
+        const editForm = document.getElementById('editForm');
+
+        // Validar email
+        correoInput.addEventListener('blur', function() {
+            const correo = this.value.trim();
+            const correoError = document.getElementById('correoError');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (correo && !emailRegex.test(correo)) {
+                correoError.textContent = '⚠️ El email debe contener @ y un dominio válido (ejemplo: usuario@correo.com)';
+                correoError.style.color = 'red';
+            } else {
+                correoError.textContent = '';
+            }
+        });
+
+        // Validar teléfono - solo números y máximo 12 dígitos
+        telefonoInput.addEventListener('input', function() {
+            const telefonoError = document.getElementById('telefonoError');
+            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 12);
+            
+            if (this.value.length > 12) {
+                this.value = this.value.slice(0, 12);
+            }
+            
+            if (this.value.length === 12) {
+                telefonoError.textContent = '✓ Teléfono válido (12 dígitos)';
+                telefonoError.style.color = 'green';
+            } else if (this.value.length > 0) {
+                telefonoError.textContent = `${this.value.length}/12 dígitos`;
+                telefonoError.style.color = '#666';
+            } else {
+                telefonoError.textContent = '';
+            }
+        });
+
+        // Validar contraseña en tiempo real
+        passwordInput.addEventListener('input', function() {
+            const password = this.value.trim();
+            const passwordError = document.getElementById('passwordError');
+            
+            if (password) {
+                const hasUpperCase = /[A-Z]/.test(password);
+                const hasLowerCase = /[a-z]/.test(password);
+                const hasNumber = /[0-9]/.test(password);
+                const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+                const isLengthValid = password.length >= 8;
+                
+                // Actualizar indicadores visuales
+                document.getElementById('req-length').style.color = isLengthValid ? 'green' : '#666';
+                document.getElementById('req-length').textContent = isLengthValid ? '✓ Mínimo 8 caracteres' : '✗ Mínimo 8 caracteres';
+                
+                document.getElementById('req-uppercase').style.color = hasUpperCase ? 'green' : '#666';
+                document.getElementById('req-uppercase').textContent = hasUpperCase ? '✓ Una mayúscula (A-Z)' : '✗ Una mayúscula (A-Z)';
+                
+                document.getElementById('req-lowercase').style.color = hasLowerCase ? 'green' : '#666';
+                document.getElementById('req-lowercase').textContent = hasLowerCase ? '✓ Una minúscula (a-z)' : '✗ Una minúscula (a-z)';
+                
+                document.getElementById('req-number').style.color = hasNumber ? 'green' : '#666';
+                document.getElementById('req-number').textContent = hasNumber ? '✓ Un número (0-9)' : '✗ Un número (0-9)';
+                
+                document.getElementById('req-symbol').style.color = hasSymbol ? 'green' : '#666';
+                document.getElementById('req-symbol').textContent = hasSymbol ? '✓ Un símbolo especial (!@#$%^&*)' : '✗ Un símbolo especial (!@#$%^&*)';
+                
+                if (isLengthValid && hasUpperCase && hasLowerCase && hasNumber && hasSymbol) {
+                    passwordError.textContent = '✓ Contraseña válida';
+                    passwordError.style.color = 'green';
+                } else {
+                    passwordError.textContent = '';
+                }
+            } else {
+                passwordError.textContent = '';
+                document.getElementById('req-length').style.color = '#666';
+                document.getElementById('req-length').textContent = '✗ Mínimo 8 caracteres';
+                document.getElementById('req-uppercase').style.color = '#666';
+                document.getElementById('req-uppercase').textContent = '✗ Una mayúscula (A-Z)';
+                document.getElementById('req-lowercase').style.color = '#666';
+                document.getElementById('req-lowercase').textContent = '✗ Una minúscula (a-z)';
+                document.getElementById('req-number').style.color = '#666';
+                document.getElementById('req-number').textContent = '✗ Un número (0-9)';
+                document.getElementById('req-symbol').style.color = '#666';
+                document.getElementById('req-symbol').textContent = '✗ Un símbolo especial (!@#$%^&*)';
+            }
+        });
+
+        // Validar al enviar el formulario
+        editForm.addEventListener('submit', function(e) {
+            const correo = correoInput.value.trim();
+            const password = passwordInput.value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            let isValid = true;
+
+            // Validar email
+            if (correo && !emailRegex.test(correo)) {
+                document.getElementById('correoError').textContent = '⚠️ El email debe contener @ y un dominio válido';
+                document.getElementById('correoError').style.color = 'red';
+                isValid = false;
+            }
+
+            // Validar contraseña si se ingresó
+            if (password) {
+                const hasUpperCase = /[A-Z]/.test(password);
+                const hasLowerCase = /[a-z]/.test(password);
+                const hasNumber = /[0-9]/.test(password);
+                const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+                const isLengthValid = password.length >= 8;
+                
+                if (!hasUpperCase || !hasLowerCase || !hasNumber || !hasSymbol || !isLengthValid) {
+                    document.getElementById('passwordError').textContent = '⚠️ La contraseña no cumple todos los requisitos';
+                    document.getElementById('passwordError').style.color = 'red';
+                    isValid = false;
+                }
+            }
+
+            if (!isValid) {
+                e.preventDefault();
+            }
         });
     </script>
 </body>

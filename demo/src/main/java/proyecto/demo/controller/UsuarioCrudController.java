@@ -10,6 +10,7 @@ import proyecto.demo.repository.UsuarioRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/usuarioscrud")
@@ -39,7 +40,27 @@ public class UsuarioCrudController {
 
     // Guardar usuario nuevo
     @PostMapping("/guardar")
-    public String guardar(@ModelAttribute Usuario usuario) {
+    public String guardar(@ModelAttribute Usuario usuario, Model model) {
+        // Validaciones server-side
+        Pattern emailPattern = Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.(com|co)$", Pattern.CASE_INSENSITIVE);
+        Pattern pwdPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}$");
+
+        boolean hasError = false;
+        if (usuario.getCorreo() == null || !emailPattern.matcher(usuario.getCorreo()).matches()) {
+            model.addAttribute("errorEmail", "El correo debe ser válido y terminar en .com o .co");
+            hasError = true;
+        }
+
+        if (usuario.getPassword() == null || !pwdPattern.matcher(usuario.getPassword()).matches()) {
+            model.addAttribute("errorPassword", "La contraseña debe tener mínimo 8 caracteres, 1 mayúscula, 1 minúscula, 1 número y 1 símbolo.");
+            hasError = true;
+        }
+
+        if (hasError) {
+            model.addAttribute("usuario", usuario);
+            return "usuarioscrud/create";
+        }
+
         // Encriptar la contraseña antes de guardar
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encryptedPassword = passwordEncoder.encode(usuario.getPassword());

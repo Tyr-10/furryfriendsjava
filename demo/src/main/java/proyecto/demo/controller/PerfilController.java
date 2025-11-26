@@ -32,7 +32,8 @@ public class PerfilController {
     public String actualizarPerfil(@ModelAttribute Usuario usuarioForm,
                                    @RequestParam(required = false) String nuevaPassword,
                                    @AuthenticationPrincipal UserDetails userDetails,
-                                   HttpSession session) {
+                                   HttpSession session,
+                                   Model model) {
 
         Usuario usuario = usuarioRepository.findByCorreo(userDetails.getUsername());
 
@@ -41,13 +42,39 @@ public class PerfilController {
         usuario.setTelefono(usuarioForm.getTelefono());
         usuario.setDireccion(usuarioForm.getDireccion());
 
+        // Validar nueva contraseña si se proporciona
         if (nuevaPassword != null && !nuevaPassword.isBlank()) {
+            String passwordValidationError = validarContraseña(nuevaPassword);
+            if (passwordValidationError != null) {
+                model.addAttribute("usuario", usuario);
+                model.addAttribute("error", passwordValidationError);
+                return "perfil";
+            }
             usuario.setPassword(passwordEncoder.encode(nuevaPassword));
         }
 
         usuarioRepository.save(usuario);
         session.setAttribute("success", "Perfil actualizado exitosamente.");
-        return "/perfil";
+        return "redirect:/perfil";
+    }
+
+    private String validarContraseña(String password) {
+        if (password.length() < 8) {
+            return "La contraseña debe tener mínimo 8 caracteres";
+        }
+        if (!password.matches(".*[A-Z].*")) {
+            return "La contraseña debe contener al menos una mayúscula";
+        }
+        if (!password.matches(".*[a-z].*")) {
+            return "La contraseña debe contener al menos una minúscula";
+        }
+        if (!password.matches(".*[0-9].*")) {
+            return "La contraseña debe contener al menos un número";
+        }
+        if (!password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*")) {
+            return "La contraseña debe contener al menos un símbolo especial (!@#$%^&*)";
+        }
+        return null; // Sin errores
     }
 
     @PostMapping("/eliminar")

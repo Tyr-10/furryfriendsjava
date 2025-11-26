@@ -95,6 +95,94 @@ textarea {
     resize: vertical;
 }
 
+/* Validaciones y mensajes */
+.error {
+    color: #b00020;
+    background: rgba(176, 0, 32, 0.05);
+    border-left: 3px solid #b00020;
+    padding: 8px 12px;
+    margin-top: -12px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    font-size: 0.95em;
+}
+
+/* campos inválidos / válidos */
+input:invalid, select:invalid, textarea:invalid {
+    border-color: #ef5350;
+    box-shadow: 0 0 0 3px rgba(239,83,80,0.06);
+    background: #fff2f2;
+}
+input:valid, select:valid, textarea:valid {
+    border-color: #66bb6a;
+    box-shadow: 0 0 0 3px rgba(102,187,106,0.06);
+    background: #ffffff;
+}
+
+/* Indicadores de contraseña */
+.pwd-criteria {
+    list-style: none;
+    padding-left: 14px;
+    margin: 6px 0 14px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.95em;
+    color: #555;
+}
+.pwd-criteria li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    transition: background 0.18s, color 0.18s;
+}
+.pwd-criteria li::before {
+    content: "✕";
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    border-radius: 50%;
+    background: #fdecea;
+    color: #b00020;
+    font-size: 0.75em;
+}
+.pwd-criteria li.valid::before {
+    content: "✓";
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+.pwd-criteria li.valid {
+    color: #2e7d32;
+    background: rgba(46,125,50,0.04);
+}
+.pwd-criteria li.invalid {
+    color: #b00020;
+    background: rgba(176,0,32,0.03);
+}
+
+/* Botón deshabilitado */
+button[disabled], #submitBtn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Tamaño y ayudas */
+label { /* ...existing code... */ }
+input, select, textarea { /* ...existing code... */ }
+
+/* Pequeños ajustes responsive para criterios y botones */
+@media (max-width: 420px) {
+    .pwd-criteria { font-size: 0.88em; gap: 4px; }
+    form { padding: 16px 4vw; }
+    button { width: 100%; text-align: center; }
+}
+
 /* Botón principal */
 button, .btn, a.btn {
     background: linear-gradient(90deg, #42a5f5 0%, #81c784 100%);

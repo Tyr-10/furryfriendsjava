@@ -77,6 +77,7 @@ header {
 .logo-container {
     display: flex;
     align-items: center;
+    gap: 10px; /* { changed code } añade separación entre logo y rol */
 }
 
 .logo {
@@ -577,6 +578,37 @@ footer {
     margin-top: 30px;
     color: #aaa;
     font-size: 0.9rem;
+}
+
+/* Insignia del rol junto al logo */
+.role-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--azul-pastel); /* { changed code } cambio de amarillo a azul clarito */
+    color: var(--azul-oscuro); /* { changed code } color de texto azul oscuro para contraste */
+    font-weight: 700;
+    padding: 6px 10px;
+    border-radius: 12px;
+    margin-left: 4px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+    font-size: 0.95rem;
+    border: 1px solid var(--azul-pastel2); /* { changed code } borde armonioso */
+}
+
+/* Ajustes responsivos para que la insignia no ocupe demasiado espacio en móviles */
+@media (max-width: 768px) {
+    .role-badge {
+        font-size: 0.85rem; /* { changed code } */
+        padding: 4px 8px;  /* { changed code } */
+    }
+}
+
+@media (max-width: 480px) {
+    .role-badge {
+        font-size: 0.8rem; /* { changed code } */
+        padding: 3px 6px;  /* { changed code } */
+    }
 }
 
 /* Responsive */
