@@ -30,38 +30,17 @@
     </div>
 
     <div class="main-content-perfil">
-    <div class="profile-container">
-        <div class="profile-card">
-            <div class="profile-header">
-
-                <!-- Avatar seguro -->
-                <div class="profile-avatar">
-                    <span th:text="${usuario != null ? 
-                        (usuario.nombre != null ? 
-                            usuario.nombre.substring(0,1).toUpperCase() 
-                            : usuario.correo.substring(0,1).toUpperCase())
-                        : '' }">
-                    </span>
+        <div class="profile-container">
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="profile-avatar"
+                         th:text="${usuario.nombre != null ? usuario.nombre.substring(0,1).toUpperCase() : usuario.correo.substring(0,1).toUpperCase()}">
+                    </div>
+                    <div class="profile-name" th:text="${usuario.nombre}">Usuario</div>
+                    <div class="profile-email"><strong>Email:</strong> <span th:text="${usuario.correo}">correo</span></div>
+                    <div class="profile-email" th:if="${usuario.telefono != null}"><strong>Teléfono:</strong> <span th:text="${usuario.telefono}"></span></div>
+                    <div class="profile-email" th:if="${usuario.direccion != null}"><strong>Dirección:</strong> <span th:text="${usuario.direccion}"></span></div>
                 </div>
-
-                <div class="profile-name" th:text="${usuario != null ? usuario.nombre : 'Usuario'}"></div>
-
-                <div class="profile-email">
-                    <strong>Email:</strong> <span th:text="${usuario != null ? usuario.correo : '---'}"></span>
-                </div>
-
-                <div class="profile-email" th:if="${usuario != null and usuario.telefono != null}">
-                    <strong>Teléfono:</strong> <span th:text="${usuario.telefono}"></span>
-                </div>
-
-                <div class="profile-email" th:if="${usuario != null and usuario.direccion != null}">
-                    <strong>Dirección:</strong> <span th:text="${usuario.direccion}"></span>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
 
                 <button id="editButton" class="btn btn-secondary">Editar</button>
 
@@ -139,149 +118,122 @@
         </div>
     </footer>
 
-    <script>
-        // Animación de huellas-corazón
-        document.addEventListener("DOMContentLoaded", () => {
-            const pawHearts = document.querySelectorAll('.paw-heart');
-            pawHearts.forEach(paw => {
-                const size = Math.random() * 30 + 20;
-                paw.style.fontSize = `${size}px`;
-                paw.style.left = `${Math.random() * 100}%`;
-                paw.style.top = `${Math.random() * 100}%`;
-                paw.style.animationDuration = `${Math.random() * 20 + 10}s`;
-                paw.style.animationDelay = `${Math.random() * 5}s`;
-                paw.style.opacity = Math.random() * 0.4 + 0.1;
-            });
+   <script>
+    // Animación de huellas-corazón
+    document.addEventListener("DOMContentLoaded", () => {
+        const pawHearts = document.querySelectorAll('.paw-heart');
+        pawHearts.forEach(paw => {
+            const size = Math.random() * 30 + 20;
+            paw.style.fontSize = size + 'px';
+            paw.style.left = (Math.random() * 100) + '%';
+            paw.style.top = (Math.random() * 100) + '%';
+            paw.style.animationDuration = (Math.random() * 20 + 10) + 's';
+            paw.style.animationDelay = (Math.random() * 5) + 's';
+            paw.style.opacity = Math.random() * 0.4 + 0.1;
         });
+    });
 
-        document.getElementById('editButton').addEventListener('click', function () {
-            document.getElementById('editForm').style.display = 'block';
-            this.style.display = 'none';
-        });
+    document.getElementById('editButton').addEventListener('click', function () {
+        document.getElementById('editForm').style.display = 'block';
+        this.style.display = 'none';
+    });
 
-        // Validaciones del formulario
-        const correoInput = document.getElementById('correo');
-        const telefonoInput = document.getElementById('telefono');
-        const passwordInput = document.getElementById('nuevaPassword');
-        const editForm = document.getElementById('editForm');
+    // Validaciones del formulario
+    const correoInput = document.getElementById('correo');
+    const telefonoInput = document.getElementById('telefono');
+    const passwordInput = document.getElementById('nuevaPassword');
+    const editForm = document.getElementById('editForm');
 
-        // Validar email
-        correoInput.addEventListener('blur', function() {
-            const correo = this.value.trim();
-            const correoError = document.getElementById('correoError');
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            
-            if (correo && !emailRegex.test(correo)) {
-                correoError.textContent = '⚠️ El email debe contener @ y un dominio válido (ejemplo: usuario@correo.com)';
-                correoError.style.color = 'red';
-            } else {
-                correoError.textContent = '';
-            }
-        });
+    // Validar email
+    correoInput.addEventListener('blur', function() {
+        const correo = this.value.trim();
+        const correoError = document.getElementById('correoError');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (correo && !emailRegex.test(correo)) {
+            correoError.textContent = '⚠ El email debe contener @ y un dominio válido (ejemplo: usuario@correo.com)';
+            correoError.style.color = 'red';
+        } else {
+            correoError.textContent = '';
+        }
+    });
 
-        // Validar teléfono - solo números y máximo 12 dígitos
-        telefonoInput.addEventListener('input', function() {
-            const telefonoError = document.getElementById('telefonoError');
-            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 12);
-            
-            if (this.value.length > 12) {
-                this.value = this.value.slice(0, 12);
-            }
-            
-            if (this.value.length === 12) {
-                telefonoError.textContent = '✓ Teléfono válido (12 dígitos)';
-                telefonoError.style.color = 'green';
-            } else if (this.value.length > 0) {
-                telefonoError.textContent = `${this.value.length}/12 dígitos`;
-                telefonoError.style.color = '#666';
-            } else {
-                telefonoError.textContent = '';
-            }
-        });
+    // Validar teléfono - solo números y máximo 12 dígitos
+    telefonoInput.addEventListener('input', function() {
+        const telefonoError = document.getElementById('telefonoError');
+        this.value = this.value.replace(/[^0-9]/g, '').slice(0, 12);
 
-        // Validar contraseña en tiempo real
-        passwordInput.addEventListener('input', function() {
-            const password = this.value.trim();
-            const passwordError = document.getElementById('passwordError');
-            
-            if (password) {
-                const hasUpperCase = /[A-Z]/.test(password);
-                const hasLowerCase = /[a-z]/.test(password);
-                const hasNumber = /[0-9]/.test(password);
-                const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
-                const isLengthValid = password.length >= 8;
-                
-                // Actualizar indicadores visuales
-                document.getElementById('req-length').style.color = isLengthValid ? 'green' : '#666';
-                document.getElementById('req-length').textContent = isLengthValid ? '✓ Mínimo 8 caracteres' : '✗ Mínimo 8 caracteres';
-                
-                document.getElementById('req-uppercase').style.color = hasUpperCase ? 'green' : '#666';
-                document.getElementById('req-uppercase').textContent = hasUpperCase ? '✓ Una mayúscula (A-Z)' : '✗ Una mayúscula (A-Z)';
-                
-                document.getElementById('req-lowercase').style.color = hasLowerCase ? 'green' : '#666';
-                document.getElementById('req-lowercase').textContent = hasLowerCase ? '✓ Una minúscula (a-z)' : '✗ Una minúscula (a-z)';
-                
-                document.getElementById('req-number').style.color = hasNumber ? 'green' : '#666';
-                document.getElementById('req-number').textContent = hasNumber ? '✓ Un número (0-9)' : '✗ Un número (0-9)';
-                
-                document.getElementById('req-symbol').style.color = hasSymbol ? 'green' : '#666';
-                document.getElementById('req-symbol').textContent = hasSymbol ? '✓ Un símbolo especial (!@#$%^&*)' : '✗ Un símbolo especial (!@#$%^&*)';
-                
-                if (isLengthValid && hasUpperCase && hasLowerCase && hasNumber && hasSymbol) {
-                    passwordError.textContent = '✓ Contraseña válida';
-                    passwordError.style.color = 'green';
-                } else {
-                    passwordError.textContent = '';
-                }
-            } else {
-                passwordError.textContent = '';
-                document.getElementById('req-length').style.color = '#666';
-                document.getElementById('req-length').textContent = '✗ Mínimo 8 caracteres';
-                document.getElementById('req-uppercase').style.color = '#666';
-                document.getElementById('req-uppercase').textContent = '✗ Una mayúscula (A-Z)';
-                document.getElementById('req-lowercase').style.color = '#666';
-                document.getElementById('req-lowercase').textContent = '✗ Una minúscula (a-z)';
-                document.getElementById('req-number').style.color = '#666';
-                document.getElementById('req-number').textContent = '✗ Un número (0-9)';
-                document.getElementById('req-symbol').style.color = '#666';
-                document.getElementById('req-symbol').textContent = '✗ Un símbolo especial (!@#$%^&*)';
-            }
-        });
+        if (this.value.length === 12) {
+            telefonoError.textContent = '✓ Teléfono válido (12 dígitos)';
+            telefonoError.style.color = 'green';
+        } else if (this.value.length > 0) {
+            telefonoError.textContent = this.value.length + '/12 dígitos';
+            telefonoError.style.color = '#666';
+        } else {
+            telefonoError.textContent = '';
+        }
+    });
 
-        // Validar al enviar el formulario
-        editForm.addEventListener('submit', function(e) {
-            const correo = correoInput.value.trim();
-            const password = passwordInput.value.trim();
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            
-            let isValid = true;
+    // Validar contraseña en tiempo real
+    passwordInput.addEventListener('input', function() {
+        const password = this.value.trim();
+        const passwordError = document.getElementById('passwordError');
 
-            // Validar email
-            if (correo && !emailRegex.test(correo)) {
-                document.getElementById('correoError').textContent = '⚠️ El email debe contener @ y un dominio válido';
-                document.getElementById('correoError').style.color = 'red';
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasLowerCase = /[a-z]/.test(password);
+        const hasNumber = /[0-9]/.test(password);
+        const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+        const isLengthValid = password.length >= 8;
+
+        function mark(id, ok, text) {
+            const item = document.getElementById(id);
+            item.style.color = ok ? 'green' : '#666';
+            item.textContent = (ok ? '✓ ' : '✗ ') + text;
+        }
+
+        mark('req-length', isLengthValid, 'Mínimo 8 caracteres');
+        mark('req-uppercase', hasUpperCase, 'Una mayúscula (A-Z)');
+        mark('req-lowercase', hasLowerCase, 'Una minúscula (a-z)');
+        mark('req-number', hasNumber, 'Un número (0-9)');
+        mark('req-symbol', hasSymbol, 'Un símbolo especial (!@#$%^&)');
+
+        if (isLengthValid && hasUpperCase && hasLowerCase && hasNumber && hasSymbol) {
+            passwordError.textContent = '✓ Contraseña válida';
+            passwordError.style.color = 'green';
+        } else {
+            passwordError.textContent = '';
+        }
+    });
+
+    // Validar al enviar
+    editForm.addEventListener('submit', function(e) {
+        const correo = correoInput.value.trim();
+        const password = passwordInput.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        let isValid = true;
+
+        if (correo && !emailRegex.test(correo)) {
+            document.getElementById('correoError').textContent = '⚠ El email debe contener @ y dominio válido';
+            document.getElementById('correoError').style.color = 'red';
+            isValid = false;
+        }
+
+        if (password) {
+            const hasUpperCase = /[A-Z]/.test(password);
+            const hasLowerCase = /[a-z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+            const isLengthValid = password.length >= 8;
+
+            if (!hasUpperCase || !hasLowerCase || !hasNumber || !hasSymbol || !isLengthValid) {
+                document.getElementById('passwordError').textContent = '⚠ La contraseña no cumple todos los requisitos';
+                document.getElementById('passwordError').style.color = 'red';
                 isValid = false;
             }
+        }
 
-            // Validar contraseña si se ingresó
-            if (password) {
-                const hasUpperCase = /[A-Z]/.test(password);
-                const hasLowerCase = /[a-z]/.test(password);
-                const hasNumber = /[0-9]/.test(password);
-                const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
-                const isLengthValid = password.length >= 8;
-                
-                if (!hasUpperCase || !hasLowerCase || !hasNumber || !hasSymbol || !isLengthValid) {
-                    document.getElementById('passwordError').textContent = '⚠️ La contraseña no cumple todos los requisitos';
-                    document.getElementById('passwordError').style.color = 'red';
-                    isValid = false;
-                }
-            }
-
-            if (!isValid) {
-                e.preventDefault();
-            }
-        });
-    </script>
+        if (!isValid) e.preventDefault();
+    });
+</script>
 </body>
 </html>
