@@ -17,12 +17,13 @@
         <div class="paw-heart">❤🐾</div>
     </div>
 
-    <!-- Header -->
+    <!-- Header de perfil: Título, logo y botón volver -->
     <div class="perfil-header-bar" style="position: relative;">
         <div class="logo-title">
             <img src="/images/logo.jpg" alt="Logo">
             <span class="perfil-title">Perfil de Usuario</span>
         </div>
+        <!-- Botón volver: ir a la página anterior del historial -->
         <a class="btn-volver-topright" href="javascript:void(0);" onclick="window.history.back();">
             <i class="fas fa-arrow-left"></i> Volver
         </a>
@@ -31,55 +32,36 @@
     <div class="main-content-perfil">
         <div class="profile-container">
             <div class="profile-card">
-
-                <!-- Avatar seguro evitando usuario null -->
                 <div class="profile-header">
                     <div class="profile-avatar"
-                         th:if="${usuario != null}"
-                         th:text="${
-                             usuario.nombre != null ?
-                             usuario.nombre.substring(0,1).toUpperCase() :
-                             (usuario.correo != null ? usuario.correo.substring(0,1).toUpperCase() : '?')
-                         }">
+                         th:text="${usuario.nombre != null ? usuario.nombre.substring(0,1).toUpperCase() : usuario.correo.substring(0,1).toUpperCase()}">
                     </div>
-
-                    <!-- Datos usuario -->
-                    <div class="profile-name" th:text="${usuario != null ? usuario.nombre : 'Usuario'}">Usuario</div>
-                    <div class="profile-email"><strong>Email:</strong> 
-                        <span th:text="${usuario != null ? usuario.correo : 'N/A'}">correo</span>
-                    </div>
-
-                    <div class="profile-email" th:if="${usuario != null and usuario.telefono != null}">
-                        <strong>Teléfono:</strong> <span th:text="${usuario.telefono}"></span>
-                    </div>
-
-                    <div class="profile-email" th:if="${usuario != null and usuario.direccion != null}">
-                        <strong>Dirección:</strong> <span th:text="${usuario.direccion}"></span>
-                    </div>
+                    <div class="profile-name" th:text="${usuario.nombre}">Usuario</div>
+                    <div class="profile-email"><strong>Email:</strong> <span th:text="${usuario.correo}">correo</span></div>
+                    <div class="profile-email" th:if="${usuario.telefono != null}"><strong>Teléfono:</strong> <span th:text="${usuario.telefono}"></span></div>
+                    <div class="profile-email" th:if="${usuario.direccion != null}"><strong>Dirección:</strong> <span th:text="${usuario.direccion}"></span></div>
                 </div>
 
-                <!-- Botón editar -->
                 <button id="editButton" class="btn btn-secondary">Editar</button>
 
-                <!-- Formulario edición -->
                 <form id="editForm" th:action="@{/perfil/actualizar}" method="post" th:object="${usuario}" style="display: none;">
                     <div class="input-group">
                         <label>Nombre:</label>
-                        <input type="text" name="nombre" th:value="${usuario != null ? usuario.nombre : ''}" required>
+                        <input type="text" name="nombre" th:value="${usuario.nombre}" required>
                     </div>
                     <div class="input-group">
                         <label>Email:</label>
-                        <input type="email" id="correo" name="correo" th:value="${usuario != null ? usuario.correo : ''}" required>
+                        <input type="email" id="correo" name="correo" th:value="${usuario.correo}" required>
                         <span class="error-message" id="correoError"></span>
                     </div>
                     <div class="input-group">
                         <label>Teléfono:</label>
-                        <input type="text" id="telefono" name="telefono" th:value="${usuario != null ? usuario.telefono : ''}" maxlength="12">
+                        <input type="text" id="telefono" name="telefono" th:value="${usuario.telefono}" maxlength="12">
                         <span class="error-message" id="telefonoError"></span>
                     </div>
                     <div class="input-group">
                         <label>Dirección:</label>
-                        <input type="text" name="direccion" th:value="${usuario != null ? usuario.direccion : ''}">
+                        <input type="text" name="direccion" th:value="${usuario.direccion}">
                     </div>
                     <div class="input-group">
                         <label>Contraseña (dejar vacío si no quieres cambiarla):</label>
@@ -99,16 +81,14 @@
                     <button type="submit" class="btn btn-success">Guardar cambios</button>
                 </form>
 
-                <!-- Eliminar cuenta -->
                 <form th:action="@{/perfil/eliminar}" method="post" onsubmit="return confirm('¿Estás seguro que deseas eliminar tu cuenta?');">
                     <button type="submit" class="btn btn-danger">Eliminar Cuenta</button>
                 </form>
-
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
+    <!-- Footer igual que index -->
     <footer>
         <div class="footer-content">
             <div class="footer-section">
@@ -138,116 +118,149 @@
         </div>
     </footer>
 
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const pawHearts = document.querySelectorAll('.paw-heart');
-        pawHearts.forEach(paw => {
-            const size = Math.random() * 30 + 20;
-            paw.style.fontSize = size + "px";
-            paw.style.left = Math.random() * 100 + "%";
-            paw.style.top = Math.random() * 100 + "%";
-            paw.style.animationDuration = (Math.random() * 20 + 10) + "s";
-            paw.style.animationDelay = Math.random() * 5 + "s";
-            paw.style.opacity = (Math.random() * 0.4 + 0.1);
+    <script>
+        // Animación de huellas-corazón
+        document.addEventListener("DOMContentLoaded", () => {
+            const pawHearts = document.querySelectorAll('.paw-heart');
+            pawHearts.forEach(paw => {
+                const size = Math.random() * 30 + 20;
+                paw.style.fontSize = `${size}px`;
+                paw.style.left = `${Math.random() * 100}%`;
+                paw.style.top = `${Math.random() * 100}%`;
+                paw.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                paw.style.animationDelay = `${Math.random() * 5}s`;
+                paw.style.opacity = Math.random() * 0.4 + 0.1;
+            });
         });
-    });
 
-    document.getElementById('editButton').addEventListener('click', function () {
-        document.getElementById('editForm').style.display = 'block';
-        this.style.display = 'none';
-    });
+        document.getElementById('editButton').addEventListener('click', function () {
+            document.getElementById('editForm').style.display = 'block';
+            this.style.display = 'none';
+        });
 
-    const correoInput = document.getElementById('correo');
-    const telefonoInput = document.getElementById('telefono');
-    const passwordInput = document.getElementById('nuevaPassword');
-    const editForm = document.getElementById('editForm');
+        // Validaciones del formulario
+        const correoInput = document.getElementById('correo');
+        const telefonoInput = document.getElementById('telefono');
+        const passwordInput = document.getElementById('nuevaPassword');
+        const editForm = document.getElementById('editForm');
 
-    correoInput.addEventListener('blur', function() {
-        const correo = this.value.trim();
-        const correoError = document.getElementById('correoError');
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        
-        if (correo && !emailRegex.test(correo)) {
-            correoError.textContent = '⚠ El email debe contener @ y un dominio válido (ejemplo: usuario@correo.com)';
-            correoError.style.color = 'red';
-        } else {
-            correoError.textContent = '';
-        }
-    });
+        // Validar email
+        correoInput.addEventListener('blur', function() {
+            const correo = this.value.trim();
+            const correoError = document.getElementById('correoError');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (correo && !emailRegex.test(correo)) {
+                correoError.textContent = '⚠️ El email debe contener @ y un dominio válido (ejemplo: usuario@correo.com)';
+                correoError.style.color = 'red';
+            } else {
+                correoError.textContent = '';
+            }
+        });
 
-    telefonoInput.addEventListener('input', function() {
-        const telefonoError = document.getElementById('telefonoError');
-        this.value = this.value.replace(/[^0-9]/g, '').slice(0, 12);
+        // Validar teléfono - solo números y máximo 12 dígitos
+        telefonoInput.addEventListener('input', function() {
+            const telefonoError = document.getElementById('telefonoError');
+            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 12);
+            
+            if (this.value.length > 12) {
+                this.value = this.value.slice(0, 12);
+            }
+            
+            if (this.value.length === 12) {
+                telefonoError.textContent = '✓ Teléfono válido (12 dígitos)';
+                telefonoError.style.color = 'green';
+            } else if (this.value.length > 0) {
+                telefonoError.textContent = `${this.value.length}/12 dígitos`;
+                telefonoError.style.color = '#666';
+            } else {
+                telefonoError.textContent = '';
+            }
+        });
 
-        if (this.value.length === 12) {
-            telefonoError.textContent = '✓ Teléfono válido (12 dígitos)';
-            telefonoError.style.color = 'green';
-        } else if (this.value.length > 0) {
-            telefonoError.textContent = this.value.length + '/12 dígitos';
-            telefonoError.style.color = '#666';
-        } else {
-            telefonoError.textContent = '';
-        }
-    });
+        // Validar contraseña en tiempo real
+        passwordInput.addEventListener('input', function() {
+            const password = this.value.trim();
+            const passwordError = document.getElementById('passwordError');
+            
+            if (password) {
+                const hasUpperCase = /[A-Z]/.test(password);
+                const hasLowerCase = /[a-z]/.test(password);
+                const hasNumber = /[0-9]/.test(password);
+                const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+                const isLengthValid = password.length >= 8;
+                
+                // Actualizar indicadores visuales
+                document.getElementById('req-length').style.color = isLengthValid ? 'green' : '#666';
+                document.getElementById('req-length').textContent = isLengthValid ? '✓ Mínimo 8 caracteres' : '✗ Mínimo 8 caracteres';
+                
+                document.getElementById('req-uppercase').style.color = hasUpperCase ? 'green' : '#666';
+                document.getElementById('req-uppercase').textContent = hasUpperCase ? '✓ Una mayúscula (A-Z)' : '✗ Una mayúscula (A-Z)';
+                
+                document.getElementById('req-lowercase').style.color = hasLowerCase ? 'green' : '#666';
+                document.getElementById('req-lowercase').textContent = hasLowerCase ? '✓ Una minúscula (a-z)' : '✗ Una minúscula (a-z)';
+                
+                document.getElementById('req-number').style.color = hasNumber ? 'green' : '#666';
+                document.getElementById('req-number').textContent = hasNumber ? '✓ Un número (0-9)' : '✗ Un número (0-9)';
+                
+                document.getElementById('req-symbol').style.color = hasSymbol ? 'green' : '#666';
+                document.getElementById('req-symbol').textContent = hasSymbol ? '✓ Un símbolo especial (!@#$%^&*)' : '✗ Un símbolo especial (!@#$%^&*)';
+                
+                if (isLengthValid && hasUpperCase && hasLowerCase && hasNumber && hasSymbol) {
+                    passwordError.textContent = '✓ Contraseña válida';
+                    passwordError.style.color = 'green';
+                } else {
+                    passwordError.textContent = '';
+                }
+            } else {
+                passwordError.textContent = '';
+                document.getElementById('req-length').style.color = '#666';
+                document.getElementById('req-length').textContent = '✗ Mínimo 8 caracteres';
+                document.getElementById('req-uppercase').style.color = '#666';
+                document.getElementById('req-uppercase').textContent = '✗ Una mayúscula (A-Z)';
+                document.getElementById('req-lowercase').style.color = '#666';
+                document.getElementById('req-lowercase').textContent = '✗ Una minúscula (a-z)';
+                document.getElementById('req-number').style.color = '#666';
+                document.getElementById('req-number').textContent = '✗ Un número (0-9)';
+                document.getElementById('req-symbol').style.color = '#666';
+                document.getElementById('req-symbol').textContent = '✗ Un símbolo especial (!@#$%^&*)';
+            }
+        });
 
-    passwordInput.addEventListener('input', function() {
-        const password = this.value.trim();
-        const passwordError = document.getElementById('passwordError');
-        
-        const reqs = {
-            length: password.length >= 8,
-            upper: /[A-Z]/.test(password),
-            lower: /[a-z]/.test(password),
-            number: /[0-9]/.test(password),
-            symbol: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)
-        };
+        // Validar al enviar el formulario
+        editForm.addEventListener('submit', function(e) {
+            const correo = correoInput.value.trim();
+            const password = passwordInput.value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            let isValid = true;
 
-        document.getElementById('req-length').textContent = (reqs.length ? '✓' : '✗') + ' Mínimo 8 caracteres';
-        document.getElementById('req-uppercase').textContent = (reqs.upper ? '✓' : '✗') + ' Una mayúscula (A-Z)';
-        document.getElementById('req-lowercase').textContent = (reqs.lower ? '✓' : '✗') + ' Una minúscula (a-z)';
-        document.getElementById('req-number').textContent = (reqs.number ? '✓' : '✗') + ' Un número (0-9)';
-        document.getElementById('req-symbol').textContent = (reqs.symbol ? '✓' : '✗') + ' Un símbolo especial (!@#$%^&*)';
-
-        const valid = Object.values(reqs).every(Boolean);
-
-        if (password && valid) {
-            passwordError.textContent = '✓ Contraseña válida';
-            passwordError.style.color = 'green';
-        } else {
-            passwordError.textContent = '';
-        }
-    });
-
-    editForm.addEventListener('submit', function(e) {
-        const correo = correoInput.value.trim();
-        const password = passwordInput.value.trim();
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        let isValid = true;
-
-        if (correo && !emailRegex.test(correo)) {
-            document.getElementById('correoError').textContent = '⚠ El email debe contener @ y un dominio válido';
-            document.getElementById('correoError').style.color = 'red';
-            isValid = false;
-        }
-
-        if (password) {
-            const isValidPass =
-                password.length >= 8 &&
-                /[A-Z]/.test(password) &&
-                /[a-z]/.test(password) &&
-                /[0-9]/.test(password) &&
-                /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
-
-            if (!isValidPass) {
-                document.getElementById('passwordError').textContent = '⚠ La contraseña no cumple todos los requisitos';
-                document.getElementById('passwordError').style.color = 'red';
+            // Validar email
+            if (correo && !emailRegex.test(correo)) {
+                document.getElementById('correoError').textContent = '⚠️ El email debe contener @ y un dominio válido';
+                document.getElementById('correoError').style.color = 'red';
                 isValid = false;
             }
-        }
 
-        if (!isValid) e.preventDefault();
-    });
-</script>
+            // Validar contraseña si se ingresó
+            if (password) {
+                const hasUpperCase = /[A-Z]/.test(password);
+                const hasLowerCase = /[a-z]/.test(password);
+                const hasNumber = /[0-9]/.test(password);
+                const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+                const isLengthValid = password.length >= 8;
+                
+                if (!hasUpperCase || !hasLowerCase || !hasNumber || !hasSymbol || !isLengthValid) {
+                    document.getElementById('passwordError').textContent = '⚠️ La contraseña no cumple todos los requisitos';
+                    document.getElementById('passwordError').style.color = 'red';
+                    isValid = false;
+                }
+            }
+
+            if (!isValid) {
+                e.preventDefault();
+            }
+        });
+    </script>
 </body>
 </html>
