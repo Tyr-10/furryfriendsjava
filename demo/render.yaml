@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: furryfriends-api
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    region: ohio
+    healthCheckPath: /
+    branch: main
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
