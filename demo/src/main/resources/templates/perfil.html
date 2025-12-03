@@ -17,13 +17,12 @@
         <div class="paw-heart">❤🐾</div>
     </div>
 
-    <!-- Header de perfil: Título, logo y botón volver -->
+    <!-- Header -->
     <div class="perfil-header-bar" style="position: relative;">
         <div class="logo-title">
             <img src="/images/logo.jpg" alt="Logo">
             <span class="perfil-title">Perfil de Usuario</span>
         </div>
-        <!-- Botón volver: ir a la página anterior del historial -->
         <a class="btn-volver-topright" href="javascript:void(0);" onclick="window.history.back();">
             <i class="fas fa-arrow-left"></i> Volver
         </a>
@@ -32,36 +31,55 @@
     <div class="main-content-perfil">
         <div class="profile-container">
             <div class="profile-card">
+
+                <!-- Avatar seguro evitando usuario null -->
                 <div class="profile-header">
                     <div class="profile-avatar"
-                         th:text="${usuario.nombre != null ? usuario.nombre.substring(0,1).toUpperCase() : usuario.correo.substring(0,1).toUpperCase()}">
+                         th:if="${usuario != null}"
+                         th:text="${
+                             usuario.nombre != null ?
+                             usuario.nombre.substring(0,1).toUpperCase() :
+                             (usuario.correo != null ? usuario.correo.substring(0,1).toUpperCase() : '?')
+                         }">
                     </div>
-                    <div class="profile-name" th:text="${usuario.nombre}">Usuario</div>
-                    <div class="profile-email"><strong>Email:</strong> <span th:text="${usuario.correo}">correo</span></div>
-                    <div class="profile-email" th:if="${usuario.telefono != null}"><strong>Teléfono:</strong> <span th:text="${usuario.telefono}"></span></div>
-                    <div class="profile-email" th:if="${usuario.direccion != null}"><strong>Dirección:</strong> <span th:text="${usuario.direccion}"></span></div>
+
+                    <!-- Datos usuario -->
+                    <div class="profile-name" th:text="${usuario != null ? usuario.nombre : 'Usuario'}">Usuario</div>
+                    <div class="profile-email"><strong>Email:</strong> 
+                        <span th:text="${usuario != null ? usuario.correo : 'N/A'}">correo</span>
+                    </div>
+
+                    <div class="profile-email" th:if="${usuario != null and usuario.telefono != null}">
+                        <strong>Teléfono:</strong> <span th:text="${usuario.telefono}"></span>
+                    </div>
+
+                    <div class="profile-email" th:if="${usuario != null and usuario.direccion != null}">
+                        <strong>Dirección:</strong> <span th:text="${usuario.direccion}"></span>
+                    </div>
                 </div>
 
+                <!-- Botón editar -->
                 <button id="editButton" class="btn btn-secondary">Editar</button>
 
+                <!-- Formulario edición -->
                 <form id="editForm" th:action="@{/perfil/actualizar}" method="post" th:object="${usuario}" style="display: none;">
                     <div class="input-group">
                         <label>Nombre:</label>
-                        <input type="text" name="nombre" th:value="${usuario.nombre}" required>
+                        <input type="text" name="nombre" th:value="${usuario != null ? usuario.nombre : ''}" required>
                     </div>
                     <div class="input-group">
                         <label>Email:</label>
-                        <input type="email" id="correo" name="correo" th:value="${usuario.correo}" required>
+                        <input type="email" id="correo" name="correo" th:value="${usuario != null ? usuario.correo : ''}" required>
                         <span class="error-message" id="correoError"></span>
                     </div>
                     <div class="input-group">
                         <label>Teléfono:</label>
-                        <input type="text" id="telefono" name="telefono" th:value="${usuario.telefono}" maxlength="12">
+                        <input type="text" id="telefono" name="telefono" th:value="${usuario != null ? usuario.telefono : ''}" maxlength="12">
                         <span class="error-message" id="telefonoError"></span>
                     </div>
                     <div class="input-group">
                         <label>Dirección:</label>
-                        <input type="text" name="direccion" th:value="${usuario.direccion}">
+                        <input type="text" name="direccion" th:value="${usuario != null ? usuario.direccion : ''}">
                     </div>
                     <div class="input-group">
                         <label>Contraseña (dejar vacío si no quieres cambiarla):</label>
@@ -81,14 +99,16 @@
                     <button type="submit" class="btn btn-success">Guardar cambios</button>
                 </form>
 
+                <!-- Eliminar cuenta -->
                 <form th:action="@{/perfil/eliminar}" method="post" onsubmit="return confirm('¿Estás seguro que deseas eliminar tu cuenta?');">
                     <button type="submit" class="btn btn-danger">Eliminar Cuenta</button>
                 </form>
+
             </div>
         </div>
     </div>
 
-    <!-- Footer igual que index -->
+    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-section">
