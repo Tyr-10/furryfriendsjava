@@ -30,17 +30,38 @@
     </div>
 
     <div class="main-content-perfil">
-        <div class="profile-container">
-            <div class="profile-card">
-                <div class="profile-header">
-                    <div class="profile-avatar"
-                         th:text="${usuario.nombre != null ? usuario.nombre.substring(0,1).toUpperCase() : usuario.correo.substring(0,1).toUpperCase()}">
-                    </div>
-                    <div class="profile-name" th:text="${usuario.nombre}">Usuario</div>
-                    <div class="profile-email"><strong>Email:</strong> <span th:text="${usuario.correo}">correo</span></div>
-                    <div class="profile-email" th:if="${usuario.telefono != null}"><strong>Teléfono:</strong> <span th:text="${usuario.telefono}"></span></div>
-                    <div class="profile-email" th:if="${usuario.direccion != null}"><strong>Dirección:</strong> <span th:text="${usuario.direccion}"></span></div>
+    <div class="profile-container">
+        <div class="profile-card">
+            <div class="profile-header">
+
+                <!-- Avatar seguro -->
+                <div class="profile-avatar">
+                    <span th:text="${usuario != null ? 
+                        (usuario.nombre != null ? 
+                            usuario.nombre.substring(0,1).toUpperCase() 
+                            : usuario.correo.substring(0,1).toUpperCase())
+                        : '' }">
+                    </span>
                 </div>
+
+                <div class="profile-name" th:text="${usuario != null ? usuario.nombre : 'Usuario'}"></div>
+
+                <div class="profile-email">
+                    <strong>Email:</strong> <span th:text="${usuario != null ? usuario.correo : '---'}"></span>
+                </div>
+
+                <div class="profile-email" th:if="${usuario != null and usuario.telefono != null}">
+                    <strong>Teléfono:</strong> <span th:text="${usuario.telefono}"></span>
+                </div>
+
+                <div class="profile-email" th:if="${usuario != null and usuario.direccion != null}">
+                    <strong>Dirección:</strong> <span th:text="${usuario.direccion}"></span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
 
                 <button id="editButton" class="btn btn-secondary">Editar</button>
 
