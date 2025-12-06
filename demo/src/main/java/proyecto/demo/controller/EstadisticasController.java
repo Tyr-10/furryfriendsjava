@@ -22,6 +22,13 @@ import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.Element;
+import com.lowagie.text.Rectangle;
+import org.springframework.core.io.ClassPathResource;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
+import java.text.NumberFormat;
 
 import jakarta.servlet.http.HttpServletResponse;
 import proyecto.demo.model.Perros;
@@ -65,12 +72,41 @@ public class EstadisticasController {
 
         document.open();
 
-        // ====== TÍTULO ======
-        document.add(new Paragraph("Reporte General de Estadísticas",
-                FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18)));
-        document.add(new Paragraph("\nFecha de generación: " + java.time.LocalDate.now() + "\n\n"));
+        // ====== ENCABEZADO: TÍTULO + LOGO (en una fila) ======
+        PdfPTable headerTable = new PdfPTable(2);
+        headerTable.setWidthPercentage(100);
+        headerTable.setWidths(new int[]{8, 2});
 
-        // ================== GRÁFICO PIE ==================
+        Paragraph titulo = new Paragraph("Reporte General de Estadísticas",
+                FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18));
+        titulo.add(new Paragraph("\nFecha de generación: " + java.time.LocalDate.now() + "\n\n"));
+
+        PdfPCell titleCell = new PdfPCell();
+        titleCell.addElement(titulo);
+        titleCell.setBorder(Rectangle.NO_BORDER);
+        headerTable.addCell(titleCell);
+
+        // Intentar cargar el logo desde classpath: /static/images/logo.jpg (mismo usado por recursos estáticos)
+        PdfPCell logoCell = new PdfPCell();
+        logoCell.setBorder(Rectangle.NO_BORDER);
+        try {
+            ClassPathResource logoResource = new ClassPathResource("static/images/logo.jpg");
+            if (logoResource.exists()) {
+                byte[] logoBytes = logoResource.getInputStream().readAllBytes();
+                Image logo = Image.getInstance(logoBytes);
+                logo.scaleToFit(90, 90);
+                logo.setAlignment(Image.RIGHT);
+                logoCell.addElement(logo);
+            }
+        } catch (IOException ex) {
+            // Si no se encuentra el logo no interrumpe la generación; dejar celda vacía
+        }
+        logoCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        headerTable.addCell(logoCell);
+
+        document.add(headerTable);
+
+        // ================== GRÁFICO PIE (con etiquetas numéricas) ==================
         DefaultPieDataset datasetPie = new DefaultPieDataset();
         datasetPie.setValue("Usuarios", usuariosTotales);
         datasetPie.setValue("Perros", perrosTotales);
@@ -80,6 +116,12 @@ public class EstadisticasController {
                 datasetPie,
                 true, true, false
         );
+
+        // Configurar que las secciones muestren el nombre y el valor numérico
+        PiePlot piePlot = (PiePlot) chartPie.getPlot();
+        piePlot.setLabelGenerator(new StandardPieSectionLabelGenerator("{0}: {1}",
+                NumberFormat.getNumberInstance(), NumberFormat.getPercentInstance()));
+        piePlot.setSimpleLabels(false);
 
         Image chartImagePie = convertirGraficoAImagen(chartPie, 500, 300);
         document.add(chartImagePie);
