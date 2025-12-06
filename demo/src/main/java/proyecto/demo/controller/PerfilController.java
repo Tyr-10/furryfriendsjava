@@ -10,6 +10,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import proyecto.demo.model.Usuario;
 import proyecto.demo.repository.UsuarioRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import java.util.Collection;
+import java.util.Collections;
 
 @Controller
 @RequestMapping("/perfil")
@@ -54,6 +61,25 @@ public class PerfilController {
         }
 
         usuarioRepository.save(usuario);
+
+        // Si se cambió el correo, actualizar la Authentication en el SecurityContext
+        String oldCorreo = userDetails.getUsername();
+        if (oldCorreo != null && !oldCorreo.equals(usuario.getCorreo())) {
+            Authentication currentAuth = SecurityContextHolder.getContext().getAuthentication();
+            Collection<? extends GrantedAuthority> authorities = currentAuth != null ? currentAuth.getAuthorities() : Collections.emptyList();
+
+            // Crear nuevo principal con el nuevo correo y la contraseña (ya codificada)
+            User newPrincipal = new User(usuario.getCorreo(), usuario.getPassword(), authorities != null ? authorities : Collections.emptyList());
+
+            UsernamePasswordAuthenticationToken newAuth =
+                    new UsernamePasswordAuthenticationToken(newPrincipal, usuario.getPassword(), newPrincipal.getAuthorities());
+
+            if (currentAuth != null) {
+                newAuth.setDetails(currentAuth.getDetails());
+            }
+            SecurityContextHolder.getContext().setAuthentication(newAuth);
+        }
+
         session.setAttribute("success", "Perfil actualizado exitosamente.");
         return "redirect:/perfil";
     }
