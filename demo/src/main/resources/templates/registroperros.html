@@ -70,7 +70,18 @@
         </span>
         Volver
     </a>
-    <a th:if="${#authorization.expression('hasRole(''ADMIN'')') == false}" href="javascript:void(0);" onclick="window.history.back();" class="btn-volver btn-volver-topright mb-3">
+
+    <a th:if="${#authorization.expression('hasRole(''REFUGIO'')')}" th:href="@{/vistarefugio}" class="btn-volver mb-3">
+        <span class="volver-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" style="vertical-align: middle;">
+                <polyline points="15,4 7,11 15,18" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </span>
+        Volver
+    </a>
+
+    <!-- Fallback para otros usuarios: regresar a la página anterior -->
+    <a th:if="${#authorization.expression('hasRole(''ADMIN'')') == false and #authorization.expression('hasRole(''REFUGIO'')') == false}" href="javascript:void(0);" onclick="window.history.back();" class="btn-volver btn-volver-topright mb-3">
         <span class="volver-icon">
             <svg width="22" height="22" viewBox="0 0 22 22" style="vertical-align: middle;">
                 <polyline points="15,4 7,11 15,18" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
